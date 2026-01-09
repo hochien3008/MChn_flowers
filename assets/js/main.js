@@ -118,6 +118,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ============================================
+    // Homepage Products
+    // ============================================
+    loadHomepageProducts();
+
+    // ============================================
     // Authentication Forms
     // ============================================
     
@@ -245,6 +250,118 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+async function loadHomepageProducts() {
+    const featuredGrid = document.getElementById('featuredProductsGrid');
+    const newGrid = document.getElementById('newProductsGrid');
+
+    if (!featuredGrid && !newGrid) return;
+    if (!window.API || !window.API.products) return;
+
+    const featuredPromise = window.API.products.list({ limit: 6, sort: 'popular' });
+    const newPromise = window.API.products.list({ limit: 6, sort: 'newest' });
+
+    try {
+        const [featuredData, newData] = await Promise.all([featuredPromise, newPromise]);
+        if (featuredGrid) {
+            renderHomeProducts(featuredGrid, featuredData.products || []);
+        }
+        if (newGrid) {
+            renderHomeProducts(newGrid, newData.products || []);
+        }
+    } catch (error) {
+        console.error('Failed to load homepage products:', error);
+        if (featuredGrid) {
+            featuredGrid.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: var(--text-gray);">Không thể tải sản phẩm nổi bật.</div>`;
+        }
+        if (newGrid) {
+            newGrid.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: var(--text-gray);">Không thể tải sản phẩm mới.</div>`;
+        }
+    }
+}
+
+function renderHomeProducts(container, products) {
+    if (!products || products.length === 0) {
+        container.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: var(--text-gray);">Chưa có sản phẩm.</div>`;
+        return;
+    }
+
+    container.innerHTML = products.map(product => {
+        const categoryLabel = product.category_name || 'Sản phẩm';
+        const description = product.short_description || product.description || '';
+        const trimmedDescription = description.length > 90 ? `${description.slice(0, 90)}...` : description;
+        const detailUrl = `shop/product-detail.html?slug=${encodeURIComponent(product.slug || '')}`;
+        const hasDiscount = product.sale_price && product.discount_percent;
+        const badges = [];
+
+        if (hasDiscount) {
+            badges.push(`<span class="badge badge-sale">Giảm ${product.discount_percent}%</span>`);
+        }
+
+        if (product.featured) {
+            badges.push(`<span class="badge badge-hot">HOT</span>`);
+        }
+
+        const imageMarkup = product.image_url
+            ? `<div class="product-image" style="background-image: url('${product.image_url}'); background-size: cover; background-position: center;"></div>`
+            : `<div class="product-image">${getCategoryEmoji(product.category_slug)}</div>`;
+
+        return `
+            <a href="${detailUrl}" class="product-card" style="position: relative;">
+                ${badges.length ? `<div class="product-badge-container">${badges.join('')}</div>` : ''}
+                <div class="product-actions">
+                    <button class="action-btn wishlist-icon" title="Yêu thích">🤍</button>
+                    <button class="action-btn share" title="Chia sẻ">📤</button>
+                    <button class="action-btn compare" title="So sánh">⚖️</button>
+                </div>
+                ${imageMarkup}
+                <div class="product-info">
+                    <div class="product-category">${categoryLabel}</div>
+                    <div class="product-name">${product.name || 'Sản phẩm'}</div>
+                    <div class="rating">
+                        <div class="stars">
+                            <span class="star">⭐</span>
+                            <span class="star">⭐</span>
+                            <span class="star">⭐</span>
+                            <span class="star">⭐</span>
+                            <span class="star">⭐</span>
+                        </div>
+                        <span class="rating-text">(${product.sales_count || 0} đã bán)</span>
+                    </div>
+                    <div class="product-description">${trimmedDescription}</div>
+                    <div class="product-footer">
+                        <div class="product-price">
+                            ${formatPrice(product.final_price || product.price)}
+                            ${hasDiscount ? `<span class="old-price">${formatPrice(product.price)}</span>` : ''}
+                        </div>
+                        <button class="add-to-cart-btn">Thêm vào giỏ</button>
+                    </div>
+                </div>
+            </a>
+        `;
+    }).join('');
+}
+
+function formatPrice(price) {
+    if (price === null || price === undefined) return '0đ';
+    return new Intl.NumberFormat('vi-VN').format(price) + 'đ';
+}
+
+function getCategoryEmoji(slug) {
+    const map = {
+        'banh-kem': '🎂',
+        'banh-kem-sinh-nhat': '🎂',
+        'banh-kem-su-kien': '🎉',
+        'banh-kem-theo-chu-de': '✨',
+        'hoa-tuoi': '🌸',
+        'hoa-bo-hoa-hop': '🌹',
+        'hoa-gio': '🧺',
+        'hoa-khai-truong': '🎊',
+        'combo': '🎁',
+        'qua-tang': '🎁'
+    };
+    return map[slug] || '🌺';
+}
 
 // ============================================
 // Advanced Loading Screen
