@@ -310,7 +310,7 @@ function renderHomeProducts(container, products) {
             <a href="${detailUrl}" class="product-card" style="position: relative;">
                 ${badges.length ? `<div class="product-badge-container">${badges.join('')}</div>` : ''}
                 <div class="product-actions">
-                    <button class="action-btn wishlist-icon" title="Yêu thích">🤍</button>
+                    <button class="action-btn" title="Yêu thích">🤍</button>
                     <button class="action-btn share" title="Chia sẻ">📤</button>
                     <button class="action-btn compare" title="So sánh">⚖️</button>
                 </div>

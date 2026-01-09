@@ -1773,6 +1773,8 @@ footer::before {
     top: 1rem;
     right: 1rem;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 0.5rem;
     opacity: 0;
     transition: opacity 0.3s;
@@ -1781,6 +1783,12 @@ footer::before {
 
 .product-card:hover .product-actions {
     opacity: 1;
+}
+
+.product-actions .wishlist-icon {
+    position: static;
+    top: auto;
+    right: auto;
 }
 
 .action-btn {
@@ -3506,4 +3514,3 @@ footer::before {
         font-size: 1.2rem;
     }
 }
-
