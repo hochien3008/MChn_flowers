@@ -100,6 +100,24 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Occasion tags selection
+    const occasionTags = document.querySelectorAll('.occasion-tag');
+    occasionTags.forEach(tag => {
+        tag.addEventListener('click', function() {
+            occasionTags.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    // Homepage filter buttons selection
+    const homeFilterBtns = document.querySelectorAll('.filters .filter-btn');
+    homeFilterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            homeFilterBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
     // Chatbot Toggle
     const chatbotBtn = document.querySelector('.chatbot-btn');
     const chatbotWindow = document.querySelector('.chatbot-window');
