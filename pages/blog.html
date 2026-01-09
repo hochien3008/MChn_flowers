@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Sweetie Garden</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <script src="../assets/js/main.js" defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="../index.html" class="logo">
+                <img src="../assets/images/logo.png" alt="Sweetie Garden Logo">
+                <span>Sweetie Garden</span>
+            </a>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span>📞</span>
+                    <a href="tel:0123456789">Hotline: 0123 456 789</a>
+                </div>
+                <div class="contact-item">
+                    <span>💬</span>
+                    <a href="#">Zalo: Sweetie Garden Shop</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="../index.html">Trang chủ</a></li>
+                <li class="has-dropdown">
+                    <a href="../shop/products.html">Sản phẩm</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../shop/products.html?category=banh-kem">Bánh kem</a></li>
+                        <li><a href="../shop/products.html?category=banh-kem-sinh-nhat">Bánh kem sinh nhật</a></li>
+                        <li><a href="../shop/products.html?category=banh-kem-su-kien">Bánh kem sự kiện</a></li>
+                        <li><a href="../shop/products.html?category=banh-kem-theo-chu-de">Bánh theo chủ đề</a></li>
+                        <li><a href="../shop/products.html?category=hoa-tuoi">Hoa tươi</a></li>
+                        <li><a href="../shop/products.html?category=hoa-bo-hoa-hop">Hoa bó - Hoa hộp</a></li>
+                        <li><a href="../shop/products.html?category=hoa-gio">Hoa giỏ</a></li>
+                        <li><a href="../shop/products.html?category=hoa-khai-truong">Hoa khai trương</a></li>
+                        <li><a href="../shop/products.html?category=combo">Combo</a></li>
+                        <li><a href="../shop/products.html?category=qua-tang">Quà tặng</a></li>
+                    </ul>
+                </li>
+                <li><a href="blog.html" class="active">Blog</a></li>
+                <li><a href="../shop/compare.html">So sánh</a></li>
+            </ul>
+            <div class="search-cart">
+                <div class="search-box">
+                    <span>🔍</span>
+                    <input type="text" placeholder="Tìm kiếm sản phẩm...">
+                </div>
+                <div class="notification-bell tooltip" data-tooltip="Thông báo">
+                    <span>🔔</span>
+                    <span class="notification-badge">0</span>
+                    <div class="notification-dropdown">
+                        <div style="padding: 2rem; text-align: center; color: var(--text-gray);">
+                            Chưa có thông báo
+                        </div>
+                    </div>
+                </div>
+                <a href="../shop/cart.html" class="cart-icon tooltip" data-tooltip="Giỏ hàng">
+                    <span>🛒</span>
+                    <span class="cart-badge">0</span>
+                </a>
+                <a href="account.html" class="user-icon tooltip" data-tooltip="Tài khoản">👤</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="../index.html">Trang chủ</a> / <span>Blog</span>
+    </div>
+
+    <!-- Blog Section -->
+    <section class="products-section">
+        <h2 class="section-title">Blog & Hướng dẫn</h2>
+
+        <div class="products-grid" style="grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));">
+            <article class="product-card">
+                <div class="product-image" style="height: 200px;">📝</div>
+                <div class="product-info">
+                    <div class="product-category">Hướng dẫn</div>
+                    <div class="product-name">Cách chọn bánh kem phù hợp cho từng dịp</div>
+                    <div class="product-description">
+                        Hướng dẫn chi tiết cách chọn bánh kem phù hợp với từng dịp như sinh nhật, 
+                        khai trương, cưới hỏi...
+                    </div>
+                    <div style="color: var(--text-gray); font-size: 0.85rem; margin-top: 1rem;">
+                        📅 15/12/2024 | 👁️ 1,234 lượt xem
+                    </div>
+                    <button class="add-to-cart-btn" style="margin-top: 1rem;">Đọc thêm</button>
+                </div>
+            </article>
+
+            <article class="product-card">
+                <div class="product-image" style="height: 200px;">🌸</div>
+                <div class="product-info">
+                    <div class="product-category">Kiến thức</div>
+                    <div class="product-name">Ý nghĩa các loại hoa trong từng dịp tặng</div>
+                    <div class="product-description">
+                        Khám phá ý nghĩa của các loại hoa khác nhau và cách chọn hoa phù hợp 
+                        cho từng dịp đặc biệt.
+                    </div>
+                    <div style="color: var(--text-gray); font-size: 0.85rem; margin-top: 1rem;">
+                        📅 14/12/2024 | 👁️ 2,156 lượt xem
+                    </div>
+                    <button class="add-to-cart-btn" style="margin-top: 1rem;">Đọc thêm</button>
+                </div>
+            </article>
+
+            <article class="product-card">
+                <div class="product-image" style="height: 200px;">🎁</div>
+                <div class="product-info">
+                    <div class="product-category">Tips</div>
+                    <div class="product-name">Combo quà tặng: Bánh kem + Hoa tươi</div>
+                    <div class="product-description">
+                        Gợi ý các combo bánh kem kết hợp hoa tươi đẹp mắt và ý nghĩa, 
+                        phù hợp cho nhiều dịp khác nhau.
+                    </div>
+                    <div style="color: var(--text-gray); font-size: 0.85rem; margin-top: 1rem;">
+                        📅 13/12/2024 | 👁️ 987 lượt xem
+                    </div>
+                    <button class="add-to-cart-btn" style="margin-top: 1rem;">Đọc thêm</button>
+                </div>
+            </article>
+
+            <article class="product-card">
+                <div class="product-image" style="height: 200px;">🎂</div>
+                <div class="product-info">
+                    <div class="product-category">Kiến thức</div>
+                    <div class="product-name">Cách bảo quản bánh kem tại nhà</div>
+                    <div class="product-description">
+                        Hướng dẫn chi tiết cách bảo quản bánh kem để giữ được hương vị 
+                        và hình dáng tốt nhất.
+                    </div>
+                    <div style="color: var(--text-gray); font-size: 0.85rem; margin-top: 1rem;">
+                        📅 12/12/2024 | 👁️ 1,567 lượt xem
+                    </div>
+                    <button class="add-to-cart-btn" style="margin-top: 1rem;">Đọc thêm</button>
+                </div>
+            </article>
+
+            <article class="product-card">
+                <div class="product-image" style="height: 200px;">🌹</div>
+                <div class="product-info">
+                    <div class="product-category">Hướng dẫn</div>
+                    <div class="product-name">Cách giữ hoa tươi lâu hơn</div>
+                    <div class="product-description">
+                        Mẹo vặt giúp hoa tươi lâu hơn, giữ được vẻ đẹp và hương thơm 
+                        trong nhiều ngày.
+                    </div>
+                    <div style="color: var(--text-gray); font-size: 0.85rem; margin-top: 1rem;">
+                        📅 11/12/2024 | 👁️ 1,890 lượt xem
+                    </div>
+                    <button class="add-to-cart-btn" style="margin-top: 1rem;">Đọc thêm</button>
+                </div>
+            </article>
+
+            <article class="product-card">
+                <div class="product-image" style="height: 200px;">💝</div>
+                <div class="product-info">
+                    <div class="product-category">Tips</div>
+                    <div class="product-name">Quà tặng Valentine: Hoa hồng hay Bánh kem?</div>
+                    <div class="product-description">
+                        So sánh và gợi ý quà tặng phù hợp cho ngày Valentine, 
+                        giúp bạn lựa chọn món quà ý nghĩa nhất.
+                    </div>
+                    <div style="color: var(--text-gray); font-size: 0.85rem; margin-top: 1rem;">
+                        📅 10/12/2024 | 👁️ 2,345 lượt xem
+                    </div>
+                    <button class="add-to-cart-btn" style="margin-top: 1rem;">Đọc thêm</button>
+                </div>
+            </article>
+        </div>
+
+        <div class="pagination">
+            <a href="#">← Trước</a>
+            <span class="active">1</span>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">Sau →</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>
+                    <img src="../assets/images/logo.png" alt="Sweetie Garden Logo">
+                    <span>Sweetie Garden</span>
+                </h3>
+                <p>Chuyên cung cấp bánh kem và hoa tươi chất lượng cao. Giao hàng nhanh, tận tâm phục vụ.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Thông tin liên hệ</h3>
+                <ul>
+                    <li>📞 Hotline: 0123 456 789</li>
+                    <li>💬 Zalo: Sweetie Garden Shop</li>
+                    <li>📧 Email: info@mchn.com</li>
+                    <li>📍 Địa chỉ: 123 Đường ABC, Quận XYZ, TP.HCM</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Danh mục</h3>
+                <ul>
+                    <li><a href="../shop/products.html?category=banh-kem-sinh-nhat">Bánh kem sinh nhật</a></li>
+                    <li><a href="../shop/products.html?category=banh-kem-su-kien">Bánh kem sự kiện</a></li>
+                    <li><a href="../shop/products.html?category=hoa-bo-hoa-hop">Hoa bó - Hoa hộp</a></li>
+                    <li><a href="../shop/products.html?category=hoa-gio">Hoa giỏ</a></li>
+                    <li><a href="../shop/products.html?category=combo">Combo Hoa + Bánh</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Dịch vụ</h3>
+                <ul>
+                    <li><a href="#">Giao hàng nhanh 2h</a></li>
+                    <li><a href="#">Ghi chữ lên bánh</a></li>
+                    <li><a href="#">Thiệp chúc mừng</a></li>
+                    <li><a href="#">Tư vấn miễn phí</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Sweetie Garden - Bánh Kem & Hoa Tươi. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
+

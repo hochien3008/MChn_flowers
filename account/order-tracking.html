@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theo dõi đơn hàng - Sweetie Garden</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <script src="../assets/js/main.js" defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="../index.html" class="logo">
+                <img src="../assets/images/logo.png" alt="Sweetie Garden Logo">
+                <span>Sweetie Garden</span>
+            </a>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span>📞</span>
+                    <a href="tel:0123456789">Hotline: 0123 456 789</a>
+                </div>
+                <div class="contact-item">
+                    <span>💬</span>
+                    <a href="#">Zalo: Sweetie Garden Shop</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="../index.html">Trang chủ</a></li>
+                <li class="has-dropdown">
+                    <a href="../shop/products.html">Sản phẩm</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="products.html?category=banh-kem">Bánh kem</a></li>
+                        <li><a href="products.html?category=banh-kem-sinh-nhat">Bánh kem sinh nhật</a></li>
+                        <li><a href="products.html?category=banh-kem-su-kien">Bánh kem sự kiện</a></li>
+                        <li><a href="products.html?category=banh-kem-theo-chu-de">Bánh theo chủ đề</a></li>
+                        <li><a href="products.html?category=hoa-tuoi">Hoa tươi</a></li>
+                        <li><a href="products.html?category=hoa-bo-hoa-hop">Hoa bó - Hoa hộp</a></li>
+                        <li><a href="products.html?category=hoa-gio">Hoa giỏ</a></li>
+                        <li><a href="products.html?category=hoa-khai-truong">Hoa khai trương</a></li>
+                        <li><a href="products.html?category=combo">Combo</a></li>
+                        <li><a href="products.html?category=qua-tang">Quà tặng</a></li>
+                    </ul>
+                </li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="../shop/compare.html">So sánh</a></li>
+            </ul>
+            <div class="search-cart">
+                <div class="search-box">
+                    <span>🔍</span>
+                    <input type="text" placeholder="Tìm kiếm sản phẩm...">
+                </div>
+                <a href="../shop/cart.html" class="cart-icon">
+                    <span>🛒</span>
+                    <span class="cart-badge">0</span>
+                </a>
+                <a href="account.html" class="user-icon">👤</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Tracking Section -->
+    <section class="checkout-section">
+        <h2 class="section-title">Theo dõi đơn hàng</h2>
+        
+        <div class="checkout-form" style="max-width: 800px; margin: 0 auto;">
+            <div class="form-group">
+                <label>Nhập mã đơn hàng:</label>
+                <input type="text" placeholder="VD: DH001234" style="font-size: 1.1rem; padding: 1rem;">
+            </div>
+            <button class="btn-primary">Tra cứu đơn hàng</button>
+        </div>
+
+        <div class="order-card" style="max-width: 800px; margin: 3rem auto;">
+            <div class="order-header">
+                <div>
+                    <div style="font-weight: bold; margin-bottom: 0.5rem; font-size: 1.25rem;">Đơn hàng #DH001234</div>
+                    <div style="color: var(--text-gray); font-size: 0.9rem;">Ngày đặt: 15/12/2024 14:30</div>
+                </div>
+                <span class="order-status shipping">Đang giao</span>
+            </div>
+
+            <div style="margin: 2rem 0;">
+                <h3 style="margin-bottom: 1rem; color: var(--accent-color);">Tiến trình đơn hàng</h3>
+                
+                <div style="position: relative; padding-left: 2rem;">
+                    <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--primary-color);"></div>
+                    
+                    <div style="margin-bottom: 2rem; position: relative;">
+                        <div style="position: absolute; left: -1.75rem; top: 0.25rem; width: 12px; height: 12px; background: var(--primary-darker); border-radius: 50%; border: 3px solid white; box-shadow: var(--shadow-sm);"></div>
+                        <div style="font-weight: 600; margin-bottom: 0.5rem;">Đơn hàng đã được xác nhận</div>
+                        <div style="color: var(--text-gray); font-size: 0.9rem;">15/12/2024 15:00</div>
+                    </div>
+
+                    <div style="margin-bottom: 2rem; position: relative;">
+                        <div style="position: absolute; left: -1.75rem; top: 0.25rem; width: 12px; height: 12px; background: var(--primary-darker); border-radius: 50%; border: 3px solid white; box-shadow: var(--shadow-sm);"></div>
+                        <div style="font-weight: 600; margin-bottom: 0.5rem;">Đang chuẩn bị hàng</div>
+                        <div style="color: var(--text-gray); font-size: 0.9rem;">15/12/2024 16:00</div>
+                    </div>
+
+                    <div style="margin-bottom: 2rem; position: relative;">
+                        <div style="position: absolute; left: -1.75rem; top: 0.25rem; width: 12px; height: 12px; background: var(--primary-darker); border-radius: 50%; border: 3px solid white; box-shadow: var(--shadow-sm);"></div>
+                        <div style="font-weight: 600; margin-bottom: 0.5rem;">Đã giao cho shipper</div>
+                        <div style="color: var(--text-gray); font-size: 0.9rem;">15/12/2024 17:30</div>
+                    </div>
+
+                    <div style="position: relative;">
+                        <div style="position: absolute; left: -1.75rem; top: 0.25rem; width: 12px; height: 12px; background: var(--primary-color); border-radius: 50%; border: 3px solid white; box-shadow: var(--shadow-md); animation: pulse 2s infinite;"></div>
+                        <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--primary-darker);">Đang giao hàng</div>
+                        <div style="color: var(--text-gray); font-size: 0.9rem;">Dự kiến giao: 18:00 - 19:00 hôm nay</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin: 2rem 0; padding: 1.5rem; background: var(--bg-gray); border-radius: 12px;">
+                <h3 style="margin-bottom: 1rem; color: var(--accent-color);">Thông tin đơn hàng</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div>
+                        <div style="color: var(--text-gray); font-size: 0.9rem;">Sản phẩm:</div>
+                        <div style="font-weight: 500; margin-top: 0.25rem;">Bánh kem Chocolate Deluxe x1</div>
+                        <div style="font-weight: 500;">Hoa hồng đỏ 99 bông x1</div>
+                    </div>
+                    <div>
+                        <div style="color: var(--text-gray); font-size: 0.9rem;">Tổng tiền:</div>
+                        <div style="font-weight: 700; color: var(--accent-color); font-size: 1.25rem; margin-top: 0.25rem;">1.200.000đ</div>
+                    </div>
+                    <div>
+                        <div style="color: var(--text-gray); font-size: 0.9rem;">Người nhận:</div>
+                        <div style="font-weight: 500; margin-top: 0.25rem;">Nguyễn Văn A</div>
+                        <div style="font-size: 0.9rem; color: var(--text-gray);">0123 456 789</div>
+                    </div>
+                    <div>
+                        <div style="color: var(--text-gray); font-size: 0.9rem;">Địa chỉ:</div>
+                        <div style="font-weight: 500; margin-top: 0.25rem;">123 Đường ABC, Quận XYZ, TP.HCM</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <button class="btn-primary" style="width: auto; padding: 1rem 2rem;">Liên hệ hỗ trợ</button>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+    </style>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>
+                    <img src="../assets/images/logo.png" alt="Sweetie Garden Logo">
+                    <span>Sweetie Garden</span>
+                </h3>
+                <p>Chuyên cung cấp bánh kem và hoa tươi chất lượng cao. Giao hàng nhanh, tận tâm phục vụ.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Thông tin liên hệ</h3>
+                <ul>
+                    <li>📞 Hotline: 0123 456 789</li>
+                    <li>💬 Zalo: Sweetie Garden Shop</li>
+                    <li>📧 Email: info@mchn.com</li>
+                    <li>📍 Địa chỉ: 123 Đường ABC, Quận XYZ, TP.HCM</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Danh mục</h3>
+                <ul>
+                    <li><a href="products.html?category=banh-kem-sinh-nhat">Bánh kem sinh nhật</a></li>
+                    <li><a href="products.html?category=banh-kem-su-kien">Bánh kem sự kiện</a></li>
+                    <li><a href="products.html?category=hoa-bo-hoa-hop">Hoa bó - Hoa hộp</a></li>
+                    <li><a href="products.html?category=hoa-gio">Hoa giỏ</a></li>
+                    <li><a href="products.html?category=combo">Combo Hoa + Bánh</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Dịch vụ</h3>
+                <ul>
+                    <li><a href="#">Giao hàng nhanh 2h</a></li>
+                    <li><a href="#">Ghi chữ lên bánh</a></li>
+                    <li><a href="#">Thiệp chúc mừng</a></li>
+                    <li><a href="#">Tư vấn miễn phí</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Sweetie Garden - Bánh Kem & Hoa Tươi. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
+

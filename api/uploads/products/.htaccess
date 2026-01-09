@@ -1,0 +1,8 @@
+# Allow access to product images
+Options -Indexes
+
+<FilesMatch "\.(jpg|jpeg|png|gif|webp|svg)$">
+    Order allow,deny
+    Allow from all
+</FilesMatch>
+

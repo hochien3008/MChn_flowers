@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Nhân viên - Admin Sweetie Garden</title>
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <link rel="icon" type="image/png" href="../../assets/images/logo.png">
+    <link rel="stylesheet" href="../assets/admin.css">
+</head>
+<body class="admin-body">
+    <aside class="admin-sidebar">
+        <div class="admin-sidebar-header">
+            <img src="../../assets/images/logo.png" alt="Logo" class="admin-logo">
+            <h2>Sweetie Garden</h2>
+            <p>Admin Panel</p>
+        </div>
+        <nav class="admin-nav">
+            <a href="dashboard.html" class="admin-nav-item">
+                <span class="admin-icon"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg></span>
+                <span>Dashboard</span>
+            </a>
+            <a href="products.html" class="admin-nav-item">
+                <span class="admin-icon"><svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.11-.31.18-.65.18-1a2.996 2.996 0 0 0-5.5-1.65l-.5.67-.5-.68C10.96 2.54 10 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm11 15H4v-2h16v2zm0-5H4V8h5.08L7 10.83 8.62 12 11 8.76l1-1.36 1 1.36L15.38 12 17 10.83 14.92 8H20v6z"/></svg></span>
+                <span>Sản phẩm</span>
+            </a>
+            <a href="orders.html" class="admin-nav-item">
+                <span class="admin-icon"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71z"/></svg></span>
+                <span>Đơn hàng</span>
+            </a>
+            <a href="customers.html" class="admin-nav-item">
+                <span class="admin-icon"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></span>
+                <span>Khách hàng</span>
+            </a>
+            <a href="coupons.html" class="admin-nav-item">
+                <span class="admin-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg></span>
+                <span>Mã giảm giá</span>
+            </a>
+            <a href="combo.html" class="admin-nav-item">
+                <span class="admin-icon"><svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.11-.31.18-.65.18-1a2.996 2.996 0 0 0-5.5-1.65l-.5.67-.5-.68C10.96 2.54 10 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2z"/></svg></span>
+                <span>Combo</span>
+            </a>
+            <a href="staff.html" class="admin-nav-item active">
+                <span class="admin-icon"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></span>
+                <span>Nhân viên</span>
+            </a>
+            <a href="blog.html" class="admin-nav-item">
+                <span class="admin-icon"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></span>
+                <span>Blog</span>
+            </a>
+        </nav>
+        <div class="admin-sidebar-footer">
+            <a href="../../index.html" class="admin-nav-item">
+                <span class="admin-icon"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></span>
+                <span>Về trang chủ</span>
+            </a>
+            <a href="../login.html" class="admin-nav-item">
+                <span class="admin-icon"><svg viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.59L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg></span>
+                <span>Đăng xuất</span>
+            </a>
+        </div>
+    </aside>
+
+    <main class="admin-main">
+        <header class="admin-header">
+            <div class="admin-header-left">
+                <h1>Quản lý Nhân viên</h1>
+                <p class="admin-breadcrumb">Trang chủ / Nhân viên</p>
+            </div>
+            <div class="admin-header-right">
+                <button class="admin-btn-primary" onclick="openStaffModal()">
+                    <span>➕</span>
+                    <span>Thêm nhân viên</span>
+                </button>
+                <div class="admin-user-info">
+                    <span>👤</span>
+                    <span>Admin</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="admin-filter-bar">
+            <div class="admin-filter-group">
+                <label>Chức vụ:</label>
+                <select class="admin-select">
+                    <option value="">Tất cả</option>
+                    <option value="shipper">Nhân viên giao hàng</option>
+                    <option value="baker">Nhân viên làm bánh</option>
+                    <option value="florist">Nhân viên cắm hoa</option>
+                    <option value="admin">Quản trị viên</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="admin-card">
+            <div class="admin-table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Nhân viên</th>
+                            <th>Email/SĐT</th>
+                            <th>Chức vụ</th>
+                            <th>Phân quyền</th>
+                            <th>Ngày vào làm</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="7" style="text-align: center; padding: 2rem;">
+                                Đang tải nhân viên...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../assets/js/api.js"></script>
+    <script src="../../assets/js/admin-staff.js"></script>
+    <script>
+        // Placeholder function for modal
+        function openStaffModal() {
+            showNotification('Tính năng thêm nhân viên đang phát triển', 'info');
+        }
+        window.openStaffModal = openStaffModal;
+    </script>
+</body>
+</html>
+

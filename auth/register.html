@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký - Sweetie Garden</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/main.js" defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="../index.html" class="logo">
+                <img src="../assets/images/logo.png" alt="Sweetie Garden Logo">
+                <span>Sweetie Garden</span>
+            </a>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span>📞</span>
+                    <a href="tel:0123456789">Hotline: 0123 456 789</a>
+                </div>
+                <div class="contact-item">
+                    <span>💬</span>
+                    <a href="#">Zalo: Sweetie Garden Shop</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="../index.html">Trang chủ</a></li>
+                <li class="has-dropdown">
+                    <a href="../shop/products.html">Sản phẩm</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="products.html?category=banh-kem">Bánh kem</a></li>
+                        <li><a href="products.html?category=banh-kem-sinh-nhat">Bánh kem sinh nhật</a></li>
+                        <li><a href="products.html?category=banh-kem-su-kien">Bánh kem sự kiện</a></li>
+                        <li><a href="products.html?category=banh-kem-theo-chu-de">Bánh theo chủ đề</a></li>
+                        <li><a href="products.html?category=hoa-tuoi">Hoa tươi</a></li>
+                        <li><a href="products.html?category=hoa-bo-hoa-hop">Hoa bó - Hoa hộp</a></li>
+                        <li><a href="products.html?category=hoa-gio">Hoa giỏ</a></li>
+                        <li><a href="products.html?category=hoa-khai-truong">Hoa khai trương</a></li>
+                        <li><a href="products.html?category=combo">Combo</a></li>
+                        <li><a href="products.html?category=qua-tang">Quà tặng</a></li>
+                    </ul>
+                </li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="../shop/compare.html">So sánh</a></li>
+            </ul>
+            <div class="search-cart">
+                <div class="search-box">
+                    <span>🔍</span>
+                    <input type="text" placeholder="Tìm kiếm sản phẩm...">
+                </div>
+                <a href="../shop/cart.html" class="cart-icon">
+                    <span>🛒</span>
+                    <span class="cart-badge">0</span>
+                </a>
+                <a href="account.html" class="user-icon">👤</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Auth Section -->
+    <section class="auth-section">
+        <div class="auth-container">
+            <h1>Đăng ký</h1>
+            
+            <div class="auth-tabs">
+                <button class="auth-tab active">Email/Mật khẩu</button>
+                <button class="auth-tab">SĐT/OTP</button>
+            </div>
+
+            <form class="auth-form">
+                <input type="text" placeholder="Họ và tên" required>
+                <input type="email" placeholder="Email" required>
+                <input type="tel" placeholder="Số điện thoại" required>
+                <input type="password" placeholder="Mật khẩu" required>
+                <input type="password" placeholder="Xác nhận mật khẩu" required>
+
+                <div class="otp-section">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Mã OTP xác minh:</label>
+                    <div class="otp-input">
+                        <input type="text" placeholder="Nhập mã OTP" maxlength="6">
+                    </div>
+                    <button type="button" class="btn-apply" style="width: 100%;">Gửi mã OTP</button>
+                </div>
+
+                <div style="margin: 1rem 0; font-size: 0.9rem; color: #666;">
+                    <input type="checkbox" id="terms" required>
+                    <label for="terms">Tôi đồng ý với <a href="#" style="color: #ff6b9d;">điều khoản sử dụng</a> và <a href="#" style="color: #ff6b9d;">chính sách bảo mật</a></label>
+                </div>
+
+                <button type="submit" class="btn-primary">Đăng ký</button>
+            </form>
+
+            <div class="divider">hoặc</div>
+
+            <div style="text-align: center; margin-top: 1rem;">
+                <p style="color: #666;">Đã có tài khoản? <a href="auth/login.html" style="color: #ff6b9d; text-decoration: none;">Đăng nhập ngay</a></p>
+            </div>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="../index.html" style="color: #666; text-decoration: none;">← Về trang chủ</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>
+                    <img src="../assets/images/logo.png" alt="Sweetie Garden Logo">
+                    <span>Sweetie Garden</span>
+                </h3>
+                <p>Chuyên cung cấp bánh kem và hoa tươi chất lượng cao. Giao hàng nhanh, tận tâm phục vụ.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Thông tin liên hệ</h3>
+                <ul>
+                    <li>📞 Hotline: 0123 456 789</li>
+                    <li>💬 Zalo: Sweetie Garden Shop</li>
+                    <li>📧 Email: info@mchn.com</li>
+                    <li>📍 Địa chỉ: 123 Đường ABC, Quận XYZ, TP.HCM</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Danh mục</h3>
+                <ul>
+                    <li><a href="products.html?category=banh-kem-sinh-nhat">Bánh kem sinh nhật</a></li>
+                    <li><a href="products.html?category=banh-kem-su-kien">Bánh kem sự kiện</a></li>
+                    <li><a href="products.html?category=hoa-bo-hoa-hop">Hoa bó - Hoa hộp</a></li>
+                    <li><a href="products.html?category=hoa-gio">Hoa giỏ</a></li>
+                    <li><a href="products.html?category=combo">Combo Hoa + Bánh</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Dịch vụ</h3>
+                <ul>
+                    <li><a href="#">Giao hàng nhanh 2h</a></li>
+                    <li><a href="#">Ghi chữ lên bánh</a></li>
+                    <li><a href="#">Thiệp chúc mừng</a></li>
+                    <li><a href="#">Tư vấn miễn phí</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Sweetie Garden - Bánh Kem & Hoa Tươi. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
+

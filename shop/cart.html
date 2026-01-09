@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ hàng - Sweetie Garden</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/main.js" defer></script>
+    <script src="../assets/js/cart.js" defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="../index.html" class="logo">
+                <img src="../assets/images/logo.png" alt="Sweetie Garden Logo">
+                <span>Sweetie Garden</span>
+            </a>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span>📞</span>
+                    <a href="tel:0123456789">Hotline: 0123 456 789</a>
+                </div>
+                <div class="contact-item">
+                    <span>💬</span>
+                    <a href="#">Zalo: Sweetie Garden Shop</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="../index.html">Trang chủ</a></li>
+                <li class="has-dropdown">
+                    <a href="products.html">Sản phẩm</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="products.html?category=banh-kem">Bánh kem</a></li>
+                        <li><a href="products.html?category=banh-kem-sinh-nhat">Bánh kem sinh nhật</a></li>
+                        <li><a href="products.html?category=banh-kem-su-kien">Bánh kem sự kiện</a></li>
+                        <li><a href="products.html?category=banh-kem-theo-chu-de">Bánh theo chủ đề</a></li>
+                        <li><a href="products.html?category=hoa-tuoi">Hoa tươi</a></li>
+                        <li><a href="products.html?category=hoa-bo-hoa-hop">Hoa bó - Hoa hộp</a></li>
+                        <li><a href="products.html?category=hoa-gio">Hoa giỏ</a></li>
+                        <li><a href="products.html?category=hoa-khai-truong">Hoa khai trương</a></li>
+                        <li><a href="products.html?category=combo">Combo</a></li>
+                        <li><a href="products.html?category=qua-tang">Quà tặng</a></li>
+                    </ul>
+                </li>
+                <li><a href="../pages/blog.html">Blog</a></li>
+                <li><a href="compare.html">So sánh</a></li>
+            </ul>
+            <div class="search-cart">
+                <div class="search-box">
+                    <span>🔍</span>
+                    <input type="text" placeholder="Tìm kiếm sản phẩm...">
+                </div>
+                <div class="notification-bell tooltip" data-tooltip="Thông báo">
+                    <span>🔔</span>
+                    <span class="notification-badge">3</span>
+                    <div class="notification-dropdown">
+                        <div class="notification-item unread">
+                            <div style="font-weight: 600; margin-bottom: 0.25rem;">Đơn hàng đã được xác nhận</div>
+                            <div style="font-size: 0.85rem; color: var(--text-gray);">Đơn #DH001234</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="cart.html" class="cart-icon tooltip" data-tooltip="Giỏ hàng">
+                    <span>🛒</span>
+                    <span class="cart-badge">3</span>
+                </a>
+                <a href="../pages/account.html" class="user-icon tooltip" data-tooltip="Tài khoản">👤</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cart Section -->
+    <section class="cart-section">
+        <h2 class="section-title">Giỏ hàng của bạn</h2>
+        <div class="cart-container">
+            <div class="cart-items">
+                <div class="cart-item">
+                    <div class="cart-item-image">🎂</div>
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">Bánh kem Chocolate Deluxe</div>
+                        <div class="cart-item-options">
+                            Size: 1kg | Ghi chữ: "Chúc mừng sinh nhật" | Thiệp: Có
+                        </div>
+                        <div class="quantity-control">
+                            <button class="quantity-btn">-</button>
+                            <input type="number" class="quantity-input" value="1" min="1">
+                            <button class="quantity-btn">+</button>
+                        </div>
+                    </div>
+                    <div class="cart-item-price">
+                        <div class="cart-item-price-value">350.000đ</div>
+                        <button class="remove-btn">🗑️ Xóa</button>
+                    </div>
+                </div>
+
+                <div class="cart-item">
+                    <div class="cart-item-image">🌹</div>
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">Hoa hồng đỏ 99 bông</div>
+                        <div class="cart-item-options">
+                            Màu: Đỏ | Giao hàng: 14h - 16h chiều
+                        </div>
+                        <div class="quantity-control">
+                            <button class="quantity-btn">-</button>
+                            <input type="number" class="quantity-input" value="1" min="1">
+                            <button class="quantity-btn">+</button>
+                        </div>
+                    </div>
+                    <div class="cart-item-price">
+                        <div class="cart-item-price-value">850.000đ</div>
+                        <button class="remove-btn">🗑️ Xóa</button>
+                    </div>
+                </div>
+
+                <div class="cart-item">
+                    <div class="cart-item-image">🎁</div>
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">Combo Sinh nhật Đặc biệt</div>
+                        <div class="cart-item-options">
+                            Bánh kem 1kg + Hoa hồng 11 bông + Thiệp chúc mừng
+                        </div>
+                        <div class="quantity-control">
+                            <button class="quantity-btn">-</button>
+                            <input type="number" class="quantity-input" value="1" min="1">
+                            <button class="quantity-btn">+</button>
+                        </div>
+                    </div>
+                    <div class="cart-item-price">
+                        <div class="cart-item-price-value">650.000đ</div>
+                        <button class="remove-btn">🗑️ Xóa</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cart-summary">
+                <h3 style="margin-bottom: 1rem; color: #c44569;">Tóm tắt đơn hàng</h3>
+                <div class="summary-row">
+                    <span>Tạm tính:</span>
+                    <span>1.850.000đ</span>
+                </div>
+                <div class="summary-row">
+                    <span>Phí giao hàng:</span>
+                    <span>30.000đ</span>
+                </div>
+                <div class="summary-row">
+                    <span>Giảm giá:</span>
+                    <span style="color: #28a745;">-150.000đ</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Tổng thanh toán:</span>
+                    <span>1.730.000đ</span>
+                </div>
+
+                <div class="coupon-section">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Mã giảm giá:</label>
+                    <div class="coupon-input">
+                        <input type="text" placeholder="Nhập mã giảm giá">
+                        <button class="btn-apply">Áp dụng</button>
+                    </div>
+                </div>
+
+                <button class="btn-primary" onclick="window.location.href='checkout.html'">Tiến hành thanh toán</button>
+                <a href="products.html" style="display: block; text-align: center; margin-top: 1rem; color: var(--accent-color); text-decoration: none; font-weight: 500;">
+                    ← Tiếp tục mua sắm
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chatbot -->
+    <button class="chatbot-btn">💬</button>
+    <div class="chatbot-window">
+        <div class="chatbot-header">
+            💬 Tư vấn trực tuyến
+        </div>
+        <div class="chatbot-messages">
+            <div class="chatbot-message bot">
+                Chào bạn! 👋 Bạn cần hỗ trợ gì về giỏ hàng?
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" placeholder="Nhập câu hỏi...">
+            <button>Gửi</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>
+                    <img src="../assets/images/logo.png" alt="Sweetie Garden Logo">
+                    <span>Sweetie Garden</span>
+                </h3>
+                <p>Chuyên cung cấp bánh kem và hoa tươi chất lượng cao. Giao hàng nhanh, tận tâm phục vụ.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Thông tin liên hệ</h3>
+                <ul>
+                    <li>📞 Hotline: 0123 456 789</li>
+                    <li>💬 Zalo: Sweetie Garden Shop</li>
+                    <li>📧 Email: info@mchn.com</li>
+                    <li>📍 Địa chỉ: 123 Đường ABC, Quận XYZ, TP.HCM</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Danh mục</h3>
+                <ul>
+                    <li><a href="products.html?category=banh-kem-sinh-nhat">Bánh kem sinh nhật</a></li>
+                    <li><a href="products.html?category=banh-kem-su-kien">Bánh kem sự kiện</a></li>
+                    <li><a href="products.html?category=hoa-bo-hoa-hop">Hoa bó - Hoa hộp</a></li>
+                    <li><a href="products.html?category=hoa-gio">Hoa giỏ</a></li>
+                    <li><a href="products.html?category=combo">Combo Hoa + Bánh</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Dịch vụ</h3>
+                <ul>
+                    <li><a href="#">Giao hàng nhanh 2h</a></li>
+                    <li><a href="#">Ghi chữ lên bánh</a></li>
+                    <li><a href="#">Thiệp chúc mừng</a></li>
+                    <li><a href="#">Tư vấn miễn phí</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Sweetie Garden - Bánh Kem & Hoa Tươi. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
+

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập Admin - Sweetie Garden</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="icon" type="image/png" href="../../assets/images/logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .admin-login {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .admin-login::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(-50px, -50px) rotate(360deg); }
+        }
+
+        .admin-login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.2);
+            padding: 60px 50px;
+            max-width: 480px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .admin-login-header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .admin-login-header .logo-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 25px;
+        }
+
+        .admin-login-header .logo-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, rgba(232, 213, 183, 0.3), rgba(212, 184, 150, 0.3));
+            border-radius: 50%;
+            z-index: -1;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.3; }
+        }
+
+        .admin-login-header img {
+            height: 140px;
+            width: auto;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1));
+        }
+
+        .admin-login-header h1 {
+            font-size: 2.2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0 0 8px 0;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .admin-login-header p {
+            color: #6c757d;
+            margin-top: 0;
+            font-size: 0.95rem;
+        }
+
+        .admin-form-group {
+            margin-bottom: 28px;
+            position: relative;
+        }
+
+        .admin-form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .admin-form-group .input-wrapper {
+            position: relative;
+        }
+
+        .admin-form-group .input-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            opacity: 0.4;
+            transition: opacity 0.3s;
+        }
+
+        .admin-form-group input {
+            width: 100%;
+            padding: 16px 16px 16px 50px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #fafafa;
+            color: #2c3e50;
+        }
+
+        .admin-form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .admin-form-group input:focus + .input-icon,
+        .admin-form-group input:not(:placeholder-shown) + .input-icon {
+            opacity: 0.7;
+        }
+
+        .admin-form-group input::placeholder {
+            color: #adb5bd;
+        }
+
+        .admin-login-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .admin-login-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .admin-login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+        }
+
+        .admin-login-btn:active::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .admin-forgot-password {
+            text-align: center;
+            margin-top: 24px;
+        }
+
+        .admin-forgot-password a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .admin-forgot-password a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .admin-back-home {
+            text-align: center;
+            margin-top: 35px;
+            padding-top: 30px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .admin-back-home a {
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s;
+        }
+
+        .admin-back-home a:hover {
+            color: #667eea;
+            transform: translateX(-3px);
+        }
+
+        .admin-back-home a svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        @media (max-width: 480px) {
+            .admin-login-container {
+                padding: 40px 30px;
+            }
+
+            .admin-login-header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-login">
+        <div class="admin-login-container">
+            <div class="admin-login-header">
+                <div class="logo-wrapper">
+                    <img src="../assets/images/logo.png" alt="Sweetie Garden Logo">
+                </div>
+                <h1>Admin Panel</h1>
+                <p>Đăng nhập để quản trị hệ thống</p>
+            </div>
+            <form id="adminLoginForm">
+                <div class="admin-form-group">
+                    <label for="adminEmail">Email</label>
+                    <div class="input-wrapper">
+                        <input type="email" id="adminEmail" name="email" required placeholder="admin@sweetiegarden.com">
+                        <svg class="input-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    </div>
+                </div>
+                <div class="admin-form-group">
+                    <label for="adminPassword">Mật khẩu</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="adminPassword" name="password" required placeholder="••••••••">
+                        <svg class="input-icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                    </div>
+                </div>
+                <button type="submit" class="admin-login-btn">Đăng nhập</button>
+            </form>
+            <div class="admin-forgot-password">
+                <a href="#">Quên mật khẩu?</a>
+            </div>
+            <div class="admin-back-home">
+                <a href="../index.html">
+                    <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+                    Về trang chủ
+                </a>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('adminLoginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('adminEmail').value;
+            const password = document.getElementById('adminPassword').value;
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            
+            // Disable button and show loading
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Đang đăng nhập...';
+            
+            try {
+                // Call login API
+                const response = await fetch('/api/auth/login.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'same-origin',
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await response.json();
+                console.log('Login response:', data);
+                
+                if (data.success && data.data) {
+                    const user = data.data.user;
+                    
+                    // Check if user is admin
+                    if (user && user.role === 'admin') {
+                        // Redirect to dashboard
+                        window.location.href = 'pages/dashboard.html';
+                    } else {
+                        alert('Bạn không có quyền truy cập admin panel!');
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalText;
+                    }
+                } else {
+                    alert('Đăng nhập thất bại: ' + (data.message || 'Email hoặc mật khẩu không đúng'));
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalText;
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('Đăng nhập thất bại: ' + error.message);
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        });
+    </script>
+</body>
+</html>
+
