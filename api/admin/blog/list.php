@@ -19,6 +19,7 @@ requireAdmin();
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 20;
 $status = isset($_GET['status']) ? sanitizeInput($_GET['status']) : null;
+$category = isset($_GET['category']) ? sanitizeInput($_GET['category']) : null;
 $search = isset($_GET['search']) ? sanitizeInput($_GET['search']) : null;
 
 $page = max(1, $page);
@@ -36,6 +37,11 @@ $params = [];
 if ($status) {
     $where[] = "bp.status = :status";
     $params[':status'] = $status;
+}
+
+if ($category) {
+    $where[] = "bp.category = :category";
+    $params[':category'] = $category;
 }
 
 if ($search) {
@@ -77,11 +83,10 @@ foreach ($posts as &$post) {
     $post['id'] = (int)$post['id'];
     $post['author_id'] = (int)$post['author_id'];
     $post['views'] = (int)$post['views'];
-    $post['image_url'] = $post['image'] ? APP_URL . '/api/uploads/blog/' . $post['image'] : null;
+    $post['image_url'] = $post['image'] ? BLOG_UPLOAD_URL . $post['image'] : null;
 }
 
 sendJsonResponse(true, 'Lấy danh sách bài viết thành công', [
     'posts' => $posts,
     'pagination' => buildPagination($page, $limit, $total)
 ]);
-

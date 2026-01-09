@@ -68,6 +68,10 @@
                 <p class="admin-breadcrumb">Trang chủ / Blog</p>
             </div>
             <div class="admin-header-right">
+                <div class="admin-search-box">
+                    <span>🔍</span>
+                    <input type="text" id="blogSearchInput" placeholder="Tìm kiếm bài viết...">
+                </div>
                 <button class="admin-btn-primary" onclick="openBlogModal()">
                     <span>➕</span>
                     <span>Thêm bài viết</span>
@@ -82,7 +86,7 @@
         <div class="admin-filter-bar">
             <div class="admin-filter-group">
                 <label>Danh mục:</label>
-                <select class="admin-select">
+                <select class="admin-select" id="blogCategoryFilter">
                     <option value="">Tất cả</option>
                     <option value="huong-dan">Hướng dẫn chọn hoa</option>
                     <option value="huong-dan-banh">Hướng dẫn chọn bánh</option>
@@ -92,7 +96,7 @@
             </div>
             <div class="admin-filter-group">
                 <label>Trạng thái:</label>
-                <select class="admin-select">
+                <select class="admin-select" id="blogStatusFilter">
                     <option value="">Tất cả</option>
                     <option value="published">Đã xuất bản</option>
                     <option value="draft">Nháp</option>
@@ -115,7 +119,7 @@
                             <th>Thao tác</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="blogTableBody">
                         <tr>
                             <td colspan="8" style="text-align: center; padding: 2rem;">
                                 Đang tải bài viết...
@@ -133,15 +137,69 @@
         </div>
     </main>
 
+    <!-- Blog Modal -->
+    <div id="blogModal" class="admin-modal" style="display: none;">
+        <div class="admin-modal-content" style="max-width: 900px;">
+            <div class="admin-modal-header">
+                <h2 id="blogModalTitle">Thêm bài viết</h2>
+                <button class="admin-modal-close" onclick="closeBlogModal()">×</button>
+            </div>
+            <div class="admin-modal-body">
+                <form class="admin-form" id="blogForm">
+                    <input type="hidden" id="blogId">
+                    <div class="admin-form-group">
+                        <label for="blogTitle">Tiêu đề</label>
+                        <input type="text" id="blogTitle" required placeholder="Nhập tiêu đề bài viết">
+                    </div>
+                    <div class="admin-form-group">
+                        <label for="blogSlug">Slug</label>
+                        <input type="text" id="blogSlug" placeholder="Tự động nếu bỏ trống">
+                    </div>
+                    <div class="admin-form-row">
+                        <div class="admin-form-group">
+                            <label for="blogCategory">Danh mục</label>
+                            <select class="admin-select" id="blogCategory" required>
+                                <option value="">Chọn danh mục</option>
+                                <option value="huong-dan">Hướng dẫn chọn hoa</option>
+                                <option value="huong-dan-banh">Hướng dẫn chọn bánh</option>
+                                <option value="tin-tuc">Tin tức</option>
+                                <option value="khuyen-mai">Khuyến mãi</option>
+                            </select>
+                        </div>
+                        <div class="admin-form-group">
+                            <label for="blogStatus">Trạng thái</label>
+                            <select class="admin-select" id="blogStatus">
+                                <option value="draft">Nháp</option>
+                                <option value="published">Xuất bản</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="admin-form-group">
+                        <label for="blogExcerpt">Tóm tắt</label>
+                        <textarea id="blogExcerpt" rows="3" placeholder="Tóm tắt ngắn cho bài viết"></textarea>
+                    </div>
+                    <div class="admin-form-group">
+                        <label for="blogContent">Nội dung</label>
+                        <textarea id="blogContent" rows="8" required placeholder="Nhập nội dung bài viết"></textarea>
+                    </div>
+                    <div class="admin-form-group">
+                        <label for="blogImage">Ảnh đại diện</label>
+                        <input type="file" id="blogImage" accept="image/*">
+                        <div id="blogImagePreview" style="margin-top: 12px; display: none;"></div>
+                        <label style="display: none; margin-top: 8px;" id="blogRemoveImageWrap">
+                            <input type="checkbox" id="blogRemoveImage"> Xóa ảnh hiện tại
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="admin-modal-footer">
+                <button class="admin-btn-secondary" onclick="closeBlogModal()">Hủy</button>
+                <button class="admin-btn-primary" onclick="submitBlogForm()">Lưu bài viết</button>
+            </div>
+        </div>
+    </div>
+
     <script src="../../assets/js/api.js"></script>
     <script src="../../assets/js/admin-blog.js"></script>
-    <script>
-        // Placeholder function for modal
-        function openBlogModal() {
-            showNotification('Tính năng thêm bài viết đang phát triển', 'info');
-        }
-        window.openBlogModal = openBlogModal;
-    </script>
 </body>
 </html>
-

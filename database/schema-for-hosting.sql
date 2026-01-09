@@ -223,6 +223,7 @@ CREATE TABLE IF NOT EXISTS blog_posts (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     slug VARCHAR(255) UNIQUE NOT NULL,
+    category VARCHAR(100) DEFAULT NULL,
     content TEXT NOT NULL,
     excerpt TEXT,
     image VARCHAR(255),
@@ -276,4 +277,3 @@ INSERT INTO products (name, slug, description, price, sale_price, category_id, s
 ('Bánh kem sinh nhật', 'banh-kem-sinh-nhat', 'Bánh kem sinh nhật đẹp mắt, thơm ngon', 420000, 380000, 1, 15, 'active', TRUE),
 ('Hoa hồng đỏ', 'hoa-hong-do', 'Bó hoa hồng đỏ tươi thắm', 400000, NULL, 2, 20, 'active', TRUE),
 ('Combo Valentine', 'combo-valentine', 'Combo bánh kem + hoa hồng cho Valentine', 800000, 750000, 3, 10, 'active', TRUE);
-

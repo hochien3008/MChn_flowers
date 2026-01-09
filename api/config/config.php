@@ -21,6 +21,8 @@ define('APP_ENV', 'production'); // 'development' hoặc 'production'
 define('BASE_PATH', dirname(__DIR__, 2));
 define('UPLOAD_PATH', BASE_PATH . '/api/uploads/products/');
 define('UPLOAD_URL', APP_URL . '/api/uploads/products/');
+define('BLOG_UPLOAD_PATH', BASE_PATH . '/api/uploads/blog/');
+define('BLOG_UPLOAD_URL', APP_URL . '/api/uploads/blog/');
 
 // Security
 define('SECRET_KEY', 'sweetie-garden-secret-key-2024-change-in-production'); // Thay đổi trong production
@@ -64,4 +66,3 @@ if (APP_ENV === 'development') {
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-
