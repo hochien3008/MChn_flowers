@@ -72,6 +72,24 @@ $productsStmt = $db->prepare($productsQuery);
 $productsStmt->execute();
 $products = $productsStmt->fetch();
 
+// Products by category
+$productCountsQuery = "SELECT c.slug, COUNT(p.id) as count
+                       FROM categories c
+                       LEFT JOIN products p ON p.category_id = c.id AND p.status = 'active'
+                       WHERE c.slug IN ('banh-kem', 'hoa-tuoi', 'combo')
+                       GROUP BY c.slug";
+$productCountsStmt = $db->prepare($productCountsQuery);
+$productCountsStmt->execute();
+$productCountsData = $productCountsStmt->fetchAll();
+
+$productCountsByCategory = [];
+foreach ($productCountsData as $item) {
+    $productCountsByCategory[$item['slug']] = (int)$item['count'];
+}
+if (!isset($productCountsByCategory['banh-kem'])) $productCountsByCategory['banh-kem'] = 0;
+if (!isset($productCountsByCategory['hoa-tuoi'])) $productCountsByCategory['hoa-tuoi'] = 0;
+if (!isset($productCountsByCategory['combo'])) $productCountsByCategory['combo'] = 0;
+
 // Total customers
 $customersQuery = "SELECT COUNT(*) as total_customers FROM users WHERE role = 'user'";
 $customersStmt = $db->prepare($customersQuery);
@@ -171,6 +189,7 @@ sendJsonResponse(true, 'Lấy thống kê thành công', [
     'total_revenue' => (float)$revenue['total_revenue'],
     'total_orders' => (int)$orders['total_orders'],
     'total_products' => (int)$products['total_products'],
+    'product_counts_by_category' => $productCountsByCategory,
     'total_customers' => (int)$customers['total_customers'],
     'low_stock_count' => (int)$lowStock['low_stock_count'],
     'orders_by_status' => $ordersByStatus,
@@ -180,4 +199,3 @@ sendJsonResponse(true, 'Lấy thống kê thành công', [
     'revenue_by_category' => $revenueByCategory,
     'period' => $period
 ]);
-

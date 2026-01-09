@@ -84,6 +84,11 @@ function updateDashboardUI(data) {
     if (data.revenue_by_category) {
         updateRevenueByCategory(data.revenue_by_category);
     }
+
+    // Update product counts by category
+    if (data.product_counts_by_category) {
+        updateProductsByCategory(data.product_counts_by_category);
+    }
 }
 
 /**
@@ -321,6 +326,25 @@ function updateRevenueByCategory(revenueByCategory) {
 }
 
 /**
+ * Update products by category
+ */
+function updateProductsByCategory(productCounts) {
+    const labels = {
+        'banh-kem': 'Bánh',
+        'hoa-tuoi': 'Hoa',
+        'combo': 'Combo'
+    };
+
+    Object.keys(labels).forEach(slug => {
+        const count = productCounts[slug] || 0;
+        const element = document.getElementById(`products-${slug}`);
+        if (element) {
+            element.textContent = `${labels[slug]}: ${count}`;
+        }
+    });
+}
+
+/**
  * Setup period filter
  */
 function setupPeriodFilter() {
@@ -415,4 +439,3 @@ function showNotification(message, type = 'info') {
         }, 300);
     }, 3000);
 }
-
