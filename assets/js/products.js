@@ -95,7 +95,7 @@ async function loadProducts(params = {}) {
  * Render products
  */
 function renderProducts(products) {
-    const container = document.querySelector('.products-grid, .products-container');
+    const container = document.getElementById('productsGrid') || document.querySelector('.products-grid, .products-container');
     
     if (!container) {
         console.warn('Products container not found');
@@ -111,42 +111,33 @@ function renderProducts(products) {
         return;
     }
 
-    container.innerHTML = products.map(product => `
-        <div class="product-card" data-product-id="${product.id}">
-            <div class="product-image">
-                ${product.image_url 
-                    ? `<img src="${product.image_url}" alt="${product.name}">`
-                    : '<div style="width: 100%; height: 200px; background: #f0f0f0; display: flex; align-items: center; justify-content: center;">🎂</div>'
-                }
-                ${product.discount_percent > 0 
-                    ? `<span class="product-badge">-${product.discount_percent}%</span>`
-                    : ''
-                }
-            </div>
-            <div class="product-info">
-                <h3 class="product-name">${product.name}</h3>
-                ${product.short_description 
-                    ? `<p class="product-description">${product.short_description}</p>`
-                    : ''
-                }
-                <div class="product-price">
-                    ${product.sale_price 
-                        ? `<span class="sale-price">${formatPrice(product.sale_price)}</span>
-                           <span class="old-price">${formatPrice(product.price)}</span>`
-                        : `<span class="price">${formatPrice(product.price)}</span>`
-                    }
-                </div>
-                <div class="product-actions">
-                    <button class="btn-primary add-to-cart" data-add-to-cart="${product.id}">
-                        🛒 Thêm vào giỏ
-                    </button>
-                    <a href="product-detail.html?slug=${product.slug}" class="btn-secondary">
-                        Xem chi tiết
-                    </a>
+    container.innerHTML = products.map(product => {
+        const imageMarkup = product.image_url
+            ? `<div class="product-image" style="background-image: url('${product.image_url}'); background-size: cover; background-position: center;"></div>`
+            : `<div class="product-image">${getCategoryEmoji(product.category_slug)}</div>`;
+
+        const priceMarkup = product.sale_price
+            ? `<div class="product-price">
+                    ${formatPrice(product.sale_price)}
+                    <span class="old-price">${formatPrice(product.price)}</span>
+               </div>`
+            : `<div class="product-price">${formatPrice(product.price)}</div>`;
+
+        return `
+            <div class="product-card" data-product-id="${product.id}">
+                ${imageMarkup}
+                <div class="product-info">
+                    <div class="product-category">${product.category_name || 'Sản phẩm'}</div>
+                    <div class="product-name">${product.name}</div>
+                    ${product.short_description ? `<div class="product-description">${product.short_description}</div>` : ''}
+                    <div class="product-footer">
+                        ${priceMarkup}
+                        <a class="add-to-cart-btn" href="product-detail.html?slug=${product.slug}">Xem chi tiết</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
 /**
@@ -231,3 +222,18 @@ function formatPrice(price) {
     }).format(price);
 }
 
+function getCategoryEmoji(slug) {
+    const map = {
+        'banh-kem': '🎂',
+        'banh-kem-sinh-nhat': '🎂',
+        'banh-kem-su-kien': '🎉',
+        'banh-kem-theo-chu-de': '✨',
+        'hoa-tuoi': '🌸',
+        'hoa-bo-hoa-hop': '🌹',
+        'hoa-gio': '🧺',
+        'hoa-khai-truong': '🎊',
+        'combo': '🎁',
+        'qua-tang': '🎁'
+    };
+    return map[slug] || '🌺';
+}

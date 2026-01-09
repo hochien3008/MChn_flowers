@@ -310,9 +310,9 @@ function renderHomeProducts(container, products) {
             <a href="${detailUrl}" class="product-card" style="position: relative;">
                 ${badges.length ? `<div class="product-badge-container">${badges.join('')}</div>` : ''}
                 <div class="product-actions">
-                    <button class="action-btn" title="Yêu thích">🤍</button>
-                    <button class="action-btn share" title="Chia sẻ">📤</button>
-                    <button class="action-btn compare" title="So sánh">⚖️</button>
+                    <a class="action-btn" title="Yêu thích" href="pages/wishlist.html">🤍</a>
+                    <button class="action-btn share" title="Chia sẻ" type="button" data-share-url="${detailUrl}">📤</button>
+                    <a class="action-btn compare" title="So sánh" href="shop/compare.html">⚖️</a>
                 </div>
                 ${imageMarkup}
                 <div class="product-info">
@@ -362,6 +362,44 @@ function getCategoryEmoji(slug) {
     };
     return map[slug] || '🌺';
 }
+
+document.addEventListener('click', async function(event) {
+    const actionBtn = event.target.closest('.product-actions .action-btn');
+    if (!actionBtn) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (actionBtn.classList.contains('share')) {
+        const url = actionBtn.getAttribute('data-share-url') || window.location.href;
+        const title = 'Sweetie Garden';
+
+        if (navigator.share) {
+            try {
+                await navigator.share({ title, url });
+            } catch (error) {
+                console.warn('Share canceled or failed:', error);
+            }
+            return;
+        }
+
+        try {
+            await navigator.clipboard.writeText(url);
+            showNotification('Đã sao chép link chia sẻ', 'success');
+        } catch (error) {
+            console.error('Failed to copy share URL:', error);
+            showNotification('Không thể chia sẻ liên kết', 'error');
+        }
+        return;
+    }
+
+    if (actionBtn.tagName === 'A') {
+        const href = actionBtn.getAttribute('href');
+        if (href) {
+            window.location.href = href;
+        }
+    }
+});
 
 // ============================================
 // Advanced Loading Screen
