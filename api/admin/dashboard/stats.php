@@ -26,16 +26,16 @@ $db = $database->getConnection();
 $dateFilter = "";
 switch ($period) {
     case 'today':
-        $dateFilter = "DATE(created_at) = CURDATE()";
+        $dateFilter = "DATE(orders.created_at) = CURDATE()";
         break;
     case 'week':
-        $dateFilter = "YEARWEEK(created_at, 1) = YEARWEEK(CURDATE(), 1)";
+        $dateFilter = "YEARWEEK(orders.created_at, 1) = YEARWEEK(CURDATE(), 1)";
         break;
     case 'month':
-        $dateFilter = "YEAR(created_at) = YEAR(CURDATE()) AND MONTH(created_at) = MONTH(CURDATE())";
+        $dateFilter = "YEAR(orders.created_at) = YEAR(CURDATE()) AND MONTH(orders.created_at) = MONTH(CURDATE())";
         break;
     case 'year':
-        $dateFilter = "YEAR(created_at) = YEAR(CURDATE())";
+        $dateFilter = "YEAR(orders.created_at) = YEAR(CURDATE())";
         break;
     default:
         $dateFilter = "1=1";
@@ -121,6 +121,7 @@ foreach ($recentOrders as &$order) {
 }
 
 // Revenue by category (for current period)
+$dateFilterForJoin = str_replace('orders.', 'o.', $dateFilter);
 $revenueByCategoryQuery = "SELECT 
                             c.slug as category_slug,
                             COALESCE(SUM(oi.subtotal), 0) as revenue
@@ -130,7 +131,7 @@ $revenueByCategoryQuery = "SELECT
                           LEFT JOIN orders o ON oi.order_id = o.id
                           WHERE c.slug IN ('banh-kem', 'hoa-tuoi', 'combo')
                           AND o.status != 'cancelled'
-                          AND ({$dateFilter})
+                          AND ({$dateFilterForJoin})
                           GROUP BY c.id, c.slug";
 $revenueByCategoryStmt = $db->prepare($revenueByCategoryQuery);
 $revenueByCategoryStmt->execute();

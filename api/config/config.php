@@ -7,7 +7,7 @@
 
 // Database Configuration - CẬP NHẬT VỚI THÔNG TIN HOSTING
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'fkaltpgx_mchn');
+define('DB_NAME', 'fkaltpgx_shop');
 define('DB_USER', 'fkaltpgx_shop'); // Cập nhật với DB user của hosting
 define('DB_PASS', 'fkaltpgx_shop'); // Cập nhật với DB password của hosting
 define('DB_CHARSET', 'utf8mb4');
