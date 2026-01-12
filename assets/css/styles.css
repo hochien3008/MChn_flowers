@@ -2403,13 +2403,20 @@ footer::before {
     font-weight: 500;
 }
 
-.occasion-tag:hover,
-.occasion-tag.active {
+.occasion-tag:hover {
     background: var(--gradient-primary);
     border-color: var(--primary-color);
     color: var(--accent-dark);
     transform: translateY(-2px);
     box-shadow: var(--shadow-sm);
+}
+
+.occasion-tag.active {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    color: var(--accent-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(120, 84, 52, 0.25);
 }
 
 /* Product Badge on Card */

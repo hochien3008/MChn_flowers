@@ -46,10 +46,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     const sortSelect = document.querySelector('select[name="sort"]');
     if (sortSelect) {
         sortSelect.addEventListener('change', function() {
-            const currentParams = new URLSearchParams(window.location.search);
-            currentParams.set('sort', this.value);
-            currentParams.set('page', '1'); // Reset to page 1
-            window.location.search = currentParams.toString();
+            loadProducts({ sort: this.value, page: 1 });
         });
     }
 
@@ -63,6 +60,15 @@ document.addEventListener('DOMContentLoaded', async function() {
                     loadProducts({ search: searchTerm, page: 1 });
                 }
             }
+        });
+    }
+
+    // Advanced filters apply
+    const applyBtn = document.getElementById('applyFiltersBtn');
+    if (applyBtn) {
+        applyBtn.addEventListener('click', function() {
+            const params = collectAdvancedFilters();
+            loadProducts({ ...params, page: 1 });
         });
     }
 });
@@ -220,6 +226,29 @@ function formatPrice(price) {
         style: 'currency',
         currency: 'VND'
     }).format(price);
+}
+
+function collectAdvancedFilters() {
+    const category = document.getElementById('filterCategory')?.value || '';
+    const minPrice = document.getElementById('filterMinPrice')?.value || '';
+    const maxPrice = document.getElementById('filterMaxPrice')?.value || '';
+    const sort = document.getElementById('filterSort')?.value || 'newest';
+
+    const params = {};
+    if (category) params.category = category;
+    if (minPrice) params.min_price = minPrice;
+    if (maxPrice) params.max_price = maxPrice;
+    if (sort) params.sort = sort;
+
+    const occasion = document.getElementById('filterOccasion')?.value || '';
+    const size = document.getElementById('filterSize')?.value || '';
+    const color = document.getElementById('filterColor')?.value || '';
+
+    if (occasion || size || color) {
+        showProductsError('Bộ lọc dịp tặng/kích thước/màu sắc chưa được hỗ trợ trên dữ liệu hiện tại.');
+    }
+
+    return params;
 }
 
 function getCategoryEmoji(slug) {

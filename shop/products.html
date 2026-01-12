@@ -99,38 +99,39 @@
         <div class="filter-row">
             <div class="filter-group">
                 <label>Loại sản phẩm</label>
-                <select>
-                    <option>Tất cả</option>
-                    <option>Bánh kem</option>
-                    <option>Hoa tươi</option>
-                    <option>Combo</option>
+                <select id="filterCategory">
+                    <option value="">Tất cả</option>
+                    <option value="banh-kem">Bánh kem</option>
+                    <option value="hoa-tuoi">Hoa tươi</option>
+                    <option value="combo">Combo</option>
+                    <option value="qua-tang">Quà tặng</option>
                 </select>
             </div>
             <div class="filter-group">
                 <label>Giá từ</label>
-                <input type="number" placeholder="0">
+                <input type="number" id="filterMinPrice" placeholder="0">
             </div>
             <div class="filter-group">
                 <label>Giá đến</label>
-                <input type="number" placeholder="2.000.000">
+                <input type="number" id="filterMaxPrice" placeholder="2.000.000">
             </div>
             <div class="filter-group">
                 <label>Dịp tặng</label>
-                <select>
-                    <option>Tất cả</option>
-                    <option>Sinh nhật</option>
-                    <option>Khai trương</option>
-                    <option>Chúc mừng</option>
-                    <option>Chia buồn</option>
-                    <option>20/10</option>
-                    <option>Valentine</option>
+                <select id="filterOccasion">
+                    <option value="">Tất cả</option>
+                    <option value="sinh-nhat">Sinh nhật</option>
+                    <option value="khai-truong">Khai trương</option>
+                    <option value="chuc-mung">Chúc mừng</option>
+                    <option value="chia-buon">Chia buồn</option>
+                    <option value="20-10">20/10</option>
+                    <option value="valentine">Valentine</option>
                 </select>
             </div>
         </div>
         <div class="filter-row">
             <div class="filter-group">
                 <label>Sắp xếp theo</label>
-                <select name="sort">
+                <select name="sort" id="filterSort">
                     <option value="newest">Mới nhất</option>
                     <option value="price_asc">Giá tăng dần</option>
                     <option value="price_desc">Giá giảm dần</option>
@@ -139,27 +140,27 @@
             </div>
             <div class="filter-group">
                 <label>Kích thước (Bánh)</label>
-                <select>
-                    <option>Tất cả</option>
-                    <option>0.5kg</option>
-                    <option>1kg</option>
-                    <option>2kg</option>
-                    <option>3kg+</option>
+                <select id="filterSize">
+                    <option value="">Tất cả</option>
+                    <option value="0.5">0.5kg</option>
+                    <option value="1">1kg</option>
+                    <option value="2">2kg</option>
+                    <option value="3">3kg+</option>
                 </select>
             </div>
             <div class="filter-group">
                 <label>Màu sắc (Hoa)</label>
-                <select>
-                    <option>Tất cả</option>
-                    <option>Đỏ</option>
-                    <option>Hồng</option>
-                    <option>Vàng</option>
-                    <option>Trắng</option>
-                    <option>Đa sắc</option>
+                <select id="filterColor">
+                    <option value="">Tất cả</option>
+                    <option value="do">Đỏ</option>
+                    <option value="hong">Hồng</option>
+                    <option value="vang">Vàng</option>
+                    <option value="trang">Trắng</option>
+                    <option value="da-sac">Đa sắc</option>
                 </select>
             </div>
             <div class="filter-group" style="display: flex; align-items: flex-end;">
-                <button class="btn-primary" style="width: 100%; margin: 0;">Áp dụng bộ lọc</button>
+                <button class="btn-primary" id="applyFiltersBtn" style="width: 100%; margin: 0;">Áp dụng bộ lọc</button>
             </div>
         </div>
     </section>
