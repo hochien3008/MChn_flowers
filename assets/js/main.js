@@ -325,37 +325,39 @@ function renderHomeProducts(container, products) {
             : `<div class="product-image">${getCategoryEmoji(product.category_slug)}</div>`;
 
         return `
-            <a href="${detailUrl}" class="product-card" style="position: relative;">
+            <div class="product-card" data-detail-url="${detailUrl}" style="position: relative;">
                 ${badges.length ? `<div class="product-badge-container">${badges.join('')}</div>` : ''}
                 <div class="product-actions">
-                    <a class="action-btn" title="Yêu thích" href="pages/wishlist.html">🤍</a>
-                    <button class="action-btn share" title="Chia sẻ" type="button" data-share-url="${detailUrl}">📤</button>
-                    <a class="action-btn compare" title="So sánh" href="shop/compare.html">⚖️</a>
+                    <button class="action-btn" type="button" title="Yêu thích" data-href="pages/wishlist.html">🤍</button>
+                    <button class="action-btn share" type="button" title="Chia sẻ" data-share-url="${detailUrl}">📤</button>
+                    <button class="action-btn compare" type="button" title="So sánh" data-href="shop/compare.html">⚖️</button>
                 </div>
-                ${imageMarkup}
-                <div class="product-info">
-                    <div class="product-category">${categoryLabel}</div>
-                    <div class="product-name">${product.name || 'Sản phẩm'}</div>
-                    <div class="rating">
-                        <div class="stars">
-                            <span class="star">⭐</span>
-                            <span class="star">⭐</span>
-                            <span class="star">⭐</span>
-                            <span class="star">⭐</span>
-                            <span class="star">⭐</span>
+                <div class="product-card-inner">
+                    ${imageMarkup}
+                    <div class="product-info">
+                        <div class="product-category">${categoryLabel}</div>
+                        <div class="product-name">${product.name || 'Sản phẩm'}</div>
+                        <div class="rating">
+                            <div class="stars">
+                                <span class="star">⭐</span>
+                                <span class="star">⭐</span>
+                                <span class="star">⭐</span>
+                                <span class="star">⭐</span>
+                                <span class="star">⭐</span>
+                            </div>
+                            <span class="rating-text">(${product.sales_count || 0} đã bán)</span>
                         </div>
-                        <span class="rating-text">(${product.sales_count || 0} đã bán)</span>
-                    </div>
-                    <div class="product-description">${trimmedDescription}</div>
-                    <div class="product-footer">
-                        <div class="product-price">
-                            ${formatPrice(product.final_price || product.price)}
-                            ${hasDiscount ? `<span class="old-price">${formatPrice(product.price)}</span>` : ''}
+                        <div class="product-description">${trimmedDescription}</div>
+                        <div class="product-footer">
+                            <div class="product-price">
+                                ${formatPrice(product.final_price || product.price)}
+                                ${hasDiscount ? `<span class="old-price">${formatPrice(product.price)}</span>` : ''}
+                            </div>
+                            <button class="add-to-cart-btn" type="button">Thêm vào giỏ</button>
                         </div>
-                        <button class="add-to-cart-btn">Thêm vào giỏ</button>
                     </div>
                 </div>
-            </a>
+            </div>
         `;
     }).join('');
 }
@@ -383,38 +385,45 @@ function getCategoryEmoji(slug) {
 
 document.addEventListener('click', async function(event) {
     const actionBtn = event.target.closest('.product-actions .action-btn');
-    if (!actionBtn) return;
+    if (actionBtn) {
+        event.preventDefault();
+        event.stopPropagation();
 
-    event.preventDefault();
-    event.stopPropagation();
+        if (actionBtn.classList.contains('share')) {
+            const url = actionBtn.getAttribute('data-share-url') || window.location.href;
+            const title = 'Sweetie Garden';
 
-    if (actionBtn.classList.contains('share')) {
-        const url = actionBtn.getAttribute('data-share-url') || window.location.href;
-        const title = 'Sweetie Garden';
+            if (navigator.share) {
+                try {
+                    await navigator.share({ title, url });
+                } catch (error) {
+                    console.warn('Share canceled or failed:', error);
+                }
+                return;
+            }
 
-        if (navigator.share) {
             try {
-                await navigator.share({ title, url });
+                await navigator.clipboard.writeText(url);
+                showNotification('Đã sao chép link chia sẻ', 'success');
             } catch (error) {
-                console.warn('Share canceled or failed:', error);
+                console.error('Failed to copy share URL:', error);
+                showNotification('Không thể chia sẻ liên kết', 'error');
             }
             return;
         }
 
-        try {
-            await navigator.clipboard.writeText(url);
-            showNotification('Đã sao chép link chia sẻ', 'success');
-        } catch (error) {
-            console.error('Failed to copy share URL:', error);
-            showNotification('Không thể chia sẻ liên kết', 'error');
+        const href = actionBtn.getAttribute('data-href');
+        if (href) {
+            window.location.href = href;
         }
         return;
     }
 
-    if (actionBtn.tagName === 'A') {
-        const href = actionBtn.getAttribute('href');
-        if (href) {
-            window.location.href = href;
+    const card = event.target.closest('.product-card[data-detail-url]');
+    if (card) {
+        const url = card.getAttribute('data-detail-url');
+        if (url) {
+            window.location.href = url;
         }
     }
 });
