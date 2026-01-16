@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giỏ hàng - Sweetie Garden</title>
-    <link rel="stylesheet" href="../assets/css/styles.css">
-    <script src="../assets/js/api.js"></script>
-    <script src="../assets/js/main.js" defer></script>
-    <script src="../assets/js/cart.js" defer></script>
+    <link rel="stylesheet" href="../assets/css/styles.css?v=26">
+    <script src="../assets/js/api.js?v=11"></script>
+    <script src="../assets/js/cart-manager.js?v=1"></script>
+    <script src="../assets/js/main.js?v=26" defer></script>
+    <script src="../assets/js/cart.js?v=26" defer></script>
 </head>
+
 <body>
     <!-- Header -->
     <header>
@@ -87,62 +90,7 @@
         <h2 class="section-title">Giỏ hàng của bạn</h2>
         <div class="cart-container">
             <div class="cart-items">
-                <div class="cart-item">
-                    <div class="cart-item-image">🎂</div>
-                    <div class="cart-item-info">
-                        <div class="cart-item-name">Bánh kem Chocolate Deluxe</div>
-                        <div class="cart-item-options">
-                            Size: 1kg | Ghi chữ: "Chúc mừng sinh nhật" | Thiệp: Có
-                        </div>
-                        <div class="quantity-control">
-                            <button class="quantity-btn">-</button>
-                            <input type="number" class="quantity-input" value="1" min="1">
-                            <button class="quantity-btn">+</button>
-                        </div>
-                    </div>
-                    <div class="cart-item-price">
-                        <div class="cart-item-price-value">350.000đ</div>
-                        <button class="remove-btn">🗑️ Xóa</button>
-                    </div>
-                </div>
-
-                <div class="cart-item">
-                    <div class="cart-item-image">🌹</div>
-                    <div class="cart-item-info">
-                        <div class="cart-item-name">Hoa hồng đỏ 99 bông</div>
-                        <div class="cart-item-options">
-                            Màu: Đỏ | Giao hàng: 14h - 16h chiều
-                        </div>
-                        <div class="quantity-control">
-                            <button class="quantity-btn">-</button>
-                            <input type="number" class="quantity-input" value="1" min="1">
-                            <button class="quantity-btn">+</button>
-                        </div>
-                    </div>
-                    <div class="cart-item-price">
-                        <div class="cart-item-price-value">850.000đ</div>
-                        <button class="remove-btn">🗑️ Xóa</button>
-                    </div>
-                </div>
-
-                <div class="cart-item">
-                    <div class="cart-item-image">🎁</div>
-                    <div class="cart-item-info">
-                        <div class="cart-item-name">Combo Sinh nhật Đặc biệt</div>
-                        <div class="cart-item-options">
-                            Bánh kem 1kg + Hoa hồng 11 bông + Thiệp chúc mừng
-                        </div>
-                        <div class="quantity-control">
-                            <button class="quantity-btn">-</button>
-                            <input type="number" class="quantity-input" value="1" min="1">
-                            <button class="quantity-btn">+</button>
-                        </div>
-                    </div>
-                    <div class="cart-item-price">
-                        <div class="cart-item-price-value">650.000đ</div>
-                        <button class="remove-btn">🗑️ Xóa</button>
-                    </div>
-                </div>
+                <!-- Cart items will be loaded dynamically -->
             </div>
 
             <div class="cart-summary">
@@ -173,7 +121,8 @@
                 </div>
 
                 <button class="btn-primary" onclick="window.location.href='checkout.html'">Tiến hành thanh toán</button>
-                <a href="products.html" style="display: block; text-align: center; margin-top: 1rem; color: var(--accent-color); text-decoration: none; font-weight: 500;">
+                <a href="products.html"
+                    style="display: block; text-align: center; margin-top: 1rem; color: var(--accent-color); text-decoration: none; font-weight: 500;">
                     ← Tiếp tục mua sắm
                 </a>
             </div>
@@ -241,5 +190,5 @@
         </div>
     </footer>
 </body>
-</html>
 
+</html>

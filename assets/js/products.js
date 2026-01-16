@@ -207,7 +207,7 @@ function renderProducts(products) {
                         ${priceMarkup}
                         <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
                             <a class="add-to-cart-btn" href="${detailUrl}" style="flex: 1; text-align: center;">Chi tiết</a>
-                            <button class="add-to-cart-btn" type="button" style="flex: 1; text-align: center; background: white; color: var(--accent-color); border: 1px solid var(--accent-color);">
+                            <button class="add-to-cart-btn" type="button" onclick="window.cartManager.add(window.productRegistry[${product.id}])" style="flex: 1; text-align: center; background: white; color: var(--accent-color); border: 1px solid var(--accent-color);">
                                 Thêm vào giỏ
                             </button>
                         </div>
