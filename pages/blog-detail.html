@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết bài viết - Sweetie Garden</title>
+    <link rel="stylesheet" href="../assets/css/styles.css?v=9">
+    <script src="../assets/js/main.js?v=9" defer></script>
+    <script src="../assets/js/blog-detail.js?v=9" defer></script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="../index.html" class="logo">
+                <img src="../assets/images/logo.png" alt="Sweetie Garden Logo">
+                <span>Sweetie Garden</span>
+            </a>
+            <div class="contact-info">
+                <div class="contact-item"><span>📞</span><a href="tel:0123456789">Hotline: 0123 456 789</a></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Nav -->
+    <nav>
+        <div class="nav-container">
+            <ul class="nav-links">
+                <li><a href="../index.html">Trang chủ</a></li>
+                <li><a href="../shop/products.html">Sản phẩm</a></li>
+                <li><a href="blog.html" class="active">Blog</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="../index.html">Trang chủ</a> / <a href="blog.html">Blog</a> / <span id="breadcrumb-title">...</span>
+    </div>
+
+    <!-- Blog Detail Content -->
+    <section class="products-section" style="max-width: 900px; margin: 0 auto; padding: 2rem;">
+        <article id="blog-content" class="blog-detail-container"
+            style="background: white; padding: 2rem; border-radius: 16px; box-shadow: var(--shadow-sm);">
+            <div class="loading" style="text-align: center; padding: 3rem;">Đang tải bài viết...</div>
+        </article>
+    </section>
+
+    <!-- Related Posts -->
+    <section class="products-section"
+        style="border-top: 1px solid var(--border-color); margin-top: 3rem; padding-top: 3rem;">
+        <h2 class="section-title">Bài viết liên quan</h2>
+        <div class="products-grid" id="related-posts"
+            style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
+            <!-- Dynamic Related Posts -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Sweetie Garden</h3>
+                <p>Chuyên cung cấp bánh kem và hoa tươi chất lượng cao.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Sweetie Garden. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

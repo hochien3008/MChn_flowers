@@ -13,9 +13,33 @@ try {
     $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 6;
     $start = ($page - 1) * $limit;
 
+    // Filters
+    $search = isset($_GET['search']) ? trim($_GET['search']) : '';
+    $category = isset($_GET['category']) ? trim($_GET['category']) : '';
+
+    // Base query
+    $where_clauses = ["status = 'published'"];
+    $params = [];
+
+    if (!empty($search)) {
+        $where_clauses[] = "(title LIKE :search OR content LIKE :search_content)";
+        $params[':search'] = "%$search%";
+        $params[':search_content'] = "%$search%";
+    }
+
+    if (!empty($category)) {
+        $where_clauses[] = "category = :category";
+        $params[':category'] = $category;
+    }
+
+    $where_sql = implode(" AND ", $where_clauses);
+
     // Count total
-    $count_query = "SELECT COUNT(*) as total FROM blog_posts WHERE status = 'published'";
+    $count_query = "SELECT COUNT(*) as total FROM blog_posts WHERE $where_sql";
     $stmt_count = $db->prepare($count_query);
+    foreach ($params as $key => $value) {
+        $stmt_count->bindValue($key, $value);
+    }
     $stmt_count->execute();
     $row_count = $stmt_count->fetch(PDO::FETCH_ASSOC);
     $total_records = $row_count['total'];
@@ -24,13 +48,16 @@ try {
     // Get posts
     $query = "SELECT id, title, slug, category, excerpt, image, views, created_at 
               FROM blog_posts 
-              WHERE status = 'published' 
+              WHERE $where_sql 
               ORDER BY created_at DESC 
-              LIMIT :start, :limit";
+              LIMIT :limit OFFSET :offset";
               
     $stmt = $db->prepare($query);
-    $stmt->bindParam(":start", $start, PDO::PARAM_INT);
-    $stmt->bindParam(":limit", $limit, PDO::PARAM_INT);
+    foreach ($params as $key => $value) {
+        $stmt->bindValue($key, $value);
+    }
+    $stmt->bindValue(":limit", $limit, PDO::PARAM_INT);
+    $stmt->bindValue(":offset", $start, PDO::PARAM_INT);
     $stmt->execute();
 
     $posts = [];

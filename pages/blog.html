@@ -91,6 +91,34 @@
     <section class="products-section">
         <h2 class="section-title">Blog & Hướng dẫn</h2>
 
+        <!-- Blog Toolbar -->
+        <div class="blog-toolbar"
+            style="margin-bottom: 2rem; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center;">
+            <div class="search-box"
+                style="background: white; border: 1px solid var(--border-color); padding: 0.5rem 1rem; border-radius: 50px; display: flex; align-items: center; width: 100%; max-width: 300px;">
+                <span style="color: var(--text-gray); margin-right: 0.5rem;">🔍</span>
+                <input type="text" id="blogSearch" placeholder="Tìm kiếm bài viết..."
+                    style="border: none; outline: none; width: 100%;">
+            </div>
+
+            <div class="category-filters" style="display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 5px;">
+                <button class="filter-btn active" data-category=""
+                    style="border: none; background: var(--accent-color); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-weight: 500; cursor: pointer;">Tất
+                    cả</button>
+                <button class="filter-btn" data-category="Hướng dẫn"
+                    style="border: 1px solid var(--border-color); background: white; color: var(--text-gray); padding: 0.5rem 1rem; border-radius: 20px; font-weight: 500; cursor: pointer;">Hướng
+                    dẫn</button>
+                <button class="filter-btn" data-category="Kiến thức"
+                    style="border: 1px solid var(--border-color); background: white; color: var(--text-gray); padding: 0.5rem 1rem; border-radius: 20px; font-weight: 500; cursor: pointer;">Kiến
+                    thức</button>
+                <button class="filter-btn" data-category="Tips"
+                    style="border: 1px solid var(--border-color); background: white; color: var(--text-gray); padding: 0.5rem 1rem; border-radius: 20px; font-weight: 500; cursor: pointer;">Tips</button>
+                <button class="filter-btn" data-category="Xu hướng"
+                    style="border: 1px solid var(--border-color); background: white; color: var(--text-gray); padding: 0.5rem 1rem; border-radius: 20px; font-weight: 500; cursor: pointer;">Xu
+                    hướng</button>
+            </div>
+        </div>
+
         <div id="blog-posts-grid" class="products-grid"
             style="grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));">
             <!-- Dynamic content will be loaded here -->

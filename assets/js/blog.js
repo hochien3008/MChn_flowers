@@ -2,9 +2,50 @@
  * Blog Page Logic
  */
 
+let currentSearch = '';
+let currentCategory = '';
+
 document.addEventListener('DOMContentLoaded', () => {
     loadBlogList();
+    setupFilters();
 });
+
+function setupFilters() {
+    // Search
+    const searchInput = document.getElementById('blogSearch');
+    let debounceTimer;
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                currentSearch = e.target.value;
+                loadBlogList(1);
+            }, 500);
+        });
+    }
+
+    // Categories
+    const buttons = document.querySelectorAll('.category-filters .filter-btn');
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Update UI
+            buttons.forEach(b => {
+                b.classList.remove('active');
+                b.style.background = 'white';
+                b.style.color = 'var(--text-gray)';
+                b.style.border = '1px solid var(--border-color)';
+            });
+            btn.classList.add('active');
+            btn.style.background = 'var(--accent-color)';
+            btn.style.color = 'white';
+            btn.style.border = 'none';
+
+            // Filter
+            currentCategory = btn.dataset.category;
+            loadBlogList(1);
+        });
+    });
+}
 
 async function loadBlogList(page = 1) {
     const grid = document.getElementById('blog-posts-grid');
@@ -16,8 +57,14 @@ async function loadBlogList(page = 1) {
     grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem;">Đang tải bài viết...</div>';
 
     try {
-        // Fetch from API (adjust path if needed)
-        const response = await fetch(`../api/blog/list.php?page=${page}&limit=6`);
+        const params = new URLSearchParams({
+            page,
+            limit: 6,
+            search: currentSearch,
+            category: currentCategory
+        });
+
+        const response = await fetch(`../api/blog/list.php?${params.toString()}`);
         const result = await response.json();
 
         if (result.success) {
