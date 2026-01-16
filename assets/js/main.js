@@ -394,6 +394,9 @@ async function loadHomepageProducts() {
     }
 }
 
+// Initialize Global Product Registry
+window.productRegistry = window.productRegistry || {};
+
 function renderHomeProducts(container, products) {
     if (!products || products.length === 0) {
         container.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: var(--text-gray);">Chưa có sản phẩm.</div>`;
@@ -401,6 +404,9 @@ function renderHomeProducts(container, products) {
     }
 
     container.innerHTML = products.map(product => {
+        // Store in registry
+        window.productRegistry[product.id] = product;
+
         const categoryLabel = product.category_name || 'Sản phẩm';
         const description = product.short_description || product.description || '';
         const trimmedDescription = description.length > 90 ? `${description.slice(0, 90)}...` : description;
@@ -426,14 +432,7 @@ function renderHomeProducts(container, products) {
                 <div class="product-actions">
                     <button class="action-btn" type="button" title="Yêu thích" data-href="pages/wishlist.html">🤍</button>
                     <button class="action-btn share" type="button" title="Chia sẻ" data-share-url="${detailUrl}">📤</button>
-                    <button class="action-btn compare" type="button" title="So sánh" onclick='window.compareManager &amp;&amp; window.compareManager.add(${JSON.stringify({
-            id: product.id,
-            name: product.name,
-            price: product.final_price || product.price,
-            image: product.image_url || "",
-            slug: product.slug,
-            category_id: product.category_slug
-        })})'>⚖️</button>
+                    <button class="action-btn compare" type="button" title="So sánh" onclick="window.compareManager && window.compareManager.add(window.productRegistry[${product.id}])">⚖️</button>
                 </div>
                 <div class="product-card-inner">
                     ${imageMarkup}

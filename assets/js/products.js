@@ -170,7 +170,13 @@ function renderProducts(products) {
         return;
     }
 
+    // Initialize registry if needed
+    window.productRegistry = window.productRegistry || {};
+
     container.innerHTML = products.map(product => {
+        // Store in registry
+        window.productRegistry[product.id] = product;
+
         const imageMarkup = product.image_url
             ? `<div class="product-image" style="background-image: url('${product.image_url}'); background-size: cover; background-position: center;"></div>`
             : `<div class="product-image">${getCategoryEmoji(product.category_slug)}</div>`;
@@ -193,14 +199,7 @@ function renderProducts(products) {
                         ${priceMarkup}
                         <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
                             <a class="add-to-cart-btn" href="product-detail.html?slug=${product.slug}" style="flex: 1; text-align: center;">Chi tiết</a>
-                            <button class="add-to-cart-btn" onclick='window.compareManager.add(${JSON.stringify({
-            id: product.id,
-            name: product.name,
-            price: product.sale_price || product.price,
-            image: product.image_url || "",
-            slug: product.slug,
-            category_id: product.category_slug
-        })})' style="padding: 0 0.8rem; background: white; color: var(--accent-color); border: 1px solid var(--accent-color);" title="So sánh">
+                            <button class="add-to-cart-btn" onclick="window.compareManager.add(window.productRegistry[${product.id}])" style="padding: 0 0.8rem; background: white; color: var(--accent-color); border: 1px solid var(--accent-color);" title="So sánh">
                                 🔄
                             </button>
                         </div>

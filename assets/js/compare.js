@@ -24,12 +24,18 @@ class CompareManager {
 
         this.items.push(product);
         this.save();
-        alert('Đã thêm vào danh sách so sánh!');
-        this.updateBadge(); // Helper if we had a badge
 
-        // If we are on the compare page, reload
-        if (window.location.pathname.includes('compare.html')) {
+
+        // Redirect to compare page
+        const path = window.location.pathname;
+        if (path.includes('compare.html')) {
             window.location.reload();
+        } else if (path.includes('/shop/')) {
+            window.location.href = 'compare.html';
+        } else if (path.includes('/pages/')) {
+            window.location.href = '../shop/compare.html';
+        } else {
+            window.location.href = 'shop/compare.html';
         }
     }
 
