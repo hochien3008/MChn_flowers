@@ -101,16 +101,19 @@ function renderBlogPosts(posts) {
                         ${post.title}
                     </a>
                 </div>
-                <div class="product-description" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                <div class="product-description">
                     ${post.excerpt || ''}
                 </div>
-                <div style="color: var(--text-gray); font-size: 0.85rem; margin-top: 1rem; display: flex; justify-content: space-between;">
-                    <span>📅 ${formatDate(post.created_at)}</span>
-                    <span>👁️ ${post.views}</span>
+                
+                <div class="product-card-footer" style="margin-top: auto; padding-top: 1rem;">
+                    <div style="color: var(--text-gray); font-size: 0.85rem; display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                        <span>📅 ${formatDate(post.created_at)}</span>
+                        <span>👁️ ${post.views}</span>
+                    </div>
+                    <a href="blog-detail.html?slug=${post.slug}" class="add-to-cart-btn" style="display: block; text-decoration: none; text-align: center; width: 100%;">
+                        Đọc thêm
+                    </a>
                 </div>
-                <a href="blog-detail.html?slug=${post.slug}" class="add-to-cart-btn" style="margin-top: 1rem; display: block; text-decoration: none; text-align: center;">
-                    Đọc thêm
-                </a>
             </div>
         </article>
     `).join('');
