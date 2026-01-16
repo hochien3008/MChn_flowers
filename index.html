@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <script src="assets/js/api.js"></script>
     <script src="assets/js/main.js?v=3" defer></script>
 </head>
+
 <body>
     <!-- Loading Screen -->
     <div id="loading-screen" class="loading-screen">
@@ -53,7 +55,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Header -->
     <header>
         <div class="header-container">
@@ -113,16 +115,21 @@
                     <div class="notification-dropdown">
                         <div class="notification-item unread">
                             <div style="font-weight: 600; margin-bottom: 0.25rem;">Đơn hàng đã được xác nhận</div>
-                            <div style="font-size: 0.85rem; color: var(--text-gray);">Đơn #DH001234 đã được xác nhận</div>
-                            <div style="font-size: 0.75rem; color: var(--text-gray); margin-top: 0.5rem;">5 phút trước</div>
+                            <div style="font-size: 0.85rem; color: var(--text-gray);">Đơn #DH001234 đã được xác nhận
+                            </div>
+                            <div style="font-size: 0.75rem; color: var(--text-gray); margin-top: 0.5rem;">5 phút trước
+                            </div>
                         </div>
                         <div class="notification-item unread">
-                            <div style="font-weight: 600; margin-bottom: 0.25rem;">Sản phẩm yêu thích đang giảm giá</div>
+                            <div style="font-weight: 600; margin-bottom: 0.25rem;">Sản phẩm yêu thích đang giảm giá
+                            </div>
                             <div style="font-size: 0.85rem; color: var(--text-gray);">Bánh kem Chocolate giảm 20%</div>
-                            <div style="font-size: 0.75rem; color: var(--text-gray); margin-top: 0.5rem;">1 giờ trước</div>
+                            <div style="font-size: 0.75rem; color: var(--text-gray); margin-top: 0.5rem;">1 giờ trước
+                            </div>
                         </div>
                         <div class="notification-item">
-                            <div style="font-weight: 600; margin-bottom: 0.25rem;">Chào mừng đến với Sweetie Garden!</div>
+                            <div style="font-weight: 600; margin-bottom: 0.25rem;">Chào mừng đến với Sweetie Garden!
+                            </div>
                             <div style="font-size: 0.85rem; color: var(--text-gray);">Nhận ngay mã giảm giá 10%</div>
                             <div style="font-size: 0.75rem; color: var(--text-gray); margin-top: 0.5rem;">Hôm qua</div>
                         </div>
@@ -153,29 +160,44 @@
         </div>
     </section>
 
-    <!-- Occasion Search -->
-    <section class="occasion-search-bar">
-        <h3>Tìm sản phẩm theo dịp tặng</h3>
-        <div class="occasion-tags">
-            <div class="occasion-tag active">🎂 Sinh nhật</div>
-            <div class="occasion-tag">💝 Valentine</div>
-            <div class="occasion-tag">🎉 20/10</div>
-            <div class="occasion-tag">🎊 Khai trương</div>
-            <div class="occasion-tag">🏆 Chúc mừng</div>
-            <div class="occasion-tag">💐 Chia buồn</div>
-            <div class="occasion-tag">🎁 Tết Nguyên Đán</div>
-            <div class="occasion-tag">💍 Cưới hỏi</div>
+    <!-- Product Controls -->
+    <section class="product-controls">
+        <div class="control-group">
+            <label class="control-label">Danh mục:</label>
+            <div class="filter-pills">
+                <button class="filter-pill active">Tất cả</button>
+                <button class="filter-pill">Bánh kem</button>
+                <button class="filter-pill">Hoa tươi</button>
+                <button class="filter-pill">Combo</button>
+                <button class="filter-pill">Quà tặng</button>
+            </div>
         </div>
-    </section>
 
-    <!-- Filters -->
-    <section class="filters">
-        <div class="filter-buttons">
-            <button class="filter-btn active">Tất cả</button>
-            <button class="filter-btn">Bánh kem</button>
-            <button class="filter-btn">Hoa tươi</button>
-            <button class="filter-btn">Combo</button>
-            <button class="filter-btn">Quà tặng</button>
+        <div class="control-group">
+            <div class="control-group">
+                <label class="control-label">Dịp tặng:</label>
+                <select class="custom-select">
+                    <option value="">Tất cả dịp</option>
+                    <option value="sinh-nhat">🎂 Sinh nhật</option>
+                    <option value="valentine">💝 Valentine</option>
+                    <option value="20-10">🎉 20/10</option>
+                    <option value="khai-truong">🎊 Khai trương</option>
+                    <option value="chuc-mung">🏆 Chúc mừng</option>
+                    <option value="chia-buon">💐 Chia buồn</option>
+                    <option value="tet">🎁 Tết Nguyên Đán</option>
+                    <option value="cuoi-hoi">💍 Cưới hỏi</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Sắp xếp:</label>
+                <select class="custom-select">
+                    <option value="newest">Mới nhất</option>
+                    <option value="price-asc">Giá tăng dần</option>
+                    <option value="price-desc">Giá giảm dần</option>
+                    <option value="best-seller">Bán chạy</option>
+                </select>
+            </div>
         </div>
     </section>
 
@@ -278,4 +300,5 @@
         </div>
     </div>
 </body>
+
 </html>

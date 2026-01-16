@@ -4,7 +4,7 @@
 // API client will be loaded via script tag in HTML
 
 // Sticky Header on Scroll
-window.addEventListener('scroll', function() {
+window.addEventListener('scroll', function () {
     const header = document.querySelector('header');
     const nav = document.querySelector('nav');
     if (window.scrollY > 50) {
@@ -17,12 +17,12 @@ window.addEventListener('scroll', function() {
 });
 
 // Mobile Menu Toggle
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
     const navLinks = document.getElementById('navLinks');
-    
+
     if (mobileMenuToggle && navLinks) {
-        mobileMenuToggle.addEventListener('click', function() {
+        mobileMenuToggle.addEventListener('click', function () {
             this.classList.toggle('active');
             navLinks.classList.toggle('active');
         });
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get the direct child <a> tag (not from dropdown menu)
         const link = item.firstElementChild;
         if (link && link.tagName === 'A') {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 // Only prevent default on mobile to toggle dropdown
                 // On desktop, allow normal navigation to the category page
                 if (window.innerWidth <= 768) {
@@ -45,18 +45,18 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
-    
+
     // Ensure all non-dropdown links work properly (Combo, Quà tặng, Blog, So sánh)
     const allNavLinks = document.querySelectorAll('.nav-links > li:not(.has-dropdown) > a');
     allNavLinks.forEach(link => {
         // These links should always navigate normally
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', function (e) {
             // No preventDefault - allow normal navigation
         });
     });
 
     // Close mobile menu when clicking outside
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', function (e) {
         if (window.innerWidth <= 768) {
             if (navLinks && mobileMenuToggle) {
                 if (!navLinks.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (navLinks) {
         const navLinksItems = navLinks.querySelectorAll('a');
         navLinksItems.forEach(link => {
-            link.addEventListener('click', function() {
+            link.addEventListener('click', function () {
                 if (window.innerWidth <= 768) {
                     navLinks.classList.remove('active');
                     if (mobileMenuToggle) {
@@ -85,15 +85,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // Notification Bell Toggle
     const notificationBell = document.querySelector('.notification-bell');
     const notificationDropdown = document.querySelector('.notification-dropdown');
-    
+
     if (notificationBell && notificationDropdown) {
-        notificationBell.addEventListener('click', function(e) {
+        notificationBell.addEventListener('click', function (e) {
             e.stopPropagation();
             notificationDropdown.classList.toggle('active');
         });
 
         // Close notification dropdown when clicking outside
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             if (!notificationBell.contains(e.target)) {
                 notificationDropdown.classList.remove('active');
             }
@@ -103,32 +103,129 @@ document.addEventListener('DOMContentLoaded', function() {
     // Occasion tags selection
     const occasionTags = document.querySelectorAll('.occasion-tag');
     occasionTags.forEach(tag => {
-        tag.addEventListener('click', function() {
+        tag.addEventListener('click', function () {
             occasionTags.forEach(t => t.classList.remove('active'));
             this.classList.add('active');
         });
     });
 
-    // Homepage filter buttons selection
-    const homeFilterBtns = document.querySelectorAll('.filters .filter-btn');
-    homeFilterBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            homeFilterBtns.forEach(b => b.classList.remove('active'));
+    // Homepage Product Controls (Filters & Sort)
+    const filterPills = document.querySelectorAll('.filter-pill');
+    const occasionSelect = document.querySelector('.product-controls select option[value="birthday"]').parentElement; // safely get parent select
+    const sortSelect = document.querySelectorAll('.product-controls .custom-select');
+
+    // Handle Category Pills
+    filterPills.forEach(pill => {
+        pill.addEventListener('click', function () {
+            // Update active state
+            filterPills.forEach(p => p.classList.remove('active'));
             this.classList.add('active');
+
+            // Trigger filter update
+            applyFilters();
         });
     });
+
+    // Handle Dropdowns (Occasion & Sort)
+    const selects = document.querySelectorAll('.product-controls .custom-select');
+    selects.forEach(select => {
+        select.addEventListener('change', function () {
+            applyFilters();
+        });
+    });
+
+    function applyFilters() {
+        // Collect current filter values
+        const activeCategoryBtn = document.querySelector('.filter-pill.active');
+        const categoryMap = {
+            'Tất cả': '',
+            'Bánh kem': 'banh-kem',
+            'Hoa tươi': 'hoa-tuoi',
+            'Combo': 'combo',
+            'Quà tặng': 'qua-tang'
+        };
+        const category = activeCategoryBtn ? categoryMap[activeCategoryBtn.textContent.trim()] : '';
+
+        // Get occasion and sort values
+        let occasion = '';
+        let sort = 'newest';
+
+        // Identify which select is which based on content (simple heuristic)
+        // In the HTML: 1st is Occasion, 2nd is Sort
+        const controls = document.querySelectorAll('.product-controls .custom-select');
+        if (controls.length >= 2) {
+            occasion = controls[0].value;
+            sort = controls[1].value;
+        }
+
+        console.log('Applying filters:', { category, occasion, sort });
+
+        // Call API to reload products
+        // We will reload both grids with the same filters for now, 
+        // or we could unify them. Let's redirect to a unified "search/filter result" approach
+        // if filters are active, or just reload the grids.
+
+        // For smoother UX, let's reload the grids:
+        reloadProductGrids({ category, occasion, sort });
+    }
+
+    async function reloadProductGrids(filters = {}) {
+        const featuredGrid = document.getElementById('featuredProductsGrid');
+        const newGrid = document.getElementById('newProductsGrid');
+
+        // Show loading state
+        if (featuredGrid) featuredGrid.innerHTML = '<div class="loading-spinner"></div>';
+        if (newGrid) newGrid.innerHTML = '<div class="loading-spinner"></div>';
+
+        try {
+            // Build API params
+            const params = { limit: 10, ...filters }; // Increase limit as per user request to see more
+
+            // If we are filtering, the concept of "Featured" vs "New" might blur
+            // Let's just load results into the first grid and hide the second section title if needed
+            // But for simplicity, let's keep loading data into both but with the filter applied.
+
+            if (window.API && window.API.products) {
+                // Fetch data
+                const data = await window.API.products.list(params);
+
+                if (featuredGrid) {
+                    renderHomeProducts(featuredGrid, data.products || []);
+                }
+
+                // For the second grid, maybe load "Best Sellers" with same filters?
+                // Or just duplicate for now as a placeholder if we don't have separate endpoints
+                // Let's try to load "price-asc" for the second one if the first was "newest"
+                // checking current sort...
+
+                if (newGrid) {
+                    // If user selected a specific sort, apply it to both? 
+                    // Or keep the second grid as "suggestions".
+                    // Let's just mirror for now to ensure feedback, or leave New Grid as is?
+                    // If I filter by "Birthday", both grids should probably show Birthday items.
+
+                    const data2 = await window.API.products.list({ ...params, sort: 'popular' });
+                    renderHomeProducts(newGrid, data2.products || []);
+                }
+            }
+        } catch (error) {
+            console.error('Filter error:', error);
+            if (featuredGrid) featuredGrid.innerHTML = 'Không tìm thấy sản phẩm phù hợp';
+            if (newGrid) newGrid.innerHTML = '';
+        }
+    }
 
     // Chatbot Toggle
     const chatbotBtn = document.querySelector('.chatbot-btn');
     const chatbotWindow = document.querySelector('.chatbot-window');
-    
+
     if (chatbotBtn && chatbotWindow) {
-        chatbotBtn.addEventListener('click', function() {
+        chatbotBtn.addEventListener('click', function () {
             chatbotWindow.classList.toggle('active');
         });
 
         // Close chatbot when clicking outside
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             if (!chatbotBtn.contains(e.target) && !chatbotWindow.contains(e.target)) {
                 chatbotWindow.classList.remove('active');
             }
@@ -143,13 +240,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // ============================================
     // Authentication Forms
     // ============================================
-    
+
     // Login Form
     const loginForm = document.querySelector('.auth-form');
     if (loginForm && window.location.pathname.includes('login.html')) {
-        loginForm.addEventListener('submit', async function(e) {
+        loginForm.addEventListener('submit', async function (e) {
             e.preventDefault();
-            
+
             if (!window.API) {
                 alert('API chưa được tải. Vui lòng thử lại.');
                 return;
@@ -170,9 +267,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 submitBtn.textContent = 'Đang đăng nhập...';
 
                 await window.API.auth.login(email, password);
-                
+
                 window.API.showNotification('Đăng nhập thành công!', 'success');
-                
+
                 // Redirect
                 setTimeout(() => {
                     const redirectUrl = new URLSearchParams(window.location.search).get('redirect') || '../index.html';
@@ -190,9 +287,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Register Form
     if (loginForm && window.location.pathname.includes('register.html')) {
-        loginForm.addEventListener('submit', async function(e) {
+        loginForm.addEventListener('submit', async function (e) {
             e.preventDefault();
-            
+
             if (!window.API) {
                 alert('API chưa được tải. Vui lòng thử lại.');
                 return;
@@ -200,8 +297,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const email = this.querySelector('input[type="email"]')?.value.trim();
             const password = this.querySelector('input[type="password"]')?.value;
-            const fullName = this.querySelector('input[name="full_name"]')?.value.trim() || 
-                            this.querySelector('input[placeholder*="Họ tên"]')?.value.trim();
+            const fullName = this.querySelector('input[name="full_name"]')?.value.trim() ||
+                this.querySelector('input[placeholder*="Họ tên"]')?.value.trim();
 
             if (!email || !password || !fullName) {
                 window.API.showNotification('Vui lòng điền đầy đủ thông tin', 'error');
@@ -219,9 +316,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 submitBtn.textContent = 'Đang đăng ký...';
 
                 await window.API.auth.register(email, password, fullName);
-                
+
                 window.API.showNotification('Đăng ký thành công!', 'success');
-                
+
                 setTimeout(() => {
                     window.location.href = '../index.html';
                 }, 1000);
@@ -238,13 +335,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // ============================================
     // Cart Functions
     // ============================================
-    
+
     // Add to Cart buttons
-    document.addEventListener('click', async function(e) {
+    document.addEventListener('click', async function (e) {
         const addToCartBtn = e.target.closest('.add-to-cart, [data-add-to-cart]');
         if (addToCartBtn && window.API) {
             e.preventDefault();
-            
+
             const productId = addToCartBtn.dataset.productId || addToCartBtn.dataset.addToCart;
             if (!productId) return;
 
@@ -254,7 +351,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 addToCartBtn.textContent = 'Đang thêm...';
 
                 await window.API.cart.add(parseInt(productId), 1);
-                
+
                 window.API.showNotification('Đã thêm vào giỏ hàng!', 'success');
                 await window.API.cart.updateBadge();
 
@@ -309,7 +406,7 @@ function renderHomeProducts(container, products) {
         const description = product.short_description || product.description || '';
         const trimmedDescription = description.length > 90 ? `${description.slice(0, 90)}...` : description;
         const detailUrl = `shop/product-detail.html?slug=${encodeURIComponent(product.slug || '')}`;
-        const hasDiscount = product.sale_price && product.discount_percent;
+        const hasDiscount = product.discount_percent > 0;
         const badges = [];
 
         if (hasDiscount) {
@@ -383,7 +480,7 @@ function getCategoryEmoji(slug) {
     return map[slug] || '🌺';
 }
 
-document.addEventListener('click', async function(event) {
+document.addEventListener('click', async function (event) {
     const actionBtn = event.target.closest('.product-actions .action-btn');
     if (actionBtn) {
         event.preventDefault();
@@ -431,18 +528,18 @@ document.addEventListener('click', async function(event) {
 // ============================================
 // Advanced Loading Screen
 // ============================================
-(function() {
+(function () {
     const loadingScreen = document.getElementById('loading-screen');
-    
-    window.addEventListener('load', function() {
+
+    window.addEventListener('load', function () {
         if (loadingScreen) {
             // Minimum display time 2.5 giây để animation chạy đẹp
-            setTimeout(function() {
+            setTimeout(function () {
                 // Fade out
                 loadingScreen.classList.add('fade-out');
-                
+
                 // Remove khỏi DOM sau khi fade out
-                setTimeout(function() {
+                setTimeout(function () {
                     loadingScreen.style.display = 'none';
                 }, 800);
             }, 2500);
@@ -470,7 +567,7 @@ async function loadCart() {
     try {
         const cartData = await window.API.cart.get();
         const cartContainer = document.querySelector('.cart-items, .cart-container');
-        
+
         if (!cartContainer) return;
 
         if (cartData.items.length === 0) {
@@ -480,7 +577,7 @@ async function loadCart() {
 
         // This is a simplified version - you'll need to customize based on your HTML structure
         console.log('Cart data:', cartData);
-        
+
         // Update cart badge
         await window.API.cart.updateBadge();
     } catch (error) {

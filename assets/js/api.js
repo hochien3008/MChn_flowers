@@ -4,7 +4,7 @@
  */
 
 // API Base URL - Đảm bảo chạy qua HTTP server, KHÔNG phải file://
-const API_BASE_URL = window.location.origin.includes('file://') 
+const API_BASE_URL = window.location.origin.includes('file://')
     ? 'http://localhost:8000/api'  // Fallback nếu mở từ file://
     : '/api';  // Relative path khi chạy từ HTTP server
 
@@ -17,14 +17,14 @@ const API_BASE_URL = window.location.origin.includes('file://')
  */
 async function apiRequest(endpoint, options = {}) {
     const url = API_BASE_URL + endpoint;
-    
+
     // Warning nếu đang dùng file:// protocol
     if (window.location.protocol === 'file:') {
-        console.warn('⚠️ Đang mở từ file://. Vui lòng chạy HTTP server!');
-        console.warn('Run: python3 -m http.server 8000');
+        console.warn('⚠️ Đang mở từ file://. Vui lòng chạy PHP server!');
+        console.warn('Run: php -S localhost:8000');
         console.warn('Then open: http://localhost:8000');
     }
-    
+
     const defaultOptions = {
         headers: {
             'Content-Type': 'application/json',
@@ -41,12 +41,12 @@ async function apiRequest(endpoint, options = {}) {
 
     try {
         const response = await fetch(url, config);
-        
+
         // Check if response is OK
         if (!response.ok) {
             throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
-        
+
         const data = await response.json();
 
         if (!data.success) {
@@ -57,12 +57,12 @@ async function apiRequest(endpoint, options = {}) {
     } catch (error) {
         console.error('API Error:', error);
         console.error('Request URL:', url);
-        
+
         // Friendly error message
         if (error.message.includes('Failed to fetch')) {
-            error.message = 'Không thể kết nối API. Hãy chắc chắn bạn đang chạy HTTP server (python3 -m http.server 8000)';
+            error.message = 'Không thể kết nối API. Hãy chắc chắn bạn đang chạy PHP server (php -S localhost:8000)';
         }
-        
+
         throw error;
     }
 }
@@ -174,7 +174,7 @@ const ProductsAPI = {
         const params = {};
         if (id) params.id = id;
         if (slug) params.slug = slug;
-        
+
         const queryString = new URLSearchParams(params).toString();
         const response = await apiRequest(`/products/detail.php?${queryString}`, {
             method: 'GET'
@@ -291,7 +291,7 @@ const OrdersAPI = {
         const params = {};
         if (id) params.id = id;
         if (order_number) params.order_number = order_number;
-        
+
         const queryString = new URLSearchParams(params).toString();
         const response = await apiRequest(`/orders/detail.php?${queryString}`, {
             method: 'GET'

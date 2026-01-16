@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <script src="../assets/js/main.js?v=2" defer></script>
     <script src="../assets/js/products.js?v=2" defer></script>
 </head>
+
 <body>
     <!-- Header -->
     <header>
@@ -82,105 +84,131 @@
         </div>
     </nav>
 
-    <!-- Filters -->
-    <section class="filters">
-        <div class="filter-buttons">
-            <button class="filter-btn active">Tất cả</button>
-            <button class="filter-btn">Bánh kem</button>
-            <button class="filter-btn">Hoa tươi</button>
-            <button class="filter-btn">Combo</button>
-            <button class="filter-btn">Quà tặng</button>
-        </div>
-    </section>
+    <!-- Shop Container -->
+    <div class="shop-container">
+        <!-- Sidebar Filters -->
+        <aside class="sidebar-filters" id="sidebarFilters">
+            <div class="filter-section">
+                <div class="filter-title">
+                    <span>Danh mục</span>
+                </div>
+                <ul class="filter-list">
+                    <label class="filter-checkbox">
+                        <input type="radio" name="category" value="" checked>
+                        <span>Tất cả</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="radio" name="category" value="banh-kem">
+                        <span>Bánh kem</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="radio" name="category" value="hoa-tuoi">
+                        <span>Hoa tươi</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="radio" name="category" value="combo">
+                        <span>Combo</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="radio" name="category" value="qua-tang">
+                        <span>Quà tặng</span>
+                    </label>
+                </ul>
+            </div>
 
-    <!-- Advanced Filters -->
-    <section class="advanced-filters">
-        <h2 style="margin-bottom: 1rem;">Bộ lọc nâng cao</h2>
-        <div class="filter-row">
-            <div class="filter-group">
-                <label>Loại sản phẩm</label>
-                <select id="filterCategory">
-                    <option value="">Tất cả</option>
-                    <option value="banh-kem">Bánh kem</option>
-                    <option value="hoa-tuoi">Hoa tươi</option>
-                    <option value="combo">Combo</option>
-                    <option value="qua-tang">Quà tặng</option>
-                </select>
+            <div class="filter-section">
+                <div class="filter-title">
+                    <span>Khoảng giá</span>
+                </div>
+                <div class="price-range-inputs">
+                    <input type="number" id="filterMinPrice" class="price-input" placeholder="Min" step="1000">
+                    <span>-</span>
+                    <input type="number" id="filterMaxPrice" class="price-input" placeholder="Max" step="1000">
+                </div>
+                <button class="apply-btn" id="applyPriceFilter">Áp dụng</button>
             </div>
-            <div class="filter-group">
-                <label>Giá từ</label>
-                <input type="number" id="filterMinPrice" placeholder="0">
+
+            <div class="filter-section">
+                <div class="filter-title">
+                    <span>Dịp tặng</span>
+                </div>
+                <ul class="filter-list">
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="occasion" value="sinh-nhat">
+                        <span>🎂 Sinh nhật</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="occasion" value="valentine">
+                        <span>💝 Valentine</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="occasion" value="20-10">
+                        <span>🎉 20/10</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="occasion" value="khai-truong">
+                        <span>🎊 Khai trương</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="occasion" value="chuc-mung">
+                        <span>🏆 Chúc mừng</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="occasion" value="chia-buon">
+                        <span>💐 Chia buồn</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="occasion" value="tet">
+                        <span>🎁 Tết Nguyên Đán</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="occasion" value="cuoi-hoi">
+                        <span>💍 Cưới hỏi</span>
+                    </label>
+                </ul>
             </div>
-            <div class="filter-group">
-                <label>Giá đến</label>
-                <input type="number" id="filterMaxPrice" placeholder="2.000.000">
+
+            <button class="apply-btn" onclick="document.getElementById('sidebarFilters').classList.remove('active')"
+                style="background: var(--text-gray); margin-top: 0.5rem; display: none;"
+                id="closeSidebarBtn">Đóng</button>
+        </aside>
+
+        <!-- Shop Content -->
+        <div class="shop-content">
+            <!-- Toolbar -->
+            <div class="shop-toolbar">
+                <button class="filter-toggle-btn" id="toggleSidebar">
+                    <span>⚙️</span> Bộ lọc
+                </button>
+                <div class="result-count">Hiển thị <span id="productCount">0</span> sản phẩm</div>
+                <div class="sort-wrapper">
+                    <label for="sortSelect" style="font-size: 0.9rem;">Sắp xếp:</label>
+                    <select id="sortSelect" class="sort-select">
+                        <option value="newest">Mới nhất</option>
+                        <option value="price_asc">Giá tăng dần</option>
+                        <option value="price_desc">Giá giảm dần</option>
+                        <option value="popular">Bán chạy</option>
+                    </select>
+                </div>
             </div>
-            <div class="filter-group">
-                <label>Dịp tặng</label>
-                <select id="filterOccasion">
-                    <option value="">Tất cả</option>
-                    <option value="sinh-nhat">Sinh nhật</option>
-                    <option value="khai-truong">Khai trương</option>
-                    <option value="chuc-mung">Chúc mừng</option>
-                    <option value="chia-buon">Chia buồn</option>
-                    <option value="20-10">20/10</option>
-                    <option value="valentine">Valentine</option>
-                </select>
+
+            <!-- Products Grid -->
+            <div class="products-grid" id="productsGrid">
+                <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--text-gray);">
+                    Đang tải sản phẩm...
+                </div>
             </div>
+
+            <div class="pagination" id="pagination"></div>
         </div>
-        <div class="filter-row">
-            <div class="filter-group">
-                <label>Sắp xếp theo</label>
-                <select name="sort" id="filterSort">
-                    <option value="newest">Mới nhất</option>
-                    <option value="price_asc">Giá tăng dần</option>
-                    <option value="price_desc">Giá giảm dần</option>
-                    <option value="popular">Bán chạy nhất</option>
-                </select>
-            </div>
-            <div class="filter-group">
-                <label>Kích thước (Bánh)</label>
-                <select id="filterSize">
-                    <option value="">Tất cả</option>
-                    <option value="0.5">0.5kg</option>
-                    <option value="1">1kg</option>
-                    <option value="2">2kg</option>
-                    <option value="3">3kg+</option>
-                </select>
-            </div>
-            <div class="filter-group">
-                <label>Màu sắc (Hoa)</label>
-                <select id="filterColor">
-                    <option value="">Tất cả</option>
-                    <option value="do">Đỏ</option>
-                    <option value="hong">Hồng</option>
-                    <option value="vang">Vàng</option>
-                    <option value="trang">Trắng</option>
-                    <option value="da-sac">Đa sắc</option>
-                </select>
-            </div>
-            <div class="filter-group" style="display: flex; align-items: flex-end;">
-                <button class="btn-primary" id="applyFiltersBtn" style="width: 100%; margin: 0;">Áp dụng bộ lọc</button>
-            </div>
-        </div>
-    </section>
+    </div>
 
     <!-- Breadcrumb -->
     <div class="breadcrumb">
         <a href="../index.html">Trang chủ</a> / <span>Danh mục sản phẩm</span>
     </div>
 
-    <!-- Products Section -->
-    <section class="products-section">
-        <h2 class="section-title">Danh mục sản phẩm</h2>
-        <div class="products-grid" id="productsGrid">
-            <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--text-gray);">
-                Đang tải sản phẩm...
-            </div>
-        </div>
 
-        <div class="pagination"></div>
-    </section>
 
     <!-- Chatbot -->
     <button class="chatbot-btn">💬</button>
@@ -243,4 +271,5 @@
         </div>
     </footer>
 </body>
+
 </html>

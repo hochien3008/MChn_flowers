@@ -2,76 +2,125 @@
  * Products Page Logic
  */
 
-document.addEventListener('DOMContentLoaded', async function() {
-    // Get URL parameters
+document.addEventListener('DOMContentLoaded', async function () {
+    // URL Params initial load
     const urlParams = new URLSearchParams(window.location.search);
     const category = urlParams.get('category');
     const search = urlParams.get('search');
     const page = parseInt(urlParams.get('page')) || 1;
     const sort = urlParams.get('sort') || 'newest';
 
-    // Load products
-    await loadProducts({
-        category: category,
-        search: search,
-        page: page,
-        sort: sort
-    });
+    // Set initial values to Sidebar inputs if present in URL
+    if (category) {
+        const categoryInput = document.querySelector(`input[name="category"][value="${category}"]`);
+        if (categoryInput) categoryInput.checked = true;
+    }
 
-    // Filter buttons
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            // Remove active class from all
-            filterBtns.forEach(b => b.classList.remove('active'));
-            // Add active to clicked
-            this.classList.add('active');
-            
-            // Get category from button text
-            const category = this.textContent.trim().toLowerCase();
-            
-            // Reload products with filter
-            if (category === 'tất cả') {
-                loadProducts({ page: 1 });
-            } else {
-                loadProducts({ 
-                    category: getCategorySlug(category),
-                    page: 1 
-                });
-            }
+    // Initial Load
+    await loadProducts(collectSidebarFilters());
+
+    // Sidebar Category Radio Change
+    const categoryInputs = document.querySelectorAll('input[name="category"]');
+    categoryInputs.forEach(input => {
+        input.addEventListener('change', () => {
+            refreshProducts();
         });
     });
 
-    // Sort select
-    const sortSelect = document.querySelector('select[name="sort"]');
+    // Sidebar Occasion Checkbox Change
+    const occasionInputs = document.querySelectorAll('input[name="occasion"]');
+    occasionInputs.forEach(input => {
+        input.addEventListener('change', () => {
+            refreshProducts();
+        });
+    });
+
+    // Price Filter Apply
+    const applyPriceBtn = document.getElementById('applyPriceFilter');
+    if (applyPriceBtn) {
+        applyPriceBtn.addEventListener('click', refreshProducts);
+    }
+
+    // Sort Select Change
+    const sortSelect = document.getElementById('sortSelect');
     if (sortSelect) {
-        sortSelect.addEventListener('change', function() {
-            loadProducts({ sort: this.value, page: 1 });
+        sortSelect.value = sort; // Set initial value
+        sortSelect.addEventListener('change', refreshProducts);
+    }
+
+    // Mobile Sidebar Toggle
+    const toggleSidebarBtn = document.getElementById('toggleSidebar');
+    const sidebarFilters = document.getElementById('sidebarFilters');
+    const closeSidebarBtn = document.getElementById('closeSidebarBtn');
+
+    if (toggleSidebarBtn && sidebarFilters) {
+        toggleSidebarBtn.addEventListener('click', () => {
+            sidebarFilters.classList.add('active');
+            if (closeSidebarBtn) closeSidebarBtn.style.display = 'block';
+        });
+
+        // Close when clicking outside on mobile (if we add overlay logic later) 
+        // OR separate close button
+    }
+
+    if (closeSidebarBtn && sidebarFilters) {
+        closeSidebarBtn.addEventListener('click', () => {
+            sidebarFilters.classList.remove('active');
+            closeSidebarBtn.style.display = 'none';
         });
     }
 
     // Search functionality
     const searchInput = document.querySelector('.search-box input');
     if (searchInput) {
-        searchInput.addEventListener('keypress', function(e) {
+        if (search) searchInput.value = search;
+        searchInput.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
-                const searchTerm = this.value.trim();
-                if (searchTerm) {
-                    loadProducts({ search: searchTerm, page: 1 });
-                }
+                refreshProducts();
             }
         });
     }
-
-    // Advanced filters apply
-    const applyBtn = document.getElementById('applyFiltersBtn');
-    if (applyBtn) {
-        applyBtn.addEventListener('click', function() {
-            const params = collectAdvancedFilters();
-            loadProducts({ ...params, page: 1 });
-        });
-    }
 });
+
+function refreshProducts() {
+    const params = collectSidebarFilters();
+    loadProducts({ ...params, page: 1 });
+}
+
+function collectSidebarFilters() {
+    const params = {};
+
+    // Category
+    const selectedCategory = document.querySelector('input[name="category"]:checked');
+    if (selectedCategory && selectedCategory.value) {
+        params.category = selectedCategory.value;
+    }
+
+    // Occasions (Multiple)
+    const selectedOccasions = Array.from(document.querySelectorAll('input[name="occasion"]:checked'))
+        .map(input => input.value);
+    if (selectedOccasions.length > 0) {
+        params.occasion = selectedOccasions.join(',');
+    }
+
+    // Price
+    const minPrice = document.getElementById('filterMinPrice')?.value;
+    const maxPrice = document.getElementById('filterMaxPrice')?.value;
+    if (minPrice) params.min_price = minPrice;
+    if (maxPrice) params.max_price = maxPrice;
+
+    // Sort
+    const sort = document.getElementById('sortSelect')?.value;
+    if (sort) params.sort = sort;
+
+    // Search (Header input)
+    const searchInput = document.querySelector('.search-box input');
+    if (searchInput && searchInput.value.trim()) {
+        params.search = searchInput.value.trim();
+    }
+
+    return params;
+}
 
 /**
  * Load products from API
@@ -84,13 +133,13 @@ async function loadProducts(params = {}) {
 
     try {
         const result = await window.API.products.list(params);
-        
+
         // Render products
         renderProducts(result.products);
-        
+
         // Render pagination
         renderPagination(result.pagination);
-        
+
     } catch (error) {
         console.error('Failed to load products:', error);
         showProductsError('Không thể tải danh sách sản phẩm. Vui lòng thử lại sau.');
@@ -101,8 +150,12 @@ async function loadProducts(params = {}) {
  * Render products
  */
 function renderProducts(products) {
+    // Update count
+    const countEl = document.getElementById('productCount');
+    if (countEl) countEl.textContent = products ? products.length : 0;
+
     const container = document.getElementById('productsGrid') || document.querySelector('.products-grid, .products-container');
-    
+
     if (!container) {
         console.warn('Products container not found');
         return;
@@ -151,7 +204,7 @@ function renderProducts(products) {
  */
 function renderPagination(pagination) {
     const container = document.querySelector('.pagination');
-    
+
     if (!container || !pagination) {
         return;
     }
@@ -228,28 +281,7 @@ function formatPrice(price) {
     }).format(price);
 }
 
-function collectAdvancedFilters() {
-    const category = document.getElementById('filterCategory')?.value || '';
-    const minPrice = document.getElementById('filterMinPrice')?.value || '';
-    const maxPrice = document.getElementById('filterMaxPrice')?.value || '';
-    const sort = document.getElementById('filterSort')?.value || 'newest';
 
-    const params = {};
-    if (category) params.category = category;
-    if (minPrice) params.min_price = minPrice;
-    if (maxPrice) params.max_price = maxPrice;
-    if (sort) params.sort = sort;
-
-    const occasion = document.getElementById('filterOccasion')?.value || '';
-    const size = document.getElementById('filterSize')?.value || '';
-    const color = document.getElementById('filterColor')?.value || '';
-
-    if (occasion || size || color) {
-        showProductsError('Bộ lọc dịp tặng/kích thước/màu sắc chưa được hỗ trợ trên dữ liệu hiện tại.');
-    }
-
-    return params;
-}
 
 function getCategoryEmoji(slug) {
     const map = {
