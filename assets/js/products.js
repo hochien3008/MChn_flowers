@@ -191,7 +191,19 @@ function renderProducts(products) {
                     ${product.short_description ? `<div class="product-description">${product.short_description}</div>` : ''}
                     <div class="product-footer">
                         ${priceMarkup}
-                        <a class="add-to-cart-btn" href="product-detail.html?slug=${product.slug}">Xem chi tiết</a>
+                        <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                            <a class="add-to-cart-btn" href="product-detail.html?slug=${product.slug}" style="flex: 1; text-align: center;">Chi tiết</a>
+                            <button class="add-to-cart-btn" onclick='window.compareManager.add(${JSON.stringify({
+            id: product.id,
+            name: product.name,
+            price: product.sale_price || product.price,
+            image: product.image_url || "",
+            slug: product.slug,
+            category_id: product.category_slug
+        })})' style="padding: 0 0.8rem; background: white; color: var(--accent-color); border: 1px solid var(--accent-color);" title="So sánh">
+                                🔄
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
