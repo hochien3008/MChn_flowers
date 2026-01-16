@@ -12,21 +12,36 @@ class CompareManager {
     }
 
     add(product) {
-        if (this.items.find(item => item.id == product.id)) {
-            alert('Sản phẩm này đã có trong danh sách so sánh!');
+        if (!product) return;
+
+        // Normalize product data
+        const itemToAdd = {
+            id: product.id,
+            name: product.name,
+            price: Number(product.final_price || product.sale_price || product.price),
+            image: product.image || product.image_url || '',
+            slug: product.slug,
+            category_id: product.category_slug || product.category_id
+        };
+
+        // If already exists, just redirect
+        if (this.items.find(item => item.id == itemToAdd.id)) {
+            this.redirectToCompare();
             return;
         }
 
         if (this.items.length >= MAX_COMPARE_ITEMS) {
             alert(`Bạn chỉ có thể so sánh tối đa ${MAX_COMPARE_ITEMS} sản phẩm. Hãy xóa bớt để thêm mới.`);
+            this.redirectToCompare();
             return;
         }
 
-        this.items.push(product);
+        this.items.push(itemToAdd);
         this.save();
+        this.redirectToCompare();
+    }
 
-
-        // Redirect to compare page
+    redirectToCompare() {
         const path = window.location.pathname;
         if (path.includes('compare.html')) {
             window.location.reload();
