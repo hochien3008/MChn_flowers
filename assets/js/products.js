@@ -175,7 +175,10 @@ function renderProducts(products) {
 
     container.innerHTML = products.map(product => {
         // Store in registry
+        // Store in registry
         window.productRegistry[product.id] = product;
+
+        const detailUrl = `product-detail.html?slug=${encodeURIComponent(product.slug || '')}`;
 
         const imageMarkup = product.image_url
             ? `<div class="product-image" style="background-image: url('${product.image_url}'); background-size: cover; background-position: center;"></div>`
@@ -189,7 +192,12 @@ function renderProducts(products) {
             : `<div class="product-price">${formatPrice(product.price)}</div>`;
 
         return `
-            <div class="product-card" data-product-id="${product.id}">
+            <div class="product-card" data-product-id="${product.id}" style="position: relative;">
+                <div class="product-actions">
+                    <button class="action-btn" type="button" title="Yêu thích" data-href="pages/wishlist.html">🤍</button>
+                    <button class="action-btn share" type="button" title="Chia sẻ" data-share-url="shop/${detailUrl}">📤</button>
+                    <button class="action-btn compare" type="button" title="So sánh" onclick="window.compareManager && window.compareManager.add(window.productRegistry[${product.id}])">⚖️</button>
+                </div>
                 ${imageMarkup}
                 <div class="product-info">
                     <div class="product-category">${product.category_name || 'Sản phẩm'}</div>
@@ -198,9 +206,9 @@ function renderProducts(products) {
                     <div class="product-footer">
                         ${priceMarkup}
                         <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
-                            <a class="add-to-cart-btn" href="product-detail.html?slug=${product.slug}" style="flex: 1; text-align: center;">Chi tiết</a>
-                            <button class="add-to-cart-btn" onclick="window.compareManager.add(window.productRegistry[${product.id}])" style="padding: 0 0.8rem; background: white; color: var(--accent-color); border: 1px solid var(--accent-color);" title="So sánh">
-                                🔄
+                            <a class="add-to-cart-btn" href="${detailUrl}" style="flex: 1; text-align: center;">Chi tiết</a>
+                            <button class="add-to-cart-btn" type="button" style="flex: 1; text-align: center; background: white; color: var(--accent-color); border: 1px solid var(--accent-color);">
+                                Thêm vào giỏ
                             </button>
                         </div>
                     </div>
