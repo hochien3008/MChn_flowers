@@ -894,8 +894,8 @@ nav.scrolled {
 
 .products-grid {
     display: grid;
-    /* Adjusted for denser layout: minmax 220px allows ~5 items on large screens */
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    /* Adjusted for denser layout: minmax 260px allows wider cards */
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 1.5rem;
     margin-bottom: 4rem;
 }
@@ -943,7 +943,7 @@ nav.scrolled {
 /* ... existing image styles ... */
 
 .product-info {
-    padding: 1.25rem;
+    padding: 1rem;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
