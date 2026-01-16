@@ -41,15 +41,25 @@ class CartManager {
      * @param {Object} product - Product object
      * @param {number} quantity - Quantity to add (default 1)
      */
+    /**
+     * Add item to cart
+     * @param {Object} product - Product object
+     * @param {number} quantity - Quantity to add (default 1)
+     */
     add(product, quantity = 1) {
-        if (!product || !product.id) return;
+        if (!product || !product.id) {
+            console.error('Invalid product data:', product);
+            return;
+        }
+
+        const productId = String(product.id);
 
         // Ensure quantity is valid
         quantity = parseInt(quantity) || 1;
         if (quantity < 1) quantity = 1;
 
         // Check if item exists
-        const existingItem = this.items.find(item => item.id == product.id);
+        const existingItem = this.items.find(item => String(item.id) === productId);
 
         if (existingItem) {
             existingItem.quantity += quantity;
@@ -65,13 +75,12 @@ class CartManager {
             }
         } else {
             // Add new item
-            // Normalize product data
             const item = {
-                id: product.id,
+                id: productId, // Store as string
                 name: product.name,
                 price: product.sale_price || product.price,
                 original_price: product.price,
-                image: product.image_url || product.image, // Handle variants
+                image: product.image_url || product.image || product.thumbnail, // Handle variants
                 slug: product.slug,
                 quantity: quantity
             };
@@ -89,7 +98,8 @@ class CartManager {
      * Remove item from cart
      */
     remove(id) {
-        this.items = this.items.filter(item => item.id != id);
+        const productId = String(id);
+        this.items = this.items.filter(item => String(item.id) !== productId);
         this.save();
         if (typeof showNotification === 'function') {
             showNotification('Đã xóa sản phẩm khỏi giỏ hàng', 'info');
@@ -100,7 +110,8 @@ class CartManager {
      * Update item quantity
      */
     updateQuantity(id, quantity) {
-        const item = this.items.find(item => item.id == id);
+        const productId = String(id);
+        const item = this.items.find(item => String(item.id) === productId);
         if (item) {
             quantity = parseInt(quantity);
             if (quantity > 0 && quantity <= this.MAX_QUANTITY) {
