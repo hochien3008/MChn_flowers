@@ -18,6 +18,13 @@ class CartManager {
         if (stored) {
             try {
                 this.items = JSON.parse(stored);
+                // Sanitize data
+                this.items = this.items.map(item => ({
+                    ...item,
+                    id: String(item.id),
+                    quantity: parseInt(item.quantity) || 1,
+                    price: parseInt(item.price) || 0
+                }));
             } catch (e) {
                 console.error('Failed to load cart:', e);
                 this.items = [];
@@ -127,7 +134,7 @@ class CartManager {
      * Get total item count
      */
     getCount() {
-        return this.items.reduce((total, item) => total + item.quantity, 0);
+        return this.items.reduce((total, item) => total + (parseInt(item.quantity) || 0), 0);
     }
 
     /**
