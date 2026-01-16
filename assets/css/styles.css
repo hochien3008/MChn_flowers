@@ -952,6 +952,22 @@ nav.scrolled {
 
 /* ... existing styles ... */
 
+
+.product-category {
+    align-self: flex-start;
+    color: var(--accent-dark);
+    font-size: 0.65rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.25rem 0.6rem;
+    background: rgba(215, 179, 140, 0.25);
+    /* Cream background */
+    border-radius: 6px;
+    display: inline-block;
+}
+
 .product-description {
     color: var(--text-gray);
     font-size: 0.9rem;
