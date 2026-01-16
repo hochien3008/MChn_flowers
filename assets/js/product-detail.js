@@ -74,9 +74,7 @@ function populateProductData(product) {
         mainImg.alt = product.name;
     }
 
-    if (product.gallery && product.gallery.length > 0) {
-        renderGallery(product.gallery, product.image_url);
-    }
+    // Gallery removed
 
     // 5. Update Tab Content (Description)
     const descTab = document.getElementById('description');
@@ -106,25 +104,7 @@ function setupActionButtons(product) {
     }
 }
 
-function renderGallery(images, mainImage) {
-    const grid = document.querySelector('.thumbnail-grid');
-    if (!grid) return;
-
-    // Ensure main image is in the list only if not already present
-    // Simple approach: Just show the gallery list provided by API
-    // If API returns empty gallery but has main image, we might want to handle that.
-
-    const allImages = images;
-    if (mainImage && !allImages.includes(mainImage)) {
-        allImages.unshift(mainImage);
-    }
-
-    grid.innerHTML = allImages.slice(0, 5).map((img, index) => `
-        <div class="thumbnail ${index === 0 ? 'active' : ''}" onclick="changeImage('${img}')">
-            <img src="${img}" alt="Thumbnail ${index + 1}">
-        </div>
-    `).join('');
-}
+// renderGallery removed
 
 function renderRelatedProducts(products) {
     const grid = document.querySelector('.products-grid');
