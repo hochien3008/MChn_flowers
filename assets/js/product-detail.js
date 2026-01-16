@@ -102,10 +102,7 @@ function setupActionButtons(product) {
         buyBtn.onclick = () => addToCart(product, true);
     }
 
-    const buyBtn = document.querySelector('.btn-buy-now');
-    if (buyBtn) {
-        buyBtn.onclick = () => addToCart(product.id, true);
-    }
+
 }
 
 // renderGallery removed
