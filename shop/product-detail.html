@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <script src="../assets/js/main.js" defer></script>
     <script src="../assets/js/product-detail.js" defer></script>
 </head>
+
 <body>
     <!-- Header -->
     <header>
@@ -83,238 +85,189 @@
     </nav>
 
     <!-- Product Detail -->
-    <section class="product-detail">
-        <div class="product-detail-container">
-            <div class="product-detail-image">🎂</div>
-            <div class="product-detail-info">
-                <div class="product-category">Bánh kem sinh nhật</div>
-                <h1>Bánh kem Chocolate Deluxe</h1>
-                <div class="product-detail-price">
-                    350.000đ
-                    <span class="old-price">450.000đ</span>
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+        <a href="../index.html">Trang chủ</a> <span>/</span>
+        <a href="products.html">Bánh kem</a> <span>/</span>
+        <span>Bánh kem Chocolate Deluxe</span>
+    </div>
+
+    <!-- Product Detail Layout -->
+    <section class="product-detail-layout">
+        <!-- Left Column: Gallery -->
+        <div class="product-gallery">
+            <div class="main-image">
+                <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&q=80"
+                    alt="Bánh kem Chocolate" id="mainImage">
+            </div>
+            <div class="thumbnail-grid">
+                <div class="thumbnail active" onclick="changeImage(this.querySelector('img').src)">
+                    <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=200&q=80"
+                        alt="Thumbnail 1">
                 </div>
-                <div class="rating" style="margin: 1rem 0;">
-                    <div class="stars">
-                        <span class="star">⭐</span>
-                        <span class="star">⭐</span>
-                        <span class="star">⭐</span>
-                        <span class="star">⭐</span>
-                        <span class="star">⭐</span>
-                    </div>
-                    <span class="rating-text">4.8/5 (24 đánh giá)</span>
+                <div class="thumbnail" onclick="changeImage(this.querySelector('img').src)">
+                    <img src="https://images.unsplash.com/photo-1563729784409-9801eabc94bf?auto=format&fit=crop&w=200&q=80"
+                        alt="Thumbnail 2">
+                </div>
+                <div class="thumbnail" onclick="changeImage(this.querySelector('img').src)">
+                    <img src="https://images.unsplash.com/photo-1606983340126-99ab4feaa64a?auto=format&fit=crop&w=200&q=80"
+                        alt="Thumbnail 3">
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Info sticky -->
+        <div class="product-info-sticky">
+            <h1 class="product-title">Bánh kem Chocolate Deluxe</h1>
+
+            <div class="product-meta">
+                <div class="rating">
+                    <span class="star">⭐⭐⭐⭐⭐</span>
+                    <span class="rating-text" style="color: var(--text-gray); font-size: 0.9rem;">(24 đánh giá)</span>
+                </div>
+                <span style="color: var(--border-color);">|</span>
+                <span style="color: var(--success-color, #27ae60); font-weight: 600;">Còn hàng</span>
+            </div>
+
+            <div class="price-container">
+                <span class="current-price">350.000đ</span>
+                <span class="original-price">450.000đ</span>
+                <span class="discount-tag">-22%</span>
+            </div>
+
+            <p class="description-summary">
+                Hương vị chocolate Bỉ thượng hạng kết hợp cùng lớp kem tươi béo ngậy.
+                Cốt bánh mềm mịn, tan trong miệng. Lựa chọn hoàn hảo cho những bữa tiệc sang trọng.
+            </p>
+
+            <div class="options-grid">
+                <!-- Size Selection -->
+                <div class="option-group">
+                    <label>Kích thước:</label>
+                    <select class="custom-select"
+                        style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid #ddd;">
+                        <option>Size Nhỏ (14cm) - Cho 2-3 người</option>
+                        <option selected>Size Vừa (20cm) - Cho 6-8 người</option>
+                        <option>Size Lớn (24cm) - Cho 10-12 người</option>
+                    </select>
                 </div>
 
-                <p style="color: var(--text-gray); margin: 1rem 0; line-height: 1.8;">
-                    Bánh kem chocolate thơm ngon, phủ kem tươi, trang trí đẹp mắt. Thành phần chính: bột mì, trứng, 
-                    sữa tươi, chocolate Bỉ, kem tươi, đường. Phù hợp cho mọi dịp sinh nhật, sự kiện.
+                <!-- Custom Text -->
+                <div class="option-group">
+                    <label>Ghi chữ lên bánh (Miễn phí):</label>
+                    <input type="text" placeholder="Ví dụ: Happy Birthday Mom..."
+                        style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid #ddd;">
+                </div>
+
+                <!-- Quantity -->
+                <div class="option-group">
+                    <label>Số lượng:</label>
+                    <div class="qty-control">
+                        <button class="qty-btn" onclick="updateQty(-1)">-</button>
+                        <input type="number" value="1" min="1" class="qty-input" id="qtyInput">
+                        <button class="qty-btn" onclick="updateQty(1)">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-add-cart">Thêm vào giỏ</button>
+                <button class="btn-buy-now">Mua ngay</button>
+            </div>
+
+            <div class="trust-badges">
+                <div class="trust-item">
+                    <span>🚀</span>
+                    <div>
+                        <strong>Giao hàng 2H</strong><br>
+                        Nội thành TP.HCM
+                    </div>
+                </div>
+                <div class="trust-item">
+                    <span>🛡️</span>
+                    <div>
+                        <strong>Đảm bảo hoàn tiền</strong><br>
+                        Nếu bánh hư hỏng
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tabs Section -->
+    <section class="product-tabs-section">
+        <div class="tabs-header">
+            <button class="tab-btn active" onclick="switchTab('description')">Mô tả chi tiết</button>
+            <button class="tab-btn" onclick="switchTab('ingredients')">Thành phần</button>
+            <button class="tab-btn" onclick="switchTab('reviews')">Đánh giá (24)</button>
+        </div>
+
+        <div class="content-wrapper">
+            <!-- Tab: Description -->
+            <div id="description" class="tab-content active">
+                <h3 style="margin-bottom: 1rem;">Câu chuyện sản phẩm</h3>
+                <p style="margin-bottom: 1rem; color: var(--text-gray);">
+                    Được lấy cảm hứng từ những tiệm bánh cổ điển tại Brussels, chiếc bánh Chocolate Deluxe là sự kết hợp
+                    tinh tế giữa vị đắng nhẹ của chocolate đen nguyên chất và vị ngọt dịu của kem tươi.
                 </p>
+                <p style="color: var(--text-gray);">
+                    Mỗi chiếc bánh đều được làm thủ công trong ngày để đảm bảo độ tươi ngon nhất. Lớp phủ ganache bóng
+                    mượt bên ngoài không chỉ đẹp mắt mà còn tăng thêm hương vị đậm đà.
+                </p>
+            </div>
 
-                <div class="share-buttons">
-                    <button class="share-btn facebook" title="Chia sẻ Facebook">f</button>
-                    <button class="share-btn zalo" title="Chia sẻ Zalo">z</button>
-                    <button class="share-btn whatsapp" title="Chia sẻ WhatsApp">w</button>
-                </div>
+            <!-- Tab: Ingredients -->
+            <div id="ingredients" class="tab-content">
+                <ul style="list-style-position: inside; color: var(--text-gray); line-height: 2;">
+                    <li>Bột mì hảo hạng</li>
+                    <li>Trứng gà tươi trang trại</li>
+                    <li>Sữa tươi thanh trùng</li>
+                    <li>Chocolate Bỉ 70% cacao</li>
+                    <li>Bơ lạt Anchor</li>
+                </ul>
+            </div>
 
-                <div class="product-options">
-                    <div class="option-group">
-                        <label>Chọn size bánh:</label>
-                        <select>
-                            <option>0.5kg - 300.000đ</option>
-                            <option selected>1kg - 350.000đ</option>
-                            <option>2kg - 600.000đ</option>
-                            <option>3kg - 850.000đ</option>
-                        </select>
-                    </div>
-
-                    <div class="option-group">
-                        <label>Yêu cầu ghi chữ lên bánh:</label>
-                        <input type="text" placeholder="Ví dụ: Chúc mừng sinh nhật em yêu!">
-                    </div>
-
-                    <div class="option-group">
-                        <label>Màu hoa kèm theo (nếu có):</label>
-                        <select>
-                            <option>Không chọn</option>
-                            <option>Hoa hồng đỏ</option>
-                            <option>Hoa hồng hồng</option>
-                            <option>Hoa hồng vàng</option>
-                            <option>Hoa mix nhiều màu</option>
-                        </select>
-                    </div>
-
-                    <div class="option-group">
-                        <label>Yêu cầu thiệp chúc mừng:</label>
-                        <select>
-                            <option>Không cần thiệp</option>
-                            <option>Thiệp đơn giản</option>
-                            <option>Thiệp sang trọng</option>
-                        </select>
-                    </div>
-
-                    <div class="option-group">
-                        <label>Thời gian giao hàng:</label>
-                        <select>
-                            <option>Ngay lập tức (trong 2h)</option>
-                            <option>8h - 10h sáng</option>
-                            <option>10h - 12h trưa</option>
-                            <option>14h - 16h chiều</option>
-                            <option>16h - 18h chiều</option>
-                            <option>18h - 21h tối</option>
-                        </select>
-                    </div>
-
-                    <div class="option-group">
-                        <label>Ghi chú thêm (nếu có):</label>
-                        <textarea placeholder="Nhập ghi chú đặc biệt cho đơn hàng..."></textarea>
+            <!-- Tab: Reviews -->
+            <div id="reviews" class="tab-content">
+                <div class="reviews-section" style="padding: 0;">
+                    <!-- Existing reviews content style reuse -->
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div class="reviewer-info">
+                                <div class="reviewer-avatar">L</div>
+                                <div>
+                                    <div class="reviewer-name">Lê Thị C</div>
+                                    <div class="review-date">Hôm qua</div>
+                                </div>
+                            </div>
+                            <div class="stars"><span class="star">⭐⭐⭐⭐⭐</span></div>
+                        </div>
+                        <div class="review-content">Bánh rất ngon, cốt bánh ẩm và không bị khô. Kem không quá ngọt.
+                        </div>
                     </div>
                 </div>
-
-                <button class="btn-primary">Thêm vào giỏ hàng</button>
-                <button class="btn-primary" style="background: var(--accent-color); margin-top: 0.5rem; color: white;">Mua ngay</button>
             </div>
         </div>
+    </section>
 
-        <!-- Product Reviews -->
-        <div class="reviews-section">
-            <h2 class="section-title" style="text-align: left; margin-bottom: 2rem;">Đánh giá sản phẩm</h2>
-            
-            <div style="background: white; border-radius: 16px; padding: 2rem; box-shadow: var(--shadow-md); border: 1px solid var(--border-color); margin-bottom: 2rem;">
-                <div style="display: flex; align-items: center; gap: 2rem; margin-bottom: 2rem;">
-                    <div style="text-align: center;">
-                        <div style="font-size: 3rem; font-weight: 700; color: var(--accent-dark);">4.8</div>
-                        <div class="stars">
-                            <span class="star">⭐</span>
-                            <span class="star">⭐</span>
-                            <span class="star">⭐</span>
-                            <span class="star">⭐</span>
-                            <span class="star">⭐</span>
-                        </div>
-                        <div style="color: var(--text-gray); margin-top: 0.5rem; font-size: 0.9rem;">24 đánh giá</div>
-                    </div>
-                    <div style="flex: 1;">
-                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
-                            <span>5⭐</span>
-                            <div style="flex: 1; height: 8px; background: var(--bg-gray); border-radius: 4px; overflow: hidden;">
-                                <div style="width: 85%; height: 100%; background: var(--gradient-primary);"></div>
-                            </div>
-                            <span style="font-size: 0.9rem; color: var(--text-gray);">85%</span>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
-                            <span>4⭐</span>
-                            <div style="flex: 1; height: 8px; background: var(--bg-gray); border-radius: 4px; overflow: hidden;">
-                                <div style="width: 12%; height: 100%; background: var(--gradient-primary);"></div>
-                            </div>
-                            <span style="font-size: 0.9rem; color: var(--text-gray);">12%</span>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 1rem;">
-                            <span>3⭐</span>
-                            <div style="flex: 1; height: 8px; background: var(--bg-gray); border-radius: 4px; overflow: hidden;">
-                                <div style="width: 3%; height: 100%; background: var(--gradient-primary);"></div>
-                            </div>
-                            <span style="font-size: 0.9rem; color: var(--text-gray);">3%</span>
-                        </div>
+    <!-- Related Products -->
+    <section class="products-section">
+        <h2 class="section-title">Sản phẩm liên quan</h2>
+        <div class="products-grid">
+            <!-- Similar items reused from previous structure or JS loaded -->
+            <a href="product-detail.html" class="product-card">
+                <div class="product-image">🎂</div>
+                <div class="product-info">
+                    <div class="product-category">Bánh kem</div>
+                    <div class="product-name">Tiramisu Classic</div>
+                    <div class="product-footer">
+                        <div class="product-price">320.000đ</div>
+                        <button class="add-to-cart-btn">Thêm</button>
                     </div>
                 </div>
-            </div>
-
-            <div class="review-item">
-                <div class="review-header">
-                    <div class="reviewer-info">
-                        <div class="reviewer-avatar">N</div>
-                        <div>
-                            <div class="reviewer-name">Nguyễn Thị A</div>
-                            <div class="review-date">15/12/2024</div>
-                        </div>
-                    </div>
-                    <div class="stars">
-                        <span class="star">⭐</span>
-                        <span class="star">⭐</span>
-                        <span class="star">⭐</span>
-                        <span class="star">⭐</span>
-                        <span class="star">⭐</span>
-                    </div>
-                </div>
-                <div class="review-content">
-                    Bánh rất ngon, đẹp mắt và đúng với mô tả. Nhân viên giao hàng rất nhiệt tình. 
-                    Sẽ ủng hộ shop lần sau! 👍
-                </div>
-            </div>
-
-            <div class="review-item">
-                <div class="review-header">
-                    <div class="reviewer-info">
-                        <div class="reviewer-avatar">T</div>
-                        <div>
-                            <div class="reviewer-name">Trần Văn B</div>
-                            <div class="review-date">14/12/2024</div>
-                        </div>
-                    </div>
-                    <div class="stars">
-                        <span class="star">⭐</span>
-                        <span class="star">⭐</span>
-                        <span class="star">⭐</span>
-                        <span class="star">⭐</span>
-                        <span class="star empty">☆</span>
-                    </div>
-                </div>
-                <div class="review-content">
-                    Bánh ngon nhưng hơi nhỏ so với mong đợi. Hương vị chocolate rất đậm đà. 
-                    Giao hàng đúng giờ.
-                </div>
-            </div>
-
-            <div style="text-align: center; margin-top: 2rem;">
-                <button class="btn-primary" style="width: auto; padding: 0.875rem 2rem;">Xem tất cả đánh giá</button>
-            </div>
+            </a>
+            <!-- More items... -->
         </div>
-
-        <!-- Related Products -->
-        <section class="products-section">
-            <h2 class="section-title">Sản phẩm liên quan</h2>
-            <div class="products-grid">
-                <a href="product-detail.html" class="product-card">
-                    <div class="product-image">🎂</div>
-                    <div class="product-info">
-                        <div class="product-category">Bánh kem sinh nhật</div>
-                        <div class="product-name">Bánh kem Tiramisu</div>
-                        <div class="product-description">Bánh kem Tiramisu đậm đà, hương vị Ý</div>
-                        <div class="product-footer">
-                            <div class="product-price">400.000đ</div>
-                            <button class="add-to-cart-btn">Thêm vào giỏ</button>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="product-detail.html" class="product-card">
-                    <div class="product-image">🎂</div>
-                    <div class="product-info">
-                        <div class="product-category">Bánh kem sự kiện</div>
-                        <div class="product-name">Bánh kem Vanilla 2kg</div>
-                        <div class="product-description">Bánh kem vanilla thơm ngon, size lớn cho sự kiện</div>
-                        <div class="product-footer">
-                            <div class="product-price">550.000đ</div>
-                            <button class="add-to-cart-btn">Thêm vào giỏ</button>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="product-detail.html" class="product-card">
-                    <div class="product-image">🎁</div>
-                    <div class="product-info">
-                        <div class="product-category">Combo</div>
-                        <div class="product-name">Combo Sinh nhật Đặc biệt</div>
-                        <div class="product-description">Bánh kem 1kg + Hoa hồng 11 bông + Thiệp chúc mừng</div>
-                        <div class="product-footer">
-                            <div class="product-price">
-                                650.000đ
-                                <span class="old-price">800.000đ</span>
-                            </div>
-                            <button class="add-to-cart-btn">Thêm vào giỏ</button>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </section>
     </section>
 
     <!-- Chatbot -->
@@ -378,5 +331,5 @@
         </div>
     </footer>
 </body>
-</html>
 
+</html>
