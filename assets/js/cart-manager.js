@@ -144,8 +144,17 @@ class CartManager {
         const badges = document.querySelectorAll('.cart-badge');
         const count = this.getCount();
         badges.forEach(badge => {
-            badge.textContent = count;
+            badge.textContent = count > 99 ? '99+' : count;
             badge.style.display = count > 0 ? 'flex' : 'none';
+
+            // Trigger animation
+            badge.classList.remove('active');
+            void badge.offsetWidth; // Trigger reflow
+            if (count > 0) {
+                badge.classList.add('active');
+                // Remove class after animation completes to allow re-triggering
+                setTimeout(() => badge.classList.remove('active'), 400);
+            }
         });
     }
 

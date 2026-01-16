@@ -433,19 +433,40 @@ nav.scrolled {
     position: absolute;
     top: -6px;
     right: -6px;
-    background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-dark) 100%);
+    background: linear-gradient(135deg, #ff4d4d 0%, #c40000 100%);
     color: white;
     border-radius: 50%;
-    width: 22px;
+    min-width: 22px;
     height: 22px;
+    padding: 0 4px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     font-weight: 700;
-    box-shadow: 0 2px 8px rgba(166, 124, 82, 0.3);
+    box-shadow: 0 2px 8px rgba(196, 0, 0, 0.4);
     border: 2px solid white;
-    font-weight: 600;
+    transform-origin: center;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 10;
+}
+
+.cart-badge.active {
+    animation: pop-badge 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes pop-badge {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.4);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 
