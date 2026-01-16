@@ -426,7 +426,14 @@ function renderHomeProducts(container, products) {
                 <div class="product-actions">
                     <button class="action-btn" type="button" title="Yêu thích" data-href="pages/wishlist.html">🤍</button>
                     <button class="action-btn share" type="button" title="Chia sẻ" data-share-url="${detailUrl}">📤</button>
-                    <button class="action-btn compare" type="button" title="So sánh" data-href="shop/compare.html">⚖️</button>
+                    <button class="action-btn compare" type="button" title="So sánh" onclick='window.compareManager &amp;&amp; window.compareManager.add(${JSON.stringify({
+            id: product.id,
+            name: product.name,
+            price: product.final_price || product.price,
+            image: product.image_url || "",
+            slug: product.slug,
+            category_id: product.category_slug
+        })})'>⚖️</button>
                 </div>
                 <div class="product-card-inner">
                     ${imageMarkup}
