@@ -111,8 +111,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Homepage Product Controls (Filters & Sort)
     const filterPills = document.querySelectorAll('.filter-pill');
-    const occasionSelect = document.querySelector('.product-controls select option[value="birthday"]').parentElement; // safely get parent select
-    const sortSelect = document.querySelectorAll('.product-controls .custom-select');
+    // const occasionSelect & sortSelect removed - access dynamically in applyFilters
 
     // Handle Category Pills
     filterPills.forEach(pill => {
