@@ -54,12 +54,14 @@ class CartManager {
      * @param {number} quantity - Quantity to add (default 1)
      */
     add(product, quantity = 1) {
+        console.log('Adding product:', product);
         if (!product || !product.id) {
             console.error('Invalid product data:', product);
             return;
         }
 
         const productId = String(product.id);
+        console.log('Processing ID as string:', productId);
 
         // Ensure quantity is valid
         quantity = parseInt(quantity) || 1;
@@ -69,6 +71,7 @@ class CartManager {
         const existingItem = this.items.find(item => String(item.id) === productId);
 
         if (existingItem) {
+            console.log('Found existing item, updating quantity');
             existingItem.quantity += quantity;
             if (existingItem.quantity > this.MAX_QUANTITY) {
                 existingItem.quantity = this.MAX_QUANTITY;
@@ -81,6 +84,7 @@ class CartManager {
                 }
             }
         } else {
+            console.log('Adding new item');
             // Add new item
             const item = {
                 id: productId, // Store as string

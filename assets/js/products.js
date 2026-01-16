@@ -196,7 +196,7 @@ function renderProducts(products) {
                 <div class="product-actions">
                     <button class="action-btn" type="button" title="Yêu thích" data-href="pages/wishlist.html">🤍</button>
                     <button class="action-btn share" type="button" title="Chia sẻ" data-share-url="shop/${detailUrl}">📤</button>
-                    <button class="action-btn compare" type="button" title="So sánh" onclick="window.compareManager && window.compareManager.add(window.productRegistry[${product.id}])">⚖️</button>
+                    <button class="action-btn compare" type="button" title="So sánh" onclick="window.compareManager && window.compareManager.add(window.productRegistry['${product.id}'])">⚖️</button>
                 </div>
                 ${imageMarkup}
                 <div class="product-info">
@@ -207,7 +207,7 @@ function renderProducts(products) {
                         ${priceMarkup}
                         <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
                             <a class="add-to-cart-btn" href="${detailUrl}" style="flex: 1; text-align: center;">Chi tiết</a>
-                            <button class="add-to-cart-btn" type="button" onclick="window.cartManager.add(window.productRegistry[${product.id}])" style="flex: 1; text-align: center; background: white; color: var(--accent-color); border: 1px solid var(--accent-color);">
+                            <button class="add-to-cart-btn" type="button" onclick="window.cartManager.add(window.productRegistry['${product.id}'])" style="flex: 1; text-align: center; background: white; color: var(--accent-color); border: 1px solid var(--accent-color);">
                                 Thêm vào giỏ
                             </button>
                         </div>
