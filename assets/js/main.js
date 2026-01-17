@@ -281,9 +281,26 @@ document.addEventListener('DOMContentLoaded', function () {
     // Authentication Forms
     // ============================================
 
+    // ============================================
+    // Authentication Forms
+    // ============================================
+    
+    // Background Image Fallback for Auth Pages
+    const authImages = document.querySelectorAll('.auth-image');
+    authImages.forEach(div => {
+        // We use a simple check: if url causes error, we might not catch it on CSS bg-image
+        // Instead, let's just assume we need a high-quality fallback from Unsplash if local is missing
+        // For now, we keep the style inline in HTML, but if user wants, we can set it here.
+        // Let's force a nice default if the specific one is empty or fails.
+        if (div.style.backgroundImage.includes('login-bg.jpg')) {
+             // Fallback/Default for login
+             // div.style.backgroundImage = "url('https://images.unsplash.com/photo-1516205651411-a416745265dd?q=80&w=1000&auto=format&fit=crop')";
+        }
+    });
+
     // Login Form
-    const loginForm = document.querySelector('.auth-form');
-    if (loginForm && window.location.pathname.includes('login.html')) {
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
         loginForm.addEventListener('submit', async function (e) {
             e.preventDefault();
 
@@ -292,42 +309,69 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            const email = this.querySelector('input[type="email"]')?.value.trim();
-            const password = this.querySelector('input[type="password"]')?.value;
+            const email = this.querySelector('input[name="email"]').value.trim();
+            const password = this.querySelector('input[name="password"]').value;
+            const remember = this.querySelector('input[name="remember"]')?.checked;
 
             if (!email || !password) {
                 window.API.showNotification('Vui lòng điền đầy đủ thông tin', 'error');
                 return;
             }
 
+            const btn = this.querySelector('button[type="submit"]');
+            const originalText = btn.textContent;
+            
             try {
-                const submitBtn = this.querySelector('button[type="submit"]');
-                const originalText = submitBtn.textContent;
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Đang đăng nhập...';
+                btn.disabled = true;
+                btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Đang đăng nhập...';
 
-                await window.API.auth.login(email, password);
+                await window.API.auth.login(email, password, remember);
 
-                window.API.showNotification('Đăng nhập thành công!', 'success');
+                window.API.showNotification('Đăng nhập thành công! Đang chuyển hướng...', 'success');
 
-                // Redirect
+                // Redirect Logic
                 setTimeout(() => {
-                    const redirectUrl = new URLSearchParams(window.location.search).get('redirect') || '../index.html';
-                    window.location.href = redirectUrl;
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const redirectUrl = urlParams.get('redirect');
+                    
+                    if (redirectUrl) {
+                        window.location.href = redirectUrl;
+                    } else if (document.referrer && document.referrer.includes(window.location.host) && !document.referrer.includes('auth/')) {
+                         // Go back to previous page if it's internal and not an auth page
+                         // Checking strict equality to avoid loop
+                         window.location.href = document.referrer;
+                    } else {
+                        window.location.href = '../index.html';
+                    }
                 }, 1000);
 
             } catch (error) {
                 window.API.showNotification(error.message || 'Đăng nhập thất bại', 'error');
-                const submitBtn = this.querySelector('button[type="submit"]');
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Đăng nhập';
+                btn.disabled = false;
+                btn.textContent = originalText;
             }
+        });
+        
+        // Toggle Password Visibility
+        const toggles = loginForm.querySelectorAll('.toggle-password');
+        toggles.forEach(t => {
+            t.addEventListener('click', function() {
+                const input = this.previousElementSibling;
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    this.textContent = '🙈';
+                } else {
+                    input.type = 'password';
+                    this.textContent = '👁️';
+                }
+            });
         });
     }
 
     // Register Form
-    if (loginForm && window.location.pathname.includes('register.html')) {
-        loginForm.addEventListener('submit', async function (e) {
+    const registerForm = document.getElementById('registerForm');
+    if (registerForm) {
+        registerForm.addEventListener('submit', async function (e) {
             e.preventDefault();
 
             if (!window.API) {
@@ -335,39 +379,37 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            const email = this.querySelector('input[type="email"]')?.value.trim();
-            const password = this.querySelector('input[type="password"]')?.value;
-            const fullName = this.querySelector('input[name="full_name"]')?.value.trim() ||
-                this.querySelector('input[placeholder*="Họ tên"]')?.value.trim();
+            const full_name = this.querySelector('input[name="full_name"]').value.trim();
+            const email = this.querySelector('input[name="email"]').value.trim();
+            const phone = this.querySelector('input[name="phone"]')?.value.trim();
+            const password = this.querySelector('input[name="password"]').value;
+            const confirm_password = this.querySelector('input[name="confirm_password"]').value;
 
-            if (!email || !password || !fullName) {
-                window.API.showNotification('Vui lòng điền đầy đủ thông tin', 'error');
-                return;
+            if (password !== confirm_password) {
+                 window.API.showNotification('Mật khẩu nhập lại không khớp', 'error');
+                 return;
             }
 
-            if (password.length < 6) {
-                window.API.showNotification('Mật khẩu phải có ít nhất 6 ký tự', 'error');
-                return;
-            }
+            const btn = this.querySelector('button[type="submit"]');
+            const originalText = btn.textContent;
 
             try {
-                const submitBtn = this.querySelector('button[type="submit"]');
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Đang đăng ký...';
+                btn.disabled = true;
+                btn.textContent = 'Đang tạo tài khoản...';
 
-                await window.API.auth.register(email, password, fullName);
+                // Assuming register API accepts phone now, if not pass in body
+                await window.API.auth.register(email, password, full_name, phone);
 
-                window.API.showNotification('Đăng ký thành công!', 'success');
+                window.API.showNotification('Đăng ký thành công! Đang chuyển hướng...', 'success');
 
                 setTimeout(() => {
                     window.location.href = '../index.html';
-                }, 1000);
+                }, 1500);
 
             } catch (error) {
                 window.API.showNotification(error.message || 'Đăng ký thất bại', 'error');
-                const submitBtn = this.querySelector('button[type="submit"]');
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Đăng ký';
+                btn.disabled = false;
+                btn.textContent = originalText;
             }
         });
     }
