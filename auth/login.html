@@ -85,8 +85,8 @@
             <!-- Form Side -->
             <div class="auth-form-container">
                 <div class="auth-header">
-                    <h1 class="auth-title">Đăng nhập</h1>
-                    <p class="auth-subtitle">Chào mừng bạn quay lại với Sweetie Garden</p>
+                    <h1 class="auth-title">Chào mừng trở lại!</h1>
+                    <p class="auth-subtitle" style="font-size: 1.1rem; color: #666;">Vui lòng nhập thông tin đăng nhập của bạn.</p>
                 </div>
 
                 <form class="auth-form" id="loginForm">
@@ -97,22 +97,35 @@
                     <div class="form-group">
                         <label>Mật khẩu</label>
                         <div style="position: relative;">
-                            <input type="password" name="password" class="form-control" placeholder="••••••••" required>
+                            <input type="password" name="password" class="form-control" placeholder="Nhập mật khẩu" required>
                             <span class="toggle-password" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; opacity: 0.5;">👁️</span>
                         </div>
                     </div>
                     
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; font-size: 0.9rem;">
-                        <label style="margin: 0; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 400;">
-                            <input type="checkbox" name="remember" style="width: auto; accent-color: var(--accent-color);"> Ghi nhớ đăng nhập
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; font-size: 0.95rem;">
+                        <label style="margin: 0; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 500; color: #555;">
+                            <input type="checkbox" name="remember" style="width: 18px; height: 18px; accent-color: var(--accent-color);"> Ghi nhớ
                         </label>
-                        <a href="#" style="color: #666; text-decoration: none;">Quên mật khẩu?</a>
+                        <a href="#" style="color: var(--accent-color); text-decoration: none; font-weight: 600;">Quên mật khẩu?</a>
                     </div>
 
-                    <button type="submit" class="auth-btn">Đăng nhập</button>
+                    <button type="submit" class="auth-btn" style="border-radius: 12px; font-size: 1.1rem; padding: 1.1rem;">Đăng nhập</button>
 
-                    <div class="auth-footer">
-                        Bạn chưa có tài khoản? <a href="register.html">Đăng ký ngay</a>
+                    <div class="auth-divider">hoặc tiếp tục với</div>
+
+                    <div class="social-buttons">
+                        <button type="button" class="social-btn">
+                            <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google">
+                            Google
+                        </button>
+                        <button type="button" class="social-btn">
+                            <img src="https://www.svgrepo.com/show/475647/facebook-color.svg" alt="Facebook">
+                            Facebook
+                        </button>
+                    </div>
+
+                    <div class="auth-footer" style="border: none; padding-top: 0; font-size: 1rem;">
+                        Bạn chưa có tài khoản? <a href="register.html" style="color: var(--accent-color); font-weight: 700;">Đăng ký miễn phí</a>
                     </div>
                 </form>
             </div>
