@@ -87,7 +87,7 @@
                 <h3 style="margin-bottom: 1rem; color: #c44569; font-size: 1.2rem;">Tài khoản</h3>
                 <ul class="account-menu">
                     <li><a href="#" class="active" data-tab-target="tab-orders">📋 Đơn hàng của tôi</a></li>
-                    <li><a href="wishlist.html">❤️ Danh sách yêu thích</a></li>
+                    <li><a href="#" data-tab-target="tab-wishlist">❤️ Danh sách yêu thích</a></li>
                     <li><a href="#" data-tab-target="tab-addresses">📍 Địa chỉ giao hàng</a></li>
                     <li><a href="#" data-tab-target="tab-profile">👤 Hồ sơ cá nhân</a></li>
                     <li><a href="#" data-tab-target="tab-password">🔐 Đổi mật khẩu</a></li>
@@ -132,6 +132,17 @@
                         </div>
                         <button type="submit" class="btn-primary">Lưu thay đổi</button>
                     </form>
+                </div>
+
+                <!-- Tab: Wishlist -->
+                <div id="tab-wishlist" class="tab-pane" style="display: none;">
+                    <h2 style="margin-bottom: 2rem; color: var(--accent-color);">Danh sách yêu thích</h2>
+                    <div id="wishlistGrid" class="products-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+                        <!-- Loaded via JS -->
+                        <div class="col-span-full">
+                             <div class="spinner"></div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Tab: Addresses -->

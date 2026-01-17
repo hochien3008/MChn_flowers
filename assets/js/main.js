@@ -492,7 +492,7 @@ function renderHomeProducts(container, products) {
             <div class="product-card" data-detail-url="${detailUrl}" style="position: relative;">
                 ${badges.length ? `<div class="product-badge-container">${badges.join('')}</div>` : ''}
                 <div class="product-actions">
-                    <button class="action-btn" type="button" title="Yêu thích" data-href="pages/wishlist.html">🤍</button>
+                    <button class="action-btn" type="button" title="Yêu thích" data-href="pages/account.html#tab-wishlist">🤍</button>
                     <button class="action-btn share" type="button" title="Chia sẻ" data-share-url="${detailUrl}">📤</button>
                     <button class="action-btn compare" type="button" title="So sánh" onclick="window.compareManager && window.compareManager.add(window.productRegistry[${product.id}])">⚖️</button>
                 </div>
