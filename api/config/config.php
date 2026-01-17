@@ -14,8 +14,16 @@ define('DB_CHARSET', 'utf8mb4');
 
 // Application Configuration
 define('APP_NAME', 'Sweetie Garden');
-define('APP_URL', 'https://mchn.online'); // Cập nhật với domain của bạn
-define('APP_ENV', 'production'); // 'development' hoặc 'production'
+
+// Auto-detect environment
+$host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+if (strpos($host, 'localhost') !== false || strpos($host, '127.0.0.1') !== false) {
+    define('APP_ENV', 'development');
+    define('APP_URL', 'http://' . $host);
+} else {
+    define('APP_ENV', 'production');
+    define('APP_URL', 'https://mchn.online'); // Domain chính thức
+}
 
 // Paths
 define('BASE_PATH', dirname(__DIR__, 2));
