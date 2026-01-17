@@ -237,6 +237,47 @@ document.addEventListener('DOMContentLoaded', function () {
     loadHomepageProducts();
 
     // ============================================
+    // Authentication UI Check
+    // ============================================
+    updateAuthUI();
+
+    async function updateAuthUI() {
+        if (!window.API || !window.API.auth) return;
+
+        const userIcon = document.querySelector('.user-icon');
+        if (!userIcon) return;
+
+        try {
+            const check = await window.API.auth.check();
+            
+            if (check && check.authenticated) {
+                // Logged in
+                userIcon.href = userIcon.href.includes('pages/') ? 'account.html' : 'pages/account.html';
+                // Adjust for relative paths if needed, or better: use absolute or detect location
+                if (window.location.pathname.includes('/pages/') || window.location.pathname.includes('/shop/')) {
+                     userIcon.href = '../pages/account.html';
+                } else if (window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/')) {
+                     userIcon.href = 'pages/account.html';
+                }
+                
+                userIcon.setAttribute('data-tooltip', `Chào, ${check.user.full_name}`);
+                userIcon.classList.add('logged-in');
+            } else {
+                // Not logged in
+                let loginPath = 'auth/login.html';
+                if (window.location.pathname.includes('/pages/') || window.location.pathname.includes('/shop/')) {
+                    loginPath = '../auth/login.html';
+                }
+                userIcon.href = loginPath;
+                userIcon.setAttribute('data-tooltip', 'Đăng nhập / Đăng ký');
+                userIcon.classList.remove('logged-in');
+            }
+        } catch (error) {
+            console.error('Auth check failed:', error);
+        }
+    }
+
+    // ============================================
     // Authentication Forms
     // ============================================
 
