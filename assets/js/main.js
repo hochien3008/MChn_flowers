@@ -340,6 +340,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const addToCartBtn = e.target.closest('.add-to-cart, [data-add-to-cart]');
         if (addToCartBtn && window.API) {
             e.preventDefault();
+            e.stopPropagation(); // Stop bubbling to product card
 
             const productId = addToCartBtn.dataset.productId || addToCartBtn.dataset.addToCart;
             if (!productId) return;
