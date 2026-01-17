@@ -234,9 +234,16 @@ const CartAPI = {
     /**
      * Get cart count (for badge)
      */
+    /**
+     * Get cart count (for badge)
+     */
     async getCount() {
         try {
             const cart = await this.get();
+            // Prefer total_quantity if available, otherwise fallback to item_count or length
+            if (cart.total_quantity !== undefined) {
+                return parseInt(cart.total_quantity);
+            }
             return cart.item_count || 0;
         } catch (error) {
             return 0;

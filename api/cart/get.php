@@ -46,19 +46,23 @@ $stmt->execute();
 $items = $stmt->fetchAll();
 
 $total = 0;
+$total_quantity = 0;
 $cart = [];
 
 foreach ($items as $item) {
     $final_price = $item['sale_price'] ? (float)$item['sale_price'] : (float)$item['price'];
-    $subtotal = $final_price * (int)$item['quantity'];
+    $quantity = (int)$item['quantity'];
+    $subtotal = $final_price * $quantity;
+    
     $total += $subtotal;
+    $total_quantity += $quantity;
 
     $cart[] = [
         'id' => (int)$item['id'],
         'product_id' => (int)$item['product_id'],
         'product_name' => $item['name'],
         'product_slug' => $item['slug'],
-        'quantity' => (int)$item['quantity'],
+        'quantity' => $quantity,
         'price' => (float)$item['price'],
         'sale_price' => $item['sale_price'] ? (float)$item['sale_price'] : null,
         'final_price' => $final_price,
@@ -71,6 +75,7 @@ foreach ($items as $item) {
 sendJsonResponse(true, 'Lấy giỏ hàng thành công', [
     'items' => $cart,
     'total' => $total,
-    'item_count' => count($cart)
+    'total_quantity' => $total_quantity,
+    'item_count' => count($cart) // Keep for backward compatibility
 ]);
 

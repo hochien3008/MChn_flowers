@@ -455,7 +455,7 @@ function renderHomeProducts(container, products) {
                                 ${formatPrice(product.final_price || product.price)}
                                 ${hasDiscount ? `<span class="old-price">${formatPrice(product.price)}</span>` : ''}
                             </div>
-                            <button class="add-to-cart-btn" type="button" onclick="window.cartManager.add(window.productRegistry['${product.id}'])">Thêm vào giỏ</button>
+                            <button class="add-to-cart-btn" type="button" data-add-to-cart="${product.id}">Thêm vào giỏ</button>
                         </div>
                     </div>
                 </div>
