@@ -335,32 +335,67 @@ document.addEventListener('DOMContentLoaded', function () {
     // Cart Functions
     // ============================================
 
-    // Add to Cart buttons
+    // ============================================
+    // Unified Click Handler (Delegation)
+    // ============================================
     document.addEventListener('click', async function (e) {
-        const addToCartBtn = e.target.closest('.add-to-cart, [data-add-to-cart]');
-        if (addToCartBtn && window.API) {
+        // 1. Handle "Add to Cart" and other Action Buttons
+        const actionBtn = e.target.closest('.action-btn, .add-to-cart, [data-add-to-cart], .add-to-cart-btn');
+        if (actionBtn) {
             e.preventDefault();
-            e.stopPropagation(); // Stop bubbling to product card
+            e.stopPropagation();
 
-            const productId = addToCartBtn.dataset.productId || addToCartBtn.dataset.addToCart;
-            if (!productId) return;
+            // Share Button
+            if (actionBtn.classList.contains('share')) {
+                const url = actionBtn.getAttribute('data-share-url') || window.location.href;
+                if (navigator.share) {
+                    try { await navigator.share({ title: 'Sweetie Garden', url }); } catch (err) { console.warn(err); }
+                } else {
+                    try { await navigator.clipboard.writeText(url); window.API.showNotification('Đã sao chép link!', 'success'); } catch (err) { console.error(err); }
+                }
+                return;
+            }
 
-            try {
-                const originalText = addToCartBtn.textContent;
-                addToCartBtn.disabled = true;
-                addToCartBtn.textContent = 'Đang thêm...';
+            // Normal Link Actions (Wishlist, Compare)
+            const href = actionBtn.getAttribute('data-href');
+            if (href) {
+                window.location.href = href;
+                return;
+            }
 
-                await window.API.cart.add(parseInt(productId), 1);
+            // Add to Cart Logic
+            const productId = actionBtn.dataset.productId || actionBtn.dataset.addToCart;
+            if (productId && window.API) {
+                try {
+                    const originalText = actionBtn.textContent;
+                    // Only change text if it's a text button (not an icon)
+                    if (actionBtn.classList.contains('add-to-cart-btn')) {
+                         actionBtn.textContent = '...';
+                         actionBtn.disabled = true;
+                    }
+                    
+                    await window.API.cart.add(parseInt(productId), 1);
+                    window.API.showNotification('Đã thêm vào giỏ hàng!', 'success');
+                    await window.API.cart.updateBadge();
+                } catch (error) {
+                    window.API.showNotification(error.message || 'Lỗi thêm giỏ hàng', 'error');
+                } finally {
+                     if (actionBtn.classList.contains('add-to-cart-btn')) {
+                         actionBtn.textContent = 'Thêm vào giỏ';
+                         actionBtn.disabled = false;
+                    }
+                }
+            }
+            return;
+        }
 
-                window.API.showNotification('Đã thêm vào giỏ hàng!', 'success');
-                await window.API.cart.updateBadge();
-
-                addToCartBtn.disabled = false;
-                addToCartBtn.textContent = originalText;
-            } catch (error) {
-                window.API.showNotification(error.message || 'Thêm vào giỏ hàng thất bại', 'error');
-                addToCartBtn.disabled = false;
-                addToCartBtn.textContent = originalText;
+        // 2. Handle Product Card Click (Redirect) -> Only if NOT clicking a button
+        const card = e.target.closest('.product-card[data-detail-url]');
+        if (card) {
+            // Ensure we didn't click inside a button that failed to be caught above for some reason
+            if (!e.target.closest('button') && !e.target.closest('a')) {
+                const url = card.getAttribute('data-detail-url');
+                if (url) window.location.href = url;
             }
         }
     });
@@ -486,50 +521,7 @@ function getCategoryEmoji(slug) {
     return map[slug] || '🌺';
 }
 
-document.addEventListener('click', async function (event) {
-    const actionBtn = event.target.closest('.product-actions .action-btn');
-    if (actionBtn) {
-        event.preventDefault();
-        event.stopPropagation();
 
-        if (actionBtn.classList.contains('share')) {
-            const url = actionBtn.getAttribute('data-share-url') || window.location.href;
-            const title = 'Sweetie Garden';
-
-            if (navigator.share) {
-                try {
-                    await navigator.share({ title, url });
-                } catch (error) {
-                    console.warn('Share canceled or failed:', error);
-                }
-                return;
-            }
-
-            try {
-                await navigator.clipboard.writeText(url);
-                showNotification('Đã sao chép link chia sẻ', 'success');
-            } catch (error) {
-                console.error('Failed to copy share URL:', error);
-                showNotification('Không thể chia sẻ liên kết', 'error');
-            }
-            return;
-        }
-
-        const href = actionBtn.getAttribute('data-href');
-        if (href) {
-            window.location.href = href;
-        }
-        return;
-    }
-
-    const card = event.target.closest('.product-card[data-detail-url]');
-    if (card) {
-        const url = card.getAttribute('data-detail-url');
-        if (url) {
-            window.location.href = url;
-        }
-    }
-});
 
 // ============================================
 // Advanced Loading Screen
