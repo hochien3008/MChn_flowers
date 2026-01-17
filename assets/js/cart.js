@@ -27,7 +27,7 @@ function renderCart() {
 
     if (items.length === 0) {
         if (container) container.innerHTML = '<div style="text-align: center; padding: 2rem;">Giỏ hàng trống</div>';
-        // Optionally toggle visibility of summary
+        updateSummary(); // Ensure summary is reset
         return;
     }
 
@@ -65,7 +65,7 @@ function updateCartItemQty(id, qty) {
 
 function updateSummary() {
     const subtotal = window.cartManager.getTotal();
-    const shipping = 30000; // Fixed for now
+    const shipping = subtotal > 0 ? 30000 : 0; // Shipping only if items exist
     const discount = 0; // Placeholder
     const total = subtotal + shipping - discount;
 
