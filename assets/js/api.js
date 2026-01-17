@@ -308,6 +308,48 @@ const OrdersAPI = {
 };
 
 // ============================================
+// User API (Profile & Password)
+// ============================================
+
+const UserAPI = {
+    profile: {
+        /**
+         * Get user profile
+         */
+        async get() {
+            const response = await apiRequest('/user/profile.php', {
+                method: 'GET'
+            });
+            return response.data;
+        },
+
+        /**
+         * Update user profile
+         */
+        async update(data) {
+            const response = await apiRequest('/user/profile.php', {
+                method: 'POST',
+                body: data
+            });
+            return response.data;
+        }
+    },
+
+    password: {
+        /**
+         * Change password
+         */
+        async update(current_password, new_password) {
+            const response = await apiRequest('/user/change-password.php', {
+                method: 'POST',
+                body: { current_password, new_password }
+            });
+            return response.data;
+        }
+    }
+};
+
+// ============================================
 // Global API object
 // ============================================
 
@@ -316,6 +358,7 @@ window.API = {
     products: ProductsAPI,
     cart: CartAPI,
     orders: OrdersAPI,
+    user: UserAPI,
     showNotification
 };
 

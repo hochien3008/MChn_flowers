@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tài khoản - Sweetie Garden</title>
-    <link rel="stylesheet" href="../assets/css/styles.css?v=40">
-    <script src="../assets/js/api.js?v=40"></script>
-    <script src="../assets/js/cart-manager.js?v=40"></script>
-    <script src="../assets/js/main.js?v=40" defer></script>
-    <script src="../assets/js/account.js?v=40" defer></script>
+    <link rel="stylesheet" href="../assets/css/styles.css?v=44">
+    <script src="../assets/js/api.js?v=44"></script>
+    <script src="../assets/js/cart-manager.js?v=44"></script>
+    <script src="../assets/js/main.js?v=44" defer></script>
+    <script src="../assets/js/account.js?v=44" defer></script>
 </head>
 <body>
     <!-- Header -->
@@ -74,98 +74,85 @@
     </nav>
 
     <!-- Account Section -->
+    <!-- Account Section -->
     <section class="account-section">
         <div class="account-container">
+            <!-- Sidebar -->
             <div class="account-sidebar">
-                <h3 style="margin-bottom: 1rem; color: #c44569;">Tài khoản của tôi</h3>
+                <div class="user-summary" style="padding-bottom: 1.5rem; border-bottom: 1px solid #eee; margin-bottom: 1.5rem;">
+                    <div style="font-weight: 600; font-size: 1.1rem; color: #333;" id="sidebarUserName">...</div>
+                    <div style="font-size: 0.9rem; color: #777;">Thành viên thân thiết</div>
+                </div>
+                
+                <h3 style="margin-bottom: 1rem; color: #c44569; font-size: 1.2rem;">Tài khoản</h3>
                 <ul class="account-menu">
-                    <li><a href="account.html" class="active">📋 Đơn hàng của tôi</a></li>
+                    <li><a href="#" class="active" data-tab-target="tab-orders">📋 Đơn hàng của tôi</a></li>
                     <li><a href="wishlist.html">❤️ Danh sách yêu thích</a></li>
-                    <li><a href="../account/addresses.html">📍 Địa chỉ giao hàng</a></li>
-                    <li><a href="../account/profile.html">👤 Hồ sơ cá nhân</a></li>
-                    <li><a href="#">🔐 Đổi mật khẩu</a></li>
+                    <li><a href="#" data-tab-target="tab-profile">👤 Hồ sơ cá nhân</a></li>
+                    <li><a href="#" data-tab-target="tab-password">🔐 Đổi mật khẩu</a></li>
                     <li><a href="../auth/login.html">🚪 Đăng xuất</a></li>
                 </ul>
             </div>
 
+            <!-- Content Area -->
             <div class="account-content">
-                <h2 style="margin-bottom: 2rem; color: #c44569;">Đơn hàng của tôi</h2>
-
-                <div class="order-list">
-                    <div class="order-card">
-                        <div class="order-header">
-                            <div>
-                                <div style="font-weight: bold; margin-bottom: 0.5rem;">Đơn hàng #DH001234</div>
-                                <div style="color: #666; font-size: 0.9rem;">Ngày đặt: 15/12/2024 14:30</div>
-                            </div>
-                            <span class="order-status completed">Đã giao</span>
-                        </div>
-                        <div style="margin: 1rem 0;">
-                            <div style="margin-bottom: 0.5rem;">Bánh kem Chocolate Deluxe x1</div>
-                            <div style="margin-bottom: 0.5rem;">Hoa hồng đỏ 99 bông x1</div>
-                            <div>Tổng tiền: <strong style="color: #c44569;">1.200.000đ</strong></div>
-                        </div>
-                        <div style="text-align: right;">
-                            <a href="#" style="color: #ff6b9d; text-decoration: none; margin-right: 1rem;">Xem chi tiết</a>
-                            <button class="add-to-cart-btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Đặt lại</button>
-                        </div>
-                    </div>
-
-                    <div class="order-card">
-                        <div class="order-header">
-                            <div>
-                                <div style="font-weight: bold; margin-bottom: 0.5rem;">Đơn hàng #DH001233</div>
-                                <div style="color: #666; font-size: 0.9rem;">Ngày đặt: 14/12/2024 10:15</div>
-                            </div>
-                            <span class="order-status shipping">Đang giao</span>
-                        </div>
-                        <div style="margin: 1rem 0;">
-                            <div style="margin-bottom: 0.5rem;">Combo Sinh nhật Đặc biệt x1</div>
-                            <div>Tổng tiền: <strong style="color: #c44569;">650.000đ</strong></div>
-                        </div>
-                        <div style="text-align: right;">
-                            <a href="#" style="color: #ff6b9d; text-decoration: none; margin-right: 1rem;">Xem chi tiết</a>
-                            <button class="add-to-cart-btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Theo dõi</button>
-                        </div>
-                    </div>
-
-                    <div class="order-card">
-                        <div class="order-header">
-                            <div>
-                                <div style="font-weight: bold; margin-bottom: 0.5rem;">Đơn hàng #DH001232</div>
-                                <div style="color: #666; font-size: 0.9rem;">Ngày đặt: 13/12/2024 16:45</div>
-                            </div>
-                            <span class="order-status confirmed">Đã xác nhận</span>
-                        </div>
-                        <div style="margin: 1rem 0;">
-                            <div style="margin-bottom: 0.5rem;">Bánh kem Tiramisu x1</div>
-                            <div style="margin-bottom: 0.5rem;">Hoa giỏ đa sắc x1</div>
-                            <div>Tổng tiền: <strong style="color: #c44569;">780.000đ</strong></div>
-                        </div>
-                        <div style="text-align: right;">
-                            <a href="#" style="color: #ff6b9d; text-decoration: none; margin-right: 1rem;">Xem chi tiết</a>
-                            <button class="add-to-cart-btn" style="padding: 0.5rem 1rem; font-size: 0.9rem; background: #dc3545;">Hủy đơn</button>
-                        </div>
-                    </div>
-
-                    <div class="order-card">
-                        <div class="order-header">
-                            <div>
-                                <div style="font-weight: bold; margin-bottom: 0.5rem;">Đơn hàng #DH001231</div>
-                                <div style="color: #666; font-size: 0.9rem;">Ngày đặt: 12/12/2024 09:20</div>
-                            </div>
-                            <span class="order-status pending">Chờ xác nhận</span>
-                        </div>
-                        <div style="margin: 1rem 0;">
-                            <div style="margin-bottom: 0.5rem;">Bánh kem Vanilla 2kg x1</div>
-                            <div>Tổng tiền: <strong style="color: #c44569;">550.000đ</strong></div>
-                        </div>
-                        <div style="text-align: right;">
-                            <a href="#" style="color: #ff6b9d; text-decoration: none; margin-right: 1rem;">Xem chi tiết</a>
-                            <button class="add-to-cart-btn" style="padding: 0.5rem 1rem; font-size: 0.9rem; background: #dc3545;">Hủy đơn</button>
+                
+                <!-- Tab: Orders -->
+                <div id="tab-orders" class="tab-pane active">
+                    <h2 style="margin-bottom: 1.5rem; color: #c44569;">Lịch sử đơn hàng</h2>
+                    <div id="orderList" class="order-list">
+                        <!-- Orders will be loaded here via JS -->
+                        <div class="text-center" style="padding: 2rem;">
+                            <div class="spinner"></div>
+                            <p>Đang tải đơn hàng...</p>
                         </div>
                     </div>
                 </div>
+
+                <!-- Tab: Profile -->
+                <div id="tab-profile" class="tab-pane" style="display: none;">
+                    <h2 style="margin-bottom: 1.5rem; color: #c44569;">Hồ sơ cá nhân</h2>
+                    <form class="account-form" onsubmit="window.updateProfile(event)">
+                        <div class="form-group">
+                            <label>Họ và tên</label>
+                            <input type="text" name="full_name" placeholder="Nhập họ tên" required class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" name="email" readonly class="form-control" style="background: #f9f9f9; cursor: not-allowed;">
+                        </div>
+                        <div class="form-group">
+                            <label>Số điện thoại</label>
+                            <input type="tel" name="phone" placeholder="Nhập số điện thoại" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Địa chỉ mặc định</label>
+                            <textarea name="address" rows="3" placeholder="Nhập địa chỉ giao hàng" class="form-control"></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">Lưu thay đổi</button>
+                    </form>
+                </div>
+
+                <!-- Tab: Password -->
+                <div id="tab-password" class="tab-pane" style="display: none;">
+                    <h2 style="margin-bottom: 1.5rem; color: #c44569;">Đổi mật khẩu</h2>
+                    <form class="account-form" onsubmit="window.changePassword(event)">
+                        <div class="form-group">
+                            <label>Mật khẩu hiện tại</label>
+                            <input type="password" name="current_password" required class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Mật khẩu mới</label>
+                            <input type="password" name="new_password" required class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Xác nhận mật khẩu mới</label>
+                            <input type="password" name="confirm_password" required class="form-control">
+                        </div>
+                        <button type="submit" class="btn-primary">Đổi mật khẩu</button>
+                    </form>
+                </div>
+
             </div>
         </div>
     </section>
