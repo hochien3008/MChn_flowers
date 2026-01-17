@@ -1,135 +1,130 @@
 /**
  * Cart Manager Class
- * Handles shopping cart logic, persistence, and UI updates
+ * BRIDGE VERSION: Delegates all logic to Server API via window.API.cart
+ * This ensures Single Source of Truth.
  */
 class CartManager {
     constructor() {
         this.items = [];
-        this.STORAGE_KEY = 'sweetie_garden_cart';
-        this.MAX_QUANTITY = 99;
+        // No longer use localStorage
         this.load();
     }
 
     /**
-     * Load cart from localStorage
+     * Load cart from Server
      */
-    load() {
-        const stored = localStorage.getItem(this.STORAGE_KEY);
-        if (stored) {
-            try {
-                this.items = JSON.parse(stored);
-                // Sanitize data
-                this.items = this.items.map(item => ({
-                    ...item,
-                    id: String(item.id),
-                    quantity: parseInt(item.quantity) || 1,
-                    price: parseInt(item.price) || 0
+    async load() {
+        if (!window.API) return;
+
+        try {
+            const data = await window.API.cart.get();
+            if (data && data.items) {
+                // Map server items to expected format for frontend
+                this.items = data.items.map(item => ({
+                    id: item.id, // This is now CART ID, not Product ID
+                    product_id: item.product_id,
+                    name: item.product_name,
+                    slug: item.product_slug,
+                    price: item.price,
+                    sale_price: item.sale_price,
+                    quantity: item.quantity,
+                    image: item.image_url,
+                    stock: item.stock
                 }));
-            } catch (e) {
-                console.error('Failed to load cart:', e);
+            } else {
                 this.items = [];
             }
+            
+            // Dispatch event for UI updates
+            this.updateBadge(); // This now calls API.cart.updateBadge
+            window.dispatchEvent(new CustomEvent('cart-updated', { detail: this.items }));
+            
+        } catch (error) {
+            console.error('Failed to sync cart:', error);
         }
-        this.updateBadge();
     }
 
     /**
-     * Save cart to localStorage
+     * Save cart - No-op since we use Server
      */
     save() {
-        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.items));
-        this.updateBadge();
-        // Dispatch event for other components to listen
-        window.dispatchEvent(new CustomEvent('cart-updated', { detail: this.items }));
+        // Did nothing, server handles persistence
     }
 
     /**
      * Add item to cart
-     * @param {Object} product - Product object
-     * @param {number} quantity - Quantity to add (default 1)
+     * Delegates to API.cart.add
      */
-    /**
-     * Add item to cart
-     * @param {Object} product - Product object
-     * @param {number} quantity - Quantity to add (default 1)
-     */
-    add(product, quantity = 1) {
-        console.log('Adding product:', product);
-        if (!product || !product.id) {
-            console.error('Invalid product data:', product);
-            return;
-        }
-
-        const productId = String(product.id);
-        console.log('Processing ID as string:', productId);
-
-        // Ensure quantity is valid
-        quantity = parseInt(quantity) || 1;
-        if (quantity < 1) quantity = 1;
-
-        // Check if item exists
-        const existingItem = this.items.find(item => String(item.id) === productId);
-
-        if (existingItem) {
-            console.log('Found existing item, updating quantity');
-            existingItem.quantity += quantity;
-            if (existingItem.quantity > this.MAX_QUANTITY) {
-                existingItem.quantity = this.MAX_QUANTITY;
-                if (typeof showNotification === 'function') {
-                    showNotification(`Số lượng tối đa là ${this.MAX_QUANTITY}`, 'warning');
-                }
-            } else {
-                if (typeof showNotification === 'function') {
-                    showNotification(`Đã cập nhật số lượng: ${product.name}`, 'success');
-                }
-            }
-        } else {
-            console.log('Adding new item');
-            // Add new item
-            const item = {
-                id: productId, // Store as string
-                name: product.name,
-                price: product.sale_price || product.price,
-                original_price: product.price,
-                image: product.image_url || product.image || product.thumbnail, // Handle variants
-                slug: product.slug,
-                quantity: quantity
-            };
-            this.items.push(item);
-
+    async add(product, quantity = 1) {
+        if (!window.API) return;
+        
+        // Handle input variations
+        const productId = product.id || product.product_id;
+        
+        try {
+            await window.API.cart.add(productId, quantity);
+            
             if (typeof showNotification === 'function') {
-                showNotification(`Đã thêm vào giỏ: ${product.name}`, 'success');
+                showNotification(`Đã thêm vào giỏ: ${product.name || 'Sản phẩm'}`, 'success');
+            }
+            
+            // Reload to get updated state
+            await this.load();
+            
+        } catch (error) {
+            console.error('Add to cart failed:', error);
+            if (typeof showNotification === 'function') {
+                showNotification(error.message || 'Không thể thêm vào giỏ', 'error');
             }
         }
-
-        this.save();
     }
 
     /**
      * Remove item from cart
+     * Delegates to API.cart.remove
      */
-    remove(id) {
-        const productId = String(id);
-        this.items = this.items.filter(item => String(item.id) !== productId);
-        this.save();
-        if (typeof showNotification === 'function') {
-            showNotification('Đã xóa sản phẩm khỏi giỏ hàng', 'info');
+    async remove(cartId) {
+        if (!window.API) return;
+
+        try {
+            await window.API.cart.remove(cartId);
+            
+            if (typeof showNotification === 'function') {
+                showNotification('Đã xóa sản phẩm khỏi giỏ hàng', 'info');
+            }
+            
+            // Reload
+            await this.load();
+            
+        } catch (error) {
+            console.error('Remove failed:', error);
+            if (typeof showNotification === 'function') {
+                showNotification(error.message || 'Không thể xóa sản phẩm', 'error');
+            }
         }
     }
 
     /**
      * Update item quantity
+     * Delegates to API.cart.update
      */
-    updateQuantity(id, quantity) {
-        const productId = String(id);
-        const item = this.items.find(item => String(item.id) === productId);
-        if (item) {
-            quantity = parseInt(quantity);
-            if (quantity > 0 && quantity <= this.MAX_QUANTITY) {
-                item.quantity = quantity;
-                this.save();
-            } else if (quantity <= 0) {
-                this.remove(id);
+    async updateQuantity(cartId, quantity) {
+        if (!window.API) return;
+        
+        quantity = parseInt(quantity);
+        if (quantity < 1) {
+            return this.remove(cartId);
+        }
+
+        try {
+            await window.API.cart.update(cartId, quantity);
+            // Reload
+            await this.load();
+            
+        } catch (error) {
+            console.error('Update failed:', error);
+            if (typeof showNotification === 'function') {
+                showNotification(error.message || 'Không thể cập nhật số lượng', 'error');
             }
         }
     }
@@ -145,36 +140,28 @@ class CartManager {
      * Get total price
      */
     getTotal() {
-        return this.items.reduce((total, item) => total + (item.price * item.quantity), 0);
+        return this.items.reduce((total, item) => {
+             const price = item.sale_price || item.price || 0;
+             return total + (price * item.quantity);
+        }, 0);
     }
 
     /**
      * Update cart badge in header
      */
     updateBadge() {
-        const badges = document.querySelectorAll('.cart-badge');
-        const count = this.getCount();
-        badges.forEach(badge => {
-            badge.textContent = count > 99 ? '99+' : count;
-            badge.style.display = count > 0 ? 'flex' : 'none';
-
-            // Trigger animation
-            badge.classList.remove('active');
-            void badge.offsetWidth; // Trigger reflow
-            if (count > 0) {
-                badge.classList.add('active');
-                // Remove class after animation completes to allow re-triggering
-                setTimeout(() => badge.classList.remove('active'), 400);
-            }
-        });
+        if (window.API && window.API.cart) {
+            window.API.cart.updateBadge(); // Use the logic in api.js which knows about total_quantity
+        }
     }
 
     /**
      * Clear cart
      */
     clear() {
+        // Not implemented on API yet, or maybe loop remove?
+        // For now, doing nothing or we could add an API endpoint for clear
         this.items = [];
-        this.save();
     }
 }
 
