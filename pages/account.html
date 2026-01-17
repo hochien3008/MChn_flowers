@@ -88,6 +88,7 @@
                 <ul class="account-menu">
                     <li><a href="#" class="active" data-tab-target="tab-orders">📋 Đơn hàng của tôi</a></li>
                     <li><a href="wishlist.html">❤️ Danh sách yêu thích</a></li>
+                    <li><a href="#" data-tab-target="tab-addresses">📍 Địa chỉ giao hàng</a></li>
                     <li><a href="#" data-tab-target="tab-profile">👤 Hồ sơ cá nhân</a></li>
                     <li><a href="#" data-tab-target="tab-password">🔐 Đổi mật khẩu</a></li>
                     <li><a href="../auth/login.html">🚪 Đăng xuất</a></li>
@@ -126,10 +127,56 @@
                             <input type="tel" name="phone" placeholder="Nhập số điện thoại" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label>Địa chỉ mặc định</label>
-                            <textarea name="address" rows="3" placeholder="Nhập địa chỉ giao hàng" class="form-control"></textarea>
+                            <label>Địa chỉ (Hồ sơ)</label>
+                            <textarea name="address" rows="2" placeholder="Nhập địa chỉ chung" class="form-control"></textarea>
                         </div>
                         <button type="submit" class="btn-primary">Lưu thay đổi</button>
+                    </form>
+                </div>
+
+                <!-- Tab: Addresses -->
+                <div id="tab-addresses" class="tab-pane" style="display: none;">
+                    <h2 style="margin-bottom: 1.5rem; color: #c44569;">Địa chỉ giao hàng</h2>
+                    
+                    <!-- Address List -->
+                    <div id="addressList" class="mb-4">
+                        <!-- Loaded by JS -->
+                    </div>
+
+                    <!-- Add Address Form -->
+                    <h3 style="font-size: 1.1rem; margin-bottom: 1rem;">Thêm địa chỉ mới</h3>
+                    <form class="account-form" onsubmit="window.addAddress(event)" style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px;">
+                        <div class="form-group">
+                            <label>Tên người nhận</label>
+                            <input type="text" name="name" required class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Số điện thoại</label>
+                            <input type="tel" name="phone" required class="form-control">
+                        </div>
+                        <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+                            <div class="form-group">
+                                <label>Tỉnh/Thành</label>
+                                <input type="text" name="city" placeholder="TP.HCM" required class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Quận/Huyện</label>
+                                <input type="text" name="district" placeholder="Quận 1" required class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Phường/Xã</label>
+                                <input type="text" name="ward" placeholder="Phường Bến Nghé" required class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Địa chỉ chi tiết</label>
+                            <input type="text" name="address" placeholder="Số nhà, tên đường" required class="form-control">
+                        </div>
+                        <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="checkbox" name="is_default" id="defaultAddr">
+                            <label for="defaultAddr" style="margin: 0;">Đặt làm địa chỉ mặc định</label>
+                        </div>
+                        <button type="submit" class="btn-primary">Thêm địa chỉ</button>
                     </form>
                 </div>
 

@@ -384,6 +384,25 @@ const UserAPI = {
             });
             return response.data;
         }
+    },
+
+    addresses: {
+        async list() {
+            const response = await apiRequest('/user/addresses.php', { method: 'GET' });
+            return response.data;
+        },
+        async create(data) {
+            const response = await apiRequest('/user/addresses.php', { method: 'POST', body: { ...data, action: 'create' } });
+            return response.data;
+        },
+        async delete(id) {
+            const response = await apiRequest('/user/addresses.php', { method: 'POST', body: { id, action: 'delete' } });
+            return response.data;
+        },
+        async setDefault(id) {
+            const response = await apiRequest('/user/addresses.php', { method: 'POST', body: { id, action: 'set_default' } });
+            return response.data;
+        }
     }
 };
 

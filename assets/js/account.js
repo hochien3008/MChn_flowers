@@ -60,13 +60,23 @@ function initTabs() {
             // Load data if needed based on tab
             if (targetId === 'tab-orders') loadOrders();
             if (targetId === 'tab-profile') loadProfile();
+            if (targetId === 'tab-addresses') loadAddresses();
         });
     });
 
     // Default: Show first tab or URL hash
+    handleHashChange();
+    window.addEventListener('hashchange', handleHashChange);
+}
+
+function handleHashChange() {
     const hash = window.location.hash.replace('#', '');
-    const defaultTab = hash ? document.querySelector(`[data-tab-target="tab-${hash}"]`) : document.querySelector('[data-tab-target="tab-orders"]');
-    if (defaultTab) defaultTab.click();
+    const tabName = hash || 'tab-orders';
+    const trigger = document.querySelector(`[data-tab-target="${tabName}"]`);
+    
+    if (trigger) {
+        trigger.click();
+    }
 }
 
 // ============================================
@@ -79,7 +89,7 @@ async function loadOrders() {
     listContainer.innerHTML = '<div class="text-center" style="padding: 2rem;">Đang tải đơn hàng...</div>';
 
     try {
-        const result = await window.API.orders.list({ limit: 10 }); // You might need to add this method to api.js if missing
+        const result = await window.API.orders.list({ limit: 10 });
         const orders = result.orders || [];
 
         if (orders.length === 0) {
@@ -129,11 +139,11 @@ function getStatusLabel(status) {
 
 function getStatusClass(status) {
     const map = {
-        'pending': 'status-pending', // yellow/orange
-        'confirmed': 'status-info', // blue
-        'shipping': 'status-primary', // purple/brand
-        'completed': 'status-success', // green
-        'cancelled': 'status-danger' // red
+        'pending': 'status-pending',
+        'confirmed': 'status-info',
+        'shipping': 'status-primary',
+        'completed': 'status-success',
+        'cancelled': 'status-danger'
     };
     return map[status] || '';
 }
@@ -143,14 +153,14 @@ function getStatusClass(status) {
 // ============================================
 async function loadProfile() {
     try {
-        const result = await window.API.user.profile.get(); // Ensure this exists in api.js
+        const result = await window.API.user.profile.get();
         const user = result.user;
 
         if (user) {
             setVal('input[name="full_name"]', user.full_name);
             setVal('input[name="email"]', user.email);
             setVal('input[name="phone"]', user.phone);
-            setVal('input[name="address"]', user.address);
+            setVal('textarea[name="address"]', user.address); // Note: Current simple profile has only one address field
         }
     } catch (error) {
         console.error('Load profile failed:', error);
@@ -174,11 +184,113 @@ async function updateProfile(e) {
 
         await window.API.user.profile.update(data);
         window.API.showNotification('Cập nhật hồ sơ thành công!', 'success');
+        
+        // Update sidebar
+        const sidebarName = document.getElementById('sidebarUserName');
+        if (sidebarName) sidebarName.textContent = data.full_name;
+
     } catch (error) {
         window.API.showNotification(error.message || 'Cập nhật thất bại', 'error');
     } finally {
         btn.disabled = false;
         btn.textContent = 'Lưu thay đổi';
+    }
+}
+
+// ============================================
+// Address Logic
+// ============================================
+async function loadAddresses() {
+    const container = document.getElementById('addressList');
+    if (!container) return;
+    
+    container.innerHTML = '<div>Đang tải địa chỉ...</div>';
+
+    try {
+        // We will call this API manually here since it wasn't in the initial Plan but user asked for it.
+        // Assuming api/user/addresses.php exists and follows the structure.
+        // We should add UserAPI.addresses to api.js first or call directly.
+        // Let's call directly for now using apiRequest to be safe or update api.js in next step.
+        // Rely on update api.js step for cleanliness.
+        
+        if (!window.API.user.addresses) {
+             container.innerHTML = 'Chức năng đang cập nhật...';
+             return;
+        }
+
+        const result = await window.API.user.addresses.list();
+        const addresses = result.addresses || [];
+
+        if (addresses.length === 0) {
+            container.innerHTML = '<p class="text-muted">Bạn chưa lưu địa chỉ nào.</p>';
+        } else {
+            container.innerHTML = addresses.map(addr => `
+                <div class="address-item ${addr.is_default ? 'default' : ''}" style="border: 1px solid #eee; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; position: relative;">
+                    ${addr.is_default ? '<span class="badge badge-success" style="position: absolute; top: 10px; right: 10px; font-size: 0.7rem;">Mặc định</span>' : ''}
+                    <div style="font-weight: bold; margin-bottom: 0.25rem;">${addr.name} | ${addr.phone}</div>
+                    <div style="color: #555; font-size: 0.9rem;">${addr.address}</div>
+                    <div style="color: #777; font-size: 0.85rem;">${addr.ward}, ${addr.district}, ${addr.city}</div>
+                    <div style="margin-top: 0.75rem;">
+                         <button class="btn-sm btn-outline-danger" onclick="deleteAddress(${addr.id})">Xóa</button>
+                         ${!addr.is_default ? `<button class="btn-sm btn-outline-primary" onclick="setDefaultAddress(${addr.id})">Đặt mặc định</button>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+    } catch (error) {
+        console.error('Load addresses error:', error);
+        container.innerHTML = '<div class="text-danger">Không thể tải địa chỉ.</div>';
+    }
+}
+
+async function addAddress(e) {
+    e.preventDefault();
+    const form = e.target;
+    const btn = form.querySelector('button[type="submit"]');
+
+    const data = {
+        action: 'create',
+        name: form.name.value,
+        phone: form.phone.value,
+        address: form.address.value,
+        city: form.city.value,
+        district: form.district.value,
+        ward: form.ward.value,
+        is_default: form.is_default.checked
+    };
+
+    try {
+        btn.disabled = true;
+        await window.API.user.addresses.create(data);
+        window.API.showNotification('Thêm địa chỉ thành công', 'success');
+        form.reset();
+        loadAddresses(); // Reload list
+    } catch (error) {
+        window.API.showNotification(error.message, 'error');
+    } finally {
+        btn.disabled = false;
+    }
+}
+
+async function deleteAddress(id) {
+    if (!confirm('Bạn có chắc muốn xóa địa chỉ này?')) return;
+    try {
+        await window.API.user.addresses.delete(id);
+        loadAddresses();
+        window.API.showNotification('Đã xóa địa chỉ', 'success');
+    } catch (error) {
+        window.API.showNotification(error.message, 'error');
+    }
+}
+
+async function setDefaultAddress(id) {
+    try {
+        await window.API.user.addresses.setDefault(id);
+        loadAddresses();
+        window.API.showNotification('Đã đặt làm mặc định', 'success');
+    } catch (error) {
+        window.API.showNotification(error.message, 'error');
     }
 }
 
@@ -230,3 +342,6 @@ function formatPrice(price) {
 window.updateProfile = updateProfile;
 window.changePassword = changePassword;
 window.loadOrders = loadOrders;
+window.addAddress = addAddress;
+window.deleteAddress = deleteAddress;
+window.setDefaultAddress = setDefaultAddress;
