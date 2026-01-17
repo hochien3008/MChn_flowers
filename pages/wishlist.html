@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Danh sách yêu thích - Sweetie Garden</title>
-    <link rel="stylesheet" href="../assets/css/styles.css">
-    <script src="../assets/js/main.js" defer></script>
+    <link rel="stylesheet" href="../assets/css/styles.css?v=44">
+    <script src="../assets/js/api.js?v=44"></script>
+    <script src="../assets/js/cart-manager.js?v=44"></script>
+    <script src="../assets/js/main.js?v=44" defer></script>
+    <script src="../assets/js/wishlist.js?v=44" defer></script>
 </head>
 <body>
     <!-- Header -->
@@ -98,59 +101,10 @@
             <div class="account-content">
                 <h2 style="margin-bottom: 2rem; color: var(--accent-color);">Danh sách yêu thích</h2>
 
-                <div class="products-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
-                    <div class="product-card" style="position: relative;">
-                        <div class="wishlist-icon active">❤️</div>
-                        <a href="../shop/product-detail.html" style="text-decoration: none; color: inherit;">
-                            <div class="product-image">🎂</div>
-                            <div class="product-info">
-                                <div class="product-category">Bánh kem sinh nhật</div>
-                                <div class="product-name">Bánh kem Chocolate Deluxe</div>
-                                <div class="product-description">Bánh kem chocolate thơm ngon, phủ kem tươi</div>
-                                <div class="product-footer">
-                                    <div class="product-price">
-                                        350.000đ
-                                        <span class="old-price">450.000đ</span>
-                                    </div>
-                                    <button class="add-to-cart-btn">Thêm vào giỏ</button>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="product-card" style="position: relative;">
-                        <div class="wishlist-icon active">❤️</div>
-                        <a href="../shop/product-detail.html" style="text-decoration: none; color: inherit;">
-                            <div class="product-image">🌹</div>
-                            <div class="product-info">
-                                <div class="product-category">Hoa tươi</div>
-                                <div class="product-name">Hoa hồng đỏ 99 bông</div>
-                                <div class="product-description">Hoa hồng đỏ tươi thắm, bó đẹp</div>
-                                <div class="product-footer">
-                                    <div class="product-price">850.000đ</div>
-                                    <button class="add-to-cart-btn">Thêm vào giỏ</button>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="product-card" style="position: relative;">
-                        <div class="wishlist-icon active">❤️</div>
-                        <a href="../shop/product-detail.html" style="text-decoration: none; color: inherit;">
-                            <div class="product-image">🎁</div>
-                            <div class="product-info">
-                                <div class="product-category">Combo</div>
-                                <div class="product-name">Combo Sinh nhật Đặc biệt</div>
-                                <div class="product-description">Bánh kem + Hoa hồng + Thiệp</div>
-                                <div class="product-footer">
-                                    <div class="product-price">
-                                        650.000đ
-                                        <span class="old-price">800.000đ</span>
-                                    </div>
-                                    <button class="add-to-cart-btn">Thêm vào giỏ</button>
-                                </div>
-                            </div>
-                        </a>
+                <div id="wishlistGrid" class="products-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+                    <!-- Loaded via JS -->
+                    <div class="col-span-full">
+                         <div class="spinner"></div>
                     </div>
                 </div>
             </div>

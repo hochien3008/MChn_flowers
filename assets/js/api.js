@@ -308,6 +308,44 @@ const OrdersAPI = {
 };
 
 // ============================================
+// Wishlist API
+// ============================================
+
+const WishlistAPI = {
+    /**
+     * Get wishlist
+     */
+    async list() {
+        const response = await apiRequest('/wishlist/list.php', {
+            method: 'GET'
+        });
+        return response.data;
+    },
+
+    /**
+     * Add to wishlist
+     */
+    async add(product_id) {
+        const response = await apiRequest('/wishlist/add.php', {
+            method: 'POST',
+            body: { product_id }
+        });
+        return response.data;
+    },
+
+    /**
+     * Remove from wishlist
+     */
+    async remove(product_id) {
+        const response = await apiRequest('/wishlist/remove.php', {
+            method: 'POST',
+            body: { product_id }
+        });
+        return response.data;
+    }
+};
+
+// ============================================
 // User API (Profile & Password)
 // ============================================
 
@@ -359,6 +397,7 @@ window.API = {
     cart: CartAPI,
     orders: OrdersAPI,
     user: UserAPI,
+    wishlist: WishlistAPI,
     showNotification
 };
 

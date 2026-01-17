@@ -356,8 +356,34 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            // Normal Link Actions (Wishlist, Compare)
+            // Normal Link Actions (Compare)
             const href = actionBtn.getAttribute('data-href');
+            
+            // Wishlist Toggle
+            if (actionBtn.getAttribute('title') === 'Yêu thích' || actionBtn.querySelector('.wishlist-icon')) {
+                 const card = actionBtn.closest('.product-card');
+                 const productId = card ? (card.dataset.productId || card.querySelector('[data-add-to-cart]')?.dataset.addToCart) : null;
+                 
+                 if (productId && window.API) {
+                     try {
+                         // Check auth
+                         const user = await window.API.auth.check();
+                         if (!user) {
+                             window.API.showNotification('Vui lòng đăng nhập để lưu yêu thích', 'info');
+                             return;
+                         }
+
+                         await window.API.wishlist.add(parseInt(productId));
+                         window.API.showNotification('Đã thêm vào yêu thích!', 'success');
+                         // Optional: Change icon style
+                         actionBtn.innerHTML = '❤️'; 
+                     } catch (error) {
+                         window.API.showNotification(error.message, 'error');
+                     }
+                 }
+                 return;
+            }
+
             if (href) {
                 window.location.href = href;
                 return;
