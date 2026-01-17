@@ -4318,8 +4318,8 @@ footer::before {
 .auth-page-container {
     display: flex;
     min-height: 600px;
-    max-width: 1100px;
-    margin: 3rem auto;
+    max-width: 1400px; /* Increased from 1100px */
+    margin: 2rem auto; /* Reduced margin slightly */
     background: #fff;
     border-radius: 20px;
     box-shadow: 0 20px 60px rgba(0,0,0,0.08);
@@ -4327,7 +4327,7 @@ footer::before {
 }
 
 .auth-image {
-    flex: 1.2;
+    flex: 1; /* Reduced from 1.2 to give more space to form */
     background-size: cover;
     background-position: center;
     position: relative;
@@ -4349,8 +4349,8 @@ footer::before {
 }
 
 .auth-form-container {
-    flex: 1;
-    padding: 3rem;
+    flex: 2; /* Increased from 1 to give form more width */
+    padding: 3.5rem; /* Slightly more padding for breathing room */
     display: flex;
     flex-direction: column;
     justify-content: center;
