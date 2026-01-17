@@ -69,8 +69,22 @@ function populateProductData(product) {
 
     // 4. Update Images
     const mainImg = document.getElementById('mainImage');
-    if (mainImg && product.image_url) {
-        mainImg.src = product.image_url;
+    if (mainImg) {
+        // Set default/fallback handler
+        mainImg.onerror = function() {
+            this.onerror = null; // Prevent loop
+            this.src = '../assets/images/logo.png';
+            this.style.objectFit = 'contain'; // Logo might need different fitting
+            this.style.padding = '20px';
+            this.style.backgroundColor = '#f8f9fa';
+        };
+
+        if (product.image_url) {
+            mainImg.src = product.image_url;
+        } else {
+             // Explicitly set fallback if no URL provided
+            mainImg.src = '../assets/images/logo.png';
+        }
         mainImg.alt = product.name;
     }
 
