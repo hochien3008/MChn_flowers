@@ -107,8 +107,15 @@ function setupCheckoutForm() {
         }
 
         const phoneRegex = /^(0|84)(3|5|7|8|9)([0-9]{8})$/;
+        const isNumeric = /^\d+$/.test(orderData.shipping_phone);
+
+        if (!orderData.shipping_phone || !isNumeric) {
+            window.API.showNotification('Số điện thoại phải là chữ số', 'error');
+            return;
+        }
+
         if (!phoneRegex.test(orderData.shipping_phone)) {
-            window.API.showNotification('Số điện thoại không đúng định dạng', 'error');
+            window.API.showNotification('Số điện thoại không hợp lệ. Vui lòng nhập 10 chữ số (ví dụ: 0912345678)', 'error');
             return;
         }
 
@@ -144,7 +151,7 @@ function setupCheckoutForm() {
             submitBtn.textContent = 'Đặt hàng';
         }
     });
-}
+
     // Coupon code application
     const couponBtn = document.querySelector('.apply-coupon-btn, [data-apply-coupon]');
     if (couponBtn) {

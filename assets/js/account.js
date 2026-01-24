@@ -123,7 +123,10 @@ async function loadOrders() {
 
     } catch (error) {
         console.error('Load orders failed:', error);
-        listContainer.innerHTML = '<div class="error-state">Không thể tải danh sách đơn hàng. Vui lòng thử lại sau.</div>';
+        listContainer.innerHTML = `<div class="error-state">
+            <p>Không thể tải danh sách đơn hàng.</p>
+            <p style="font-size: 0.9rem; color: #666;">Lỗi: ${error.message}</p>
+        </div>`;
     }
 }
 

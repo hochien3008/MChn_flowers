@@ -70,7 +70,10 @@ if (APP_ENV === 'development') {
     ini_set('display_errors', 0);
 }
 
-// Start session
+// Start session with security settings
 if (session_status() === PHP_SESSION_NONE) {
+    ini_set('session.cookie_httponly', 1);
+    ini_set('session.use_only_cookies', 1);
+    ini_set('session.cookie_samesite', 'Lax');
     session_start();
 }
