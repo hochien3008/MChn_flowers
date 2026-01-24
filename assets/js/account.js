@@ -24,7 +24,7 @@ async function checkAuth() {
         } else {
             // Update sidebar user info if needed
             const userNameEl = document.getElementById('sidebarUserName');
-            if (userNameEl) userNameEl.textContent = user.full_name || 'Khách hàng';
+            if (userNameEl) userNameEl.textContent = check.user.full_name || 'Khách hàng';
         }
     } catch (error) {
         console.error('Auth check failed:', error);

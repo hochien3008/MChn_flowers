@@ -64,6 +64,7 @@ if (!verifyPassword($password, $user['password'])) {
 }
 
 // Set session
+session_regenerate_id(true);
 $_SESSION['user_id'] = $user['id'];
 $_SESSION['user_email'] = $user['email'];
 $_SESSION['user_name'] = $user['full_name'];
