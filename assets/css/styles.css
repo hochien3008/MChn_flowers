@@ -4317,8 +4317,9 @@ footer::before {
    ============================================ */
 .auth-page-container {
     display: flex;
-    min-height: 700px; /* Increased height too */
-    max-width: 95vw; /* Hugely increased width */
+    min-height: 550px;
+    width: 100%;
+    max-width: 60vw;
     margin: 2rem auto;
     background: #fff;
     border-radius: 20px;
@@ -4327,7 +4328,7 @@ footer::before {
 }
 
 .auth-image {
-    flex: 2; /* Increased significantly (Double relative weight if form is 3 vs old 2:1) */
+    flex: 1.5; /* Reduced relative to form */
     background-size: cover;
     background-position: center;
     position: relative;
@@ -4349,8 +4350,8 @@ footer::before {
 }
 
 .auth-form-container {
-    flex: 2; /* Increased from 1 to give form more width */
-    padding: 3.5rem; /* Slightly more padding for breathing room */
+    flex: 3.5; /* Form area is now much wider */
+    padding: 5rem; /* Massive padding for ultra-clean look */
     display: flex;
     flex-direction: column;
     justify-content: center;
