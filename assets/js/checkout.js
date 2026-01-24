@@ -115,9 +115,9 @@ function setupCheckoutForm() {
             
             window.API.showNotification('Đặt hàng thành công!', 'success');
             
-            // Redirect to order confirmation
+            // Redirect to order tracking in account page
             setTimeout(() => {
-                window.location.href = `../account/order-tracking.html?order=${result.order_number}`;
+                window.location.href = `../pages/account.html#tab-orders`;
             }, 1500);
 
         } catch (error) {
