@@ -434,6 +434,19 @@ function formatPrice(price) {
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
 }
 
+async function handleLogout() {
+    if (confirm('Bạn có chắc chắn muốn đăng xuất khỏi tài khoản?')) {
+        try {
+            await window.API.auth.logout();
+            window.location.href = '../auth/login.html';
+        } catch (error) {
+            console.error('Logout failed:', error);
+            // Even if API fails, clear session client-side and redirect
+            window.location.href = '../auth/login.html';
+        }
+    }
+}
+
 // Attach functions to window for onclick access
 window.updateProfile = updateProfile;
 window.changePassword = changePassword;
@@ -443,3 +456,4 @@ window.deleteAddress = deleteAddress;
 window.setDefaultAddress = setDefaultAddress;
 window.removeFromWishlist = removeFromWishlist;
 window.addToCart = addToCart;
+window.handleLogout = handleLogout;

@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tài khoản - Sweetie Garden</title>
-    <link rel="stylesheet" href="../assets/css/styles.css?v=60">
-    <script src="../assets/js/api.js?v=60"></script>
-    <script src="../assets/js/cart-manager.js?v=60"></script>
-    <script src="../assets/js/main.js?v=60" defer></script>
-    <script src="../assets/js/account.js?v=60" defer></script>
+    <link rel="stylesheet" href="../assets/css/styles.css?v=63">
+    <script src="../assets/js/api.js?v=63"></script>
+    <script src="../assets/js/cart-manager.js?v=63"></script>
+    <script src="../assets/js/main.js?v=63" defer></script>
+    <script src="../assets/js/account.js?v=63" defer></script>
 </head>
 <body>
     <!-- Header -->
@@ -91,7 +91,7 @@
                     <li><a href="#" data-tab-target="tab-addresses">📍 Địa chỉ giao hàng</a></li>
                     <li><a href="#" data-tab-target="tab-profile">👤 Hồ sơ cá nhân</a></li>
                     <li><a href="#" data-tab-target="tab-password">🔐 Đổi mật khẩu</a></li>
-                    <li><a href="../auth/login.html">🚪 Đăng xuất</a></li>
+                    <li><a href="javascript:void(0)" onclick="handleLogout()">🚪 Đăng xuất</a></li>
                 </ul>
             </div>
 
@@ -183,9 +183,9 @@
                             <label>Địa chỉ chi tiết</label>
                             <input type="text" name="address" placeholder="Số nhà, tên đường" required class="form-control">
                         </div>
-                        <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem;">
-                            <input type="checkbox" name="is_default" id="defaultAddr">
-                            <label for="defaultAddr" style="margin: 0;">Đặt làm địa chỉ mặc định</label>
+                        <div style="display: flex; align-items: center; gap: 0.8rem; margin: 1.5rem 0;">
+                            <input type="checkbox" name="is_default" id="defaultAddr" style="width: 20px; height: 20px; cursor: pointer; accent-color: #c44569;">
+                            <label for="defaultAddr" style="margin: 0; cursor: pointer; font-weight: 500; color: #555;">Đặt làm địa chỉ mặc định</label>
                         </div>
                         <button type="submit" class="btn-primary">Thêm địa chỉ</button>
                     </form>
