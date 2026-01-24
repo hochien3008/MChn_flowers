@@ -450,8 +450,8 @@ document.addEventListener('DOMContentLoaded', function () {
                  if (productId && window.API) {
                      try {
                          // Check auth
-                         const user = await window.API.auth.check();
-                         if (!user) {
+                         const check = await window.API.auth.check();
+                         if (!check || !check.authenticated) {
                              window.API.showNotification('Vui lòng đăng nhập để lưu yêu thích', 'info');
                              return;
                          }

@@ -55,8 +55,10 @@ async function apiRequest(endpoint, options = {}) {
 
         return data;
     } catch (error) {
-        console.error('API Error:', error);
-        console.error('Request URL:', url);
+        if (!options.silent) {
+            console.error('API Error:', error);
+            console.error('Request URL:', url);
+        }
 
         // Friendly error message
         if (error.message.includes('Failed to fetch')) {
@@ -142,7 +144,8 @@ const AuthAPI = {
     async check() {
         try {
             const response = await apiRequest('/auth/check.php', {
-                method: 'GET'
+                method: 'GET',
+                silent: true
             });
             return response.data;
         } catch (error) {

@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', async function () {
 async function checkAuth() {
     if (!window.API || !window.API.auth) return;
     try {
-        const user = await window.API.auth.check();
-        if (!user) {
+        const check = await window.API.auth.check();
+        if (!check || !check.authenticated) {
             window.location.href = '../auth/login.html';
         } else {
             // Update sidebar user info if needed
