@@ -86,69 +86,69 @@
     <section class="checkout-section">
         <h2 class="section-title">Thông tin thanh toán</h2>
         <div class="checkout-container">
-            <div class="checkout-form">
+            <form class="checkout-form" id="checkoutForm">
                 <h3 style="margin-bottom: 1.5rem; color: #c44569;">Thông tin nhận hàng</h3>
                 
                 <div class="form-group">
                     <label>Họ và tên *</label>
-                    <input type="text" placeholder="Nhập họ và tên" required>
+                    <input type="text" name="shipping_name" placeholder="Nhập họ và tên" required>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
                         <label>Số điện thoại *</label>
-                        <input type="tel" placeholder="0123 456 789" required>
+                        <input type="tel" name="shipping_phone" placeholder="0123 456 789" required>
                     </div>
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="email" placeholder="email@example.com">
+                        <input type="email" name="shipping_email" placeholder="email@example.com">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>Địa chỉ nhận hàng *</label>
-                    <input type="text" placeholder="Số nhà, tên đường" required>
+                    <input type="text" name="shipping_address" placeholder="Số nhà, tên đường" required>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
                         <label>Tỉnh/Thành phố *</label>
-                        <select required>
-                            <option>Chọn Tỉnh/Thành phố</option>
-                            <option>TP. Hồ Chí Minh</option>
-                            <option>Hà Nội</option>
-                            <option>Đà Nẵng</option>
+                        <select name="shipping_city" required>
+                            <option value="">Chọn Tỉnh/Thành phố</option>
+                            <option value="Hồ Chí Minh">TP. Hồ Chí Minh</option>
+                            <option value="Hà Nội">Hà Nội</option>
+                            <option value="Đà Nẵng">Đà Nẵng</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label>Quận/Huyện *</label>
-                        <select required>
-                            <option>Chọn Quận/Huyện</option>
-                            <option>Quận 1</option>
-                            <option>Quận 2</option>
-                            <option>Quận 3</option>
+                        <select name="shipping_district" required>
+                            <option value="">Chọn Quận/Huyện</option>
+                            <option value="Quận 1">Quận 1</option>
+                            <option value="Quận 2">Quận 2</option>
+                            <option value="Quận 3">Quận 3</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>Phường/Xã *</label>
-                    <select required>
-                        <option>Chọn Phường/Xã</option>
-                        <option>Phường 1</option>
-                        <option>Phường 2</option>
+                    <select name="shipping_ward" required>
+                        <option value="">Chọn Phường/Xã</option>
+                        <option value="Phường 1">Phường 1</option>
+                        <option value="Phường 2">Phường 2</option>
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label>Ghi chú giao hàng</label>
-                    <textarea placeholder="Nhập ghi chú cho shipper (ví dụ: gọi trước khi giao, để ở cửa...)" rows="3"></textarea>
+                    <textarea name="notes" placeholder="Nhập ghi chú cho shipper (ví dụ: gọi trước khi giao, để ở cửa...)" rows="3"></textarea>
                 </div>
 
                 <h3 style="margin: 2rem 0 1rem; color: #c44569;">Phương thức thanh toán</h3>
                 <div class="payment-methods">
                     <div class="payment-option">
-                        <input type="radio" name="payment" id="cod" checked>
+                        <input type="radio" name="payment_method" value="cod" id="cod" checked>
                         <label for="cod" style="margin: 0; flex: 1; cursor: pointer;">
                             <strong>💵 Thanh toán khi nhận hàng (COD)</strong>
                             <p style="margin: 0.5rem 0 0; color: #666; font-size: 0.9rem;">Thanh toán khi nhận được hàng</p>
@@ -156,7 +156,7 @@
                     </div>
 
                     <div class="payment-option">
-                        <input type="radio" name="payment" id="bank">
+                        <input type="radio" name="payment_method" value="bank" id="bank">
                         <label for="bank" style="margin: 0; flex: 1; cursor: pointer;">
                             <strong>🏦 Chuyển khoản ngân hàng</strong>
                             <p style="margin: 0.5rem 0 0; color: #666; font-size: 0.9rem;">Chuyển khoản qua ngân hàng</p>
@@ -164,7 +164,7 @@
                     </div>
 
                     <div class="payment-option">
-                        <input type="radio" name="payment" id="qr">
+                        <input type="radio" name="payment_method" value="qr" id="qr">
                         <label for="qr" style="margin: 0; flex: 1; cursor: pointer;">
                             <strong>📱 Thanh toán QR Code</strong>
                             <p style="margin: 0.5rem 0 0; color: #666; font-size: 0.9rem;">Quét mã QR để thanh toán</p>
@@ -174,18 +174,18 @@
 
                 <h3 style="margin: 2rem 0 1rem; color: #c44569;">Thời gian giao hàng</h3>
                 <div class="form-group">
-                    <select required>
-                        <option>Ngay lập tức (trong 2h) - +20.000đ</option>
-                        <option>8h - 10h sáng</option>
-                        <option>10h - 12h trưa</option>
-                        <option selected>14h - 16h chiều</option>
-                        <option>16h - 18h chiều</option>
-                        <option>18h - 21h tối</option>
+                    <select name="delivery_time" required>
+                        <option value="Ngay lập tức (trong 2h) - +20.000đ">Ngay lập tức (trong 2h) - +20.000đ</option>
+                        <option value="8h - 10h sáng">8h - 10h sáng</option>
+                        <option value="10h - 12h trưa">10h - 12h trưa</option>
+                        <option value="14h - 16h chiều" selected>14h - 16h chiều</option>
+                        <option value="16h - 18h chiều">16h - 18h chiều</option>
+                        <option value="18h - 21h tối">18h - 21h tối</option>
                     </select>
                 </div>
 
-                <button class="btn-primary" style="margin-top: 2rem;">Đặt hàng</button>
-            </div>
+                <button type="submit" class="btn-primary" style="margin-top: 2rem;">Đặt hàng</button>
+            </form>
 
             <div class="order-summary">
                 <h3 style="margin-bottom: 1rem; color: #c44569;">Tóm tắt đơn hàng</h3>

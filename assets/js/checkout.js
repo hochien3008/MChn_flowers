@@ -88,20 +88,37 @@ function setupCheckoutForm() {
         // Get form data
         const formData = new FormData(form);
         const orderData = {
-            shipping_name: formData.get('name') || formData.get('shipping_name'),
-            shipping_phone: formData.get('phone') || formData.get('shipping_phone'),
-            shipping_address: formData.get('address') || formData.get('shipping_address'),
-            shipping_city: formData.get('city') || formData.get('shipping_city'),
-            shipping_district: formData.get('district') || formData.get('shipping_district'),
-            shipping_ward: formData.get('ward') || formData.get('shipping_ward'),
+            shipping_name: formData.get('shipping_name')?.trim(),
+            shipping_phone: formData.get('shipping_phone')?.trim(),
+            shipping_email: formData.get('shipping_email')?.trim(),
+            shipping_address: formData.get('shipping_address')?.trim(),
+            shipping_city: formData.get('shipping_city'),
+            shipping_district: formData.get('shipping_district'),
+            shipping_ward: formData.get('shipping_ward'),
             payment_method: formData.get('payment_method') || 'cod',
-            coupon_code: formData.get('coupon_code') || formData.get('coupon'),
-            notes: formData.get('notes') || formData.get('note')
+            delivery_time: formData.get('delivery_time'),
+            notes: formData.get('notes')?.trim()
         };
 
-        // Validate
-        if (!orderData.shipping_name || !orderData.shipping_phone || !orderData.shipping_address) {
-            window.API.showNotification('Vui lòng điền đầy đủ thông tin giao hàng', 'error');
+        // Enhanced Validation
+        if (!orderData.shipping_name || orderData.shipping_name.length < 2) {
+            window.API.showNotification('Vui lòng nhập họ và tên hợp lệ', 'error');
+            return;
+        }
+
+        const phoneRegex = /^(0|84)(3|5|7|8|9)([0-9]{8})$/;
+        if (!phoneRegex.test(orderData.shipping_phone)) {
+            window.API.showNotification('Số điện thoại không đúng định dạng', 'error');
+            return;
+        }
+
+        if (!orderData.shipping_address || orderData.shipping_address.length < 5) {
+            window.API.showNotification('Vui lòng nhập địa chỉ chi tiết', 'error');
+            return;
+        }
+
+        if (!orderData.shipping_city || !orderData.shipping_district || !orderData.shipping_ward) {
+            window.API.showNotification('Vui lòng chọn đầy đủ khu vực giao hàng', 'error');
             return;
         }
 
@@ -109,7 +126,7 @@ function setupCheckoutForm() {
             const submitBtn = form.querySelector('button[type="submit"]');
             const originalText = submitBtn.textContent;
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Đang xử lý...';
+            submitBtn.innerHTML = '<span class="spinner" style="width: 15px; height: 15px; display: inline-block;"></span> Đang xử lý...';
 
             const result = await window.API.orders.create(orderData);
             
@@ -127,7 +144,7 @@ function setupCheckoutForm() {
             submitBtn.textContent = 'Đặt hàng';
         }
     });
-
+}
     // Coupon code application
     const couponBtn = document.querySelector('.apply-coupon-btn, [data-apply-coupon]');
     if (couponBtn) {
